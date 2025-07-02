@@ -281,3 +281,7 @@ export function normaliseNodes(data, view) {
   return newString;
   
 }; // data - a string containing path cords. view - dimensions of the graphics viewBox in the form of an object.
+
+export function sayHello(name) {
+  console.log(`Hi ${name}`)
+}; // says hi

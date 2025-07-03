@@ -124,4 +124,4 @@ export function text(data) {
   })
   return {el: newText, attr: data};
   
-}
+};

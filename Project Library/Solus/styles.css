@@ -1,0 +1,21 @@
+@layer base {
+  body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    font-size: 1.25rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+}
+
+@layer display {
+  .main-display {
+    background-color: hsl(0, 0%, 10%);
+    max-width: 600px;
+    margin: 3rem;
+  }
+}

@@ -1,0 +1,1 @@
+export const mainAspect = {x: 400, y: 300};

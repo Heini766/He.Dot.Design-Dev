@@ -1,0 +1,1 @@
+import * as comps from './data/components.js';

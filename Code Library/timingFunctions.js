@@ -1,5 +1,3 @@
-//https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library/timingFunctions.js
-
 export function easeInQuad(t) {
   return t * t;
 };

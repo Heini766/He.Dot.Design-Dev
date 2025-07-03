@@ -1,3 +1,5 @@
+//'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library/functions.js'
+
 export function getDistance(pos1, pos2) {
   const dx = pos2.x - pos1.x; // Difference in x-coordinates
   const dy = pos2.y - pos1.y; // Difference in y-coordinates

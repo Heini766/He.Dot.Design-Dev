@@ -1,3 +1,5 @@
+//https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library/renderSvg.js
+
 const SVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 SVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 SVG.setAttribute('preserveAspectRatio', 'xMidYMid meet');

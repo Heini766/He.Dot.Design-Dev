@@ -43,7 +43,7 @@ export function group(data) {
 
     if (element === 'nodes') {
       data.nodes.forEach((element) => {
-      newGroup.appendChild(element.el);
+      newGroup.appendChild(element);
       nodes.push(element);
     })
     } else {

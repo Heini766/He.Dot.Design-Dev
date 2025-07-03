@@ -286,7 +286,8 @@ export function turn(el, offset) {
 
   const innerEl = el.firstChild;
   const size = innerEl.getBBox();
-  const [posX, posY] = func.extNumbers(innerEl.getAttribute('transform'));
+  console.log(innerEl, size)
+  const [posX, posY] = extNumbers(innerEl.getAttribute('transform') === null ? `0 0` : innerEl.getAttribute('transform'));
 
   const displacement = offset*size.width - size.width/2;
 

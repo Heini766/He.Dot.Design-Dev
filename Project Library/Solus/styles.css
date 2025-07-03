@@ -19,3 +19,23 @@
     margin: 3rem;
   }
 }
+
+@layer character {
+  .character-body {
+    fill: white;
+  }
+
+  .character-eye {
+    fill: black;
+  }
+
+  .character-mouth {
+    stroke: black;
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  #bodyOr {
+    scale: 2;
+  }
+}

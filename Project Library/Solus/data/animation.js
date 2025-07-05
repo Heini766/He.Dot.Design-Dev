@@ -1,5 +1,6 @@
 import * as func from '../../../Code Library/functions.js';
 import * as time from '../../../Code Library/timingFunctions.js';
+import { mainAspect } from './properties.js';
 
 export function animateMove(node, duration, distance, direction) {
 
@@ -14,8 +15,10 @@ export function animateMove(node, duration, distance, direction) {
     }
     const elapsed = (performance.now() - start)/1000;
     const t = time.easeInOutQuad(Math.min(elapsed/duration, 1));
+
+    const newPosX = func.clamp(posX - t * distance * direction, -mainAspect.x/2 + node.getBBox().width, mainAspect.x/2 - node.getBBox().width)
     
-    node.setAttribute('transform', `scale(${scaleX} ${scaleY}) translate(${posX - t * distance * direction} ${posY})`)
+    node.setAttribute('transform', `scale(${scaleX} ${scaleY}) translate(${newPosX} ${posY})`)
     const stretchX = 1 + ( func.triangularWave(t) * distance * .01);
     const stretchY = 1/stretchX
     node.firstChild.style.scale = `${stretchX} ${stretchY}`;

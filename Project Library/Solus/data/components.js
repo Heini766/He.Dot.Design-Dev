@@ -10,14 +10,14 @@ const renCharacter = () => {
   const characterOrigin = ren.circle({class: 'origin character-body',r: 2, fill: 'yellow'})
   
   const body = ren.group({id: 'character-body', nodes: [base.el], transform: `scale(1 1) translate(0 ${-characterSize})`})
-  const character = ren.group({ id: 'character', nodes: [body.el, characterOrigin.el], transform: `scale(1 1) translate(${-characterSize/2} 0)` })
+  const character = ren.group({ id: 'character', nodes: [body.el], transform: `scale(1 1) translate(${-characterSize/2} 0)` })
   
   return character
   
 }
 const character = renCharacter();
 
-const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y/2} ${mainAspect.x} ${mainAspect.y}`,
+const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
 nodes: [character]
 })
 document.body.appendChild(mainDs.el);

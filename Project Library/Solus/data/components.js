@@ -1,10 +1,10 @@
 import * as func from '../../../Code Library/functions.js';
 import * as ren from '../../../Code Library/renderSvg.js';
 import { mainAspect } from "./properties.js";
+import { characterSize } from './properties.js';
 
 const renCharacter = () => {
-
-  const characterSize = 15;
+  
   const base = ren.rect({class: 'character-base', width: `${characterSize}`, height: `${characterSize}`})
 
   function renFace() {
@@ -19,7 +19,7 @@ const renCharacter = () => {
     const mouth = ren.path({ class: 'character-mouth', d:  `M${-eye.attr.r} 0 ${eye.attr.r} 0`});
     mouth.el.setAttribute('transform', `translate(0 ${eye.attr.r * 1.7})`)
 
-    const element = ren.group({ id: 'character-face', nodes: [eyeR, eyeL, mouth.el], transform: `translate(${characterSize/2} ${characterSize*.25})`});
+    const element = ren.group({ id: 'character-face', nodes: [eyeR, eyeL, mouth.el], transform: `translate(${characterSize*.55} ${characterSize*.25})`});
 
     return element
   }

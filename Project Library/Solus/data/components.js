@@ -9,8 +9,8 @@ const renCharacter = () => {
   
   const characterOrigin = ren.circle({class: 'origin character-body',r: 2, fill: 'yellow'})
   
-  const body = ren.group({id: 'character-body', nodes: [base.el], transform: `translate(${-characterSize/2} ${-characterSize})`})
-  const character = ren.group({id: 'character', nodes: [body.el, characterOrigin.el], transform:`scale(1.5 1)`})
+  const body = ren.group({id: 'character-body', nodes: [base.el], transform: `scale(1 1) translate(0 ${-characterSize})`})
+  const character = ren.group({id: 'character', nodes: [body.el, characterOrigin.el]})
   
   return character
   

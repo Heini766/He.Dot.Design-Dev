@@ -287,9 +287,9 @@ export function turn(el, offset) {
     extNumbers(elem.getAttribute('transform') || fallback);
 
   const [mainX, mainY] = getTransform(el);
-  const [childX, childY] = getTransform(el.firstChild);
+  const [scaleX, scaleY, childX, childY] = getTransform(el.firstChild);
   const displacement = offset * el.firstChild.getBBox().width;
 
   el.setAttribute('transform', `translate(${mainX + displacement} ${mainY})`);
-  el.firstChild.setAttribute('transform', `translate(${childX - displacement} ${childY})`);
+  el.firstChild.setAttribute('transform', `scale(1 1) translate(${childX - displacement} ${childY})`);
 } // Takes a node element that has a firstChildElement

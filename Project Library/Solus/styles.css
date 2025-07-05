@@ -24,6 +24,7 @@
   .character-base {
     fill: white;
     scale: 1 1;
+    rx: 1;
   }
 
   .character-eye {

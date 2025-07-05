@@ -18,7 +18,7 @@ export function animateMove(node, duration, distance, direction) {
     const newPosX = func.clamp(posX - t * distance * direction, -mainAspect.x/2 + node.getBBox().width, mainAspect.x/2 - node.getBBox().width)
     
     node.setAttribute('transform', `scale(${scaleX} ${scaleY}) translate(${newPosX} ${posY})`)
-    const stretchX = 1 + ( func.triangularWave(t) * distance * .01);
+    const stretchX = 1 + ( func.triangularWave(t) * distance * .005);
     const stretchY = 1/stretchX
     node.firstChild.style.scale = `${stretchX} ${stretchY}`;
 

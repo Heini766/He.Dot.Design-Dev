@@ -6,7 +6,6 @@ export function animateMove(node, duration, distance, direction) {
 
   let start, id;
   const [scaleX, scaleY, posX, posY] = func.extNumbers(node.getAttribute('transform'))
-  console.log(posX, posY)
 
   function animate() {
 

@@ -15,7 +15,7 @@
 @layer display {
   .main-display {
     background-color: hsl(0, 0%, 10%);
-    max-width: 600px;
+    max-width: 800px;
     margin: 3rem;
   }
 }
@@ -23,6 +23,7 @@
 @layer character {
   .character-base {
     fill: white;
+    scale: 1 1;
   }
 
   .character-eye {
@@ -33,5 +34,17 @@
     stroke: black;
     stroke-width: 1.5;
     fill: none;
+  }
+}
+
+@layer origins {
+  .origin {
+    cursor: pointer;
+    opacity: .5;
+    transition: scale .2s ease;
+
+    &:hover {
+      scale: 2;
+    }
   }
 }

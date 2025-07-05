@@ -159,7 +159,7 @@ export function calcLineAngle(point1, point2) {
 export function extNumbers(string) {
   const nums = string.match(/-?\d+\.?\d*/g).map(Number);
   return nums;
-}; // Returns an array containing the numbers
+}; // Returns an array containing the numbers in a string
 
 export function getTagElements(container, tagName) {
 
@@ -286,7 +286,6 @@ export function turn(el, offset) {
 
   const innerEl = el.firstChild;
   const size = innerEl.getBBox();
-  console.log(innerEl, size)
   const [posX, posY] = extNumbers(innerEl.getAttribute('transform') === null ? `0 0` : innerEl.getAttribute('transform'));
 
   const displacement = offset*size.width - size.width/2;

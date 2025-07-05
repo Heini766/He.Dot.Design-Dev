@@ -286,10 +286,14 @@ export function turn(el, offset) {
   const getTransform = (elem, fallback = '0 0') => 
     extNumbers(elem.getAttribute('transform') || fallback);
 
-  const [mainX, mainY] = getTransform(el);
-  const [scaleX, scaleY, childX, childY] = getTransform(el.firstChild);
+  const [mainSX, mainSY, mainX, mainY] = getTransform(el);
+  const [childSX, childSY, childX, childY] = getTransform(el.firstChild);
   const displacement = offset * el.firstChild.getBBox().width;
 
-  el.setAttribute('transform', `translate(${mainX + displacement} ${mainY})`);
+  el.setAttribute('transform', `scale(1 1) translate(${mainX + displacement} ${mainY})`);
   el.firstChild.setAttribute('transform', `scale(1 1) translate(${childX - displacement} ${childY})`);
 } // Takes a node element that has a firstChildElement
+
+export function triangularWave(x) {
+    return x < 0.5 ? 2 * x : 2 * (1 - x);
+}

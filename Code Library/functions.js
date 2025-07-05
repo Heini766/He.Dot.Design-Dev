@@ -283,14 +283,13 @@ export function normaliseNodes(data, view) {
 }; // data - a string containing path cords. view - dimensions of the graphics viewBox in the form of an object.
 
 export function turn(el, offset) {
+  const getTransform = (elem, fallback = '0 0') => 
+    extNumbers(elem.getAttribute('transform') || fallback);
 
-  const innerEl = el.firstChild;
-  const size = innerEl.getBBox();
-  const [posX, posY] = extNumbers(innerEl.getAttribute('transform') === null ? `0 0` : innerEl.getAttribute('transform'));
+  const [mainX, mainY] = getTransform(el);
+  const [childX, childY] = getTransform(el.firstChild);
+  const displacement = offset * el.firstChild.getBBox().width;
 
-  const displacement = offset*size.width - size.width/2;
-
-  el.setAttribute('transform', `translate(${displacement} 0)`);
-  innerEl.setAttribute('transform', `translate(${-displacement + posX} ${posY})`)
-  
+  el.setAttribute('transform', `translate(${mainX + displacement} ${mainY})`);
+  el.firstChild.setAttribute('transform', `translate(${childX - displacement} ${childY})`);
 } // Takes a node element that has a firstChildElement

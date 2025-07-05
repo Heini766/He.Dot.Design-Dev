@@ -21,7 +21,7 @@
 }
 
 @layer character {
-  .character-body {
+  .character-base {
     fill: white;
   }
 
@@ -33,9 +33,5 @@
     stroke: black;
     stroke-width: 1.5;
     fill: none;
-  }
-
-  #bodyOr {
-    scale: 2;
   }
 }

@@ -25,7 +25,7 @@ const renCharacter = () => {
   }
   const face = renFace()
 
-  function renderHair() {
+  function renHair() {
 
     const lenght = characterSize * .3;
     const hairTiltRight = func.getRadPoints(.875, lenght)
@@ -41,7 +41,7 @@ const renCharacter = () => {
     return element;
     
   }
-  const hair = renderHair()
+  const hair = renHair()
   
   const characterOrigin = ren.circle({class: 'origin character-body',r: 2, fill: 'yellow'})
   
@@ -53,8 +53,10 @@ const renCharacter = () => {
 }
 const character = renCharacter();
 
+const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
+
 const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [character]
+nodes: [ground, character]
 })
 document.body.appendChild(mainDs.el);
 

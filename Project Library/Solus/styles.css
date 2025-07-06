@@ -18,6 +18,11 @@
     max-width: 800px;
     margin: 3rem;
   }
+
+  .ground {
+    stroke: var(--primeColor);
+    stroke-width: calc(var(--strokeWidth)/2);
+  }
 }
 
 @layer character {

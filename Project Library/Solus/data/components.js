@@ -64,13 +64,11 @@ const renEnergyFrag = () => {
     
   }
 
-  const fragment = ren.path({ class:'energy-fragment',
-    d: `M${newCords[0].x} ${newCords[0].y} L${newCords[1].x} ${newCords[1].y} L${newCords[2].x} ${newCords[2].y} L${newCords[3].x} ${newCords[3].y}`
-  })
+  const fragment = ren.circle({ class: 'energy-fragment', r: mainAspect.y * .015})
   const fragmentGlow = fragment.el.cloneNode();
   fragmentGlow.classList.add('glow')
 
-  const element = ren.group({ class: 'energy-element', nodes: [fragmentGlow, fragment.el], transform: `translate(${Math.random() * mainAspect.x - mainAspect.x/2} ${Math.random() * -mainAspect.y*.025})` })
+  const element = ren.group({ class: 'energy-element', nodes: [fragmentGlow, fragment.el], transform: `translate(${Math.random() * mainAspect.x - mainAspect.x/2} ${Math.random() * - mainAspect.y*.05 - fragment.attr.r})` })
   
   return element;
 }

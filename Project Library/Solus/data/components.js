@@ -70,7 +70,6 @@ const renEnergyFrag = () => {
   
   return element;
 }
-const energyFrag = renEnergyFrag();
 
 const renEnergyBar = () => {
 
@@ -89,6 +88,6 @@ const energyBar = renEnergyBar();
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [energyBar, ground, character, energyFrag]
+nodes: [energyBar, ground, character]
 })
 document.body.appendChild(mainDs.el);

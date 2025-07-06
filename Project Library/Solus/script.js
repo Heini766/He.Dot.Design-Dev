@@ -36,22 +36,22 @@ function isEnergyInRange() {
   
 }
 
-let startingEnergy = .1 * Math.random() + .2;
+let currentEnergy = .1 * Math.random() + .2;
 function updateEnergy(offset) {
 
-  startingEnergy = func.clamp(offset, 0, 1);
+  currentEnergy = func.clamp(offset, 0, 1);
 
   const energyBar = document.getElementById('energyMeter');
   const getStartPos = func.extNumbers(energyBar.getAttribute('d'))
-  const newLength = energyBarLength * startingEnergy;
+  const newLength = energyBarLength * currentEnergy;
   const newPos = {x: -energyBarLength/2 + newLength, y: getStartPos[1]}
   
   energyBar.setAttribute('d', `M${getStartPos[0]} ${getStartPos[1]} L${newPos.x} ${getStartPos[1]}`)
-  energyBar.style.stroke = `hsl(${(1 - startingEnergy) * 7} ${(1 - startingEnergy) * 89} ${(startingEnergy) * 52 + 48})`
+  energyBar.style.stroke = `hsl(${(1 - currentEnergy) * 7} ${(1 - currentEnergy) * 89} ${(currentEnergy) * 52 + 48})`
   
 }
 
-updateEnergy(startingEnergy);
+updateEnergy(currentEnergy);
 
 let currentDirection = -1; // -1 = Rigth and 1 = Left
 window.addEventListener('keydown', (event) => {
@@ -64,7 +64,7 @@ window.addEventListener('keydown', (event) => {
     const characterFace = document.getElementById('character-face');
     const distance = character.getBBox().width * speed;
 
-    updateEnergy(startingEnergy - costOnMove)
+    updateEnergy(currentEnergy - costOnMove)
 
     if (newDirection !== currentDirection) {
       currentDirection = newDirection

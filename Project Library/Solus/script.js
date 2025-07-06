@@ -12,7 +12,6 @@ function isEnergyInRange() {
 
   const energyFragments = document.querySelectorAll('.energy-element');
   if (!energyFragments[0]) {
-    console.log('no energy')
     return
   }
   
@@ -66,7 +65,6 @@ window.addEventListener('keydown', (event) => {
     const distance = character.getBBox().width * speed;
 
     updateEnergy(startingEnergy - costOnMove)
-    console.log(startingEnergy)
 
     if (newDirection !== currentDirection) {
       currentDirection = newDirection

@@ -48,7 +48,8 @@ function updateEnergy(offset) {
   
 }
 
-updateEnergy(1);
+const startingEnergy = .1 * Math.random() + .2;
+updateEnergy(startingEnergy);
 
 let currentDirection = -1; // -1 = Rigth and 1 = Left
 window.addEventListener('keydown', (event) => {

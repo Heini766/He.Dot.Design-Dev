@@ -55,7 +55,7 @@ const character = renCharacter();
 
 const renEnergyFrag = () => {
 
-  const energy = .05;
+  const energy = Math.random() * .02 + .060;
 
   const fragment = ren.circle({ class: 'energy-fragment', r: mainAspect.y * .015})
   const fragmentGlow = fragment.el.cloneNode();

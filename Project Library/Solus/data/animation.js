@@ -1,6 +1,7 @@
 import * as func from '../../../Code Library/functions.js';
 import * as time from '../../../Code Library/timingFunctions.js';
 import { mainAspect } from './properties.js';
+import { isEnergyInRange } from '../script.js';
 
 export function animateMove(node, duration, distance, direction) {
 
@@ -21,6 +22,8 @@ export function animateMove(node, duration, distance, direction) {
     const stretchX = 1 + ( func.triangularWave(t) * distance * .005);
     const stretchY = 1/stretchX
     node.firstChild.style.scale = `${stretchX} ${stretchY}`;
+
+    isEnergyInRange()
 
     if (t < 1) {
       id = requestAnimationFrame(animate)

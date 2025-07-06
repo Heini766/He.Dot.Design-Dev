@@ -50,9 +50,17 @@
 @layer energy {
   .energy-fragment {
     fill: var(--primeColor);
+
+    transition-property: scale;
+    transition-duration: .2s;
+    transition-timing-function: ease;
   }
   .glow {
     filter: blur(2px);
+  }
+  .in-range {
+    cursor: pointer;
+    scale: 1.5;
   }
 }
 

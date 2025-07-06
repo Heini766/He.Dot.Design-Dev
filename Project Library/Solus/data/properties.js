@@ -6,7 +6,7 @@ export const energyBarLength  = mainAspect.x/2;
 // character attributes
 
 export const characterSize = 20;
-export const speed = 2;
+export const speed = 1;
 export const costOnMove = .005;
 
 // character attributes

@@ -8,7 +8,7 @@ function checkDirection(event) {
   return keyMap[event.key];
 }
 
-function isEnergyInRange() {
+export function isEnergyInRange() {
 
   const energyFragments = document.querySelectorAll('.energy-element');
   if (!energyFragments[0]) {
@@ -16,8 +16,10 @@ function isEnergyInRange() {
   }
   
   const character = document.getElementById('character');
+  const chDirection = func.extNumbers(character.firstChild.getAttribute('transform'))[2] < 0 ? -1 : 1;
+  
   const getCharacterPos = func.extNumbers(character.getAttribute('transform'));
-  const characterPos = {x: getCharacterPos[2], y: getCharacterPos[3]};
+  const characterPos = {x: getCharacterPos[2] + characterSize/2*chDirection, y: getCharacterPos[3]};
   
   const nodesInRange = [];
   energyFragments.forEach((el) => {
@@ -32,9 +34,22 @@ function isEnergyInRange() {
     
   })
 
-  return nodesInRange[0] ? nodesInRange : false
+  if (nodesInRange[0]) {
+    nodesInRange.forEach(el => {
+      el.childNodes.forEach(el => {
+        el.classList.add('in-range')
+      })
+    });
+  } else {
+    energyFragments.forEach(el => {
+      el.childNodes.forEach(el => {
+        el.classList.remove('in-range')
+      })
+    })
+  }
   
 }
+//isEnergyInRange()
 
 let currentEnergy = .1 * Math.random() + .2;
 function updateEnergy(offset) {

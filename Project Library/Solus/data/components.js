@@ -53,10 +53,36 @@ const renCharacter = () => {
 }
 const character = renCharacter();
 
+const renEnergyFrag = () => {
+
+  let newCords = [];
+
+  for (let i = 3; i >= 0; i -= 1) {
+
+    const rNum = .3*i/3 * Math.random() + (.6 + (.15 - i/3 * .15))
+    console.log(rNum)
+    const newCord = func.getRadPoints(rNum, i * mainAspect.y*.02)
+    newCords.push(newCord);
+    
+  }
+
+  const fragment = ren.path({ class:'energy-fragment',
+    d: `M${newCords[0].x} ${newCords[0].y} L${newCords[1].x} ${newCords[1].y} L${newCords[2].x} ${newCords[2].y} L${newCords[3].x} ${newCords[3].y}`
+  })
+  const fragmentGlow = fragment.el.cloneNode();
+  fragmentGlow.classList.add('glow')
+
+  const element = ren.group({ id: 'enrgy-fragment', nodes: [fragmentGlow, fragment.el] })
+  
+  return element;
+  
+}
+const energyFrag = renEnergyFrag();
+
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [ground, character]
+nodes: [ground, character, energyFrag]
 })
 document.body.appendChild(mainDs.el);
 

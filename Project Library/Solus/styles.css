@@ -47,6 +47,17 @@
   }
 }
 
+@layer energy {
+  .energy-fragment {
+    stroke: var(--primeColor);
+    stroke-width: calc(var(--strokeWidth)*2);
+    fill: none;
+  }
+  .glow {
+    filter: blur(2px);
+  }
+}
+
 @layer origins {
   .origin {
     cursor: pointer;

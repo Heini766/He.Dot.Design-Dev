@@ -35,9 +35,7 @@ function isEnergyInRange() {
 
   return nodesInRange[0] ? nodesInRange : false
   
-} //Check to see if a energy node is within range of the character
-
-console.log(isEnergyInRange())
+}
 
 let currentDirection = -1; // -1 = Rigth and 1 = Left
 window.addEventListener('keydown', (event) => {

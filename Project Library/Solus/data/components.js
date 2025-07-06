@@ -77,10 +77,24 @@ const renEnergyFrag = () => {
 }
 const energyFrag = renEnergyFrag();
 
+const renEnergyBar = () => {
+
+  const bg = ren.path({ class: 'energy-bar-bg',
+    d: `M${-mainAspect.x/4} ${mainAspect.y*.03} L${mainAspect.x/4} ${mainAspect.y*.03}`
+  })
+  const energyMeter = bg.el.cloneNode();
+  energyMeter.id = 'energyMeter';
+  energyMeter.classList.add('energy-meter')
+
+  const element = ren.group({id: 'energyBar', nodes: [bg.el, energyMeter]})
+  return element
+}
+const energyBar = renEnergyBar();
+
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [ground, character, energyFrag]
+nodes: [energyBar, ground, character, energyFrag]
 })
 document.body.appendChild(mainDs.el);
 

@@ -59,6 +59,21 @@
   }
 }
 
+@layer energyBar {
+
+  .energy-bar-bg {
+    stroke: var(--secondColor);
+    stroke-width: calc(var(--strokeWidth) * 2.25);
+    stroke-linecap: round;
+    fill: none;
+  }
+
+  .energy-meter {
+    stroke: var(--primeColor);
+  }
+  
+}
+
 @layer origins {
   .origin {
     cursor: pointer;

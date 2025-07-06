@@ -28,7 +28,6 @@ export function animateMove(node, duration, distance, direction) {
     if (t < 1) {
       id = requestAnimationFrame(animate)
     }
-    
   }
 
   id = requestAnimationFrame(animate)

@@ -49,7 +49,6 @@ export function isEnergyInRange() {
   }
   
 }
-//isEnergyInRange()
 
 let currentEnergy = .1 * Math.random() + .2;
 function updateEnergy(offset) {
@@ -91,6 +90,4 @@ window.addEventListener('keydown', (event) => {
     
     animateMove(character, .2, distance, newDirection)
   }
-
-  
 })

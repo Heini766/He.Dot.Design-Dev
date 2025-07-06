@@ -26,13 +26,18 @@
     scale: 1 1;
   }
 
+  .character-hair {
+    stroke: var(--primeColor);
+    stroke-width: calc(var(--strokeWidth)*1.2);
+  }
+
   .character-eye {
     fill: var(--primeColor);
   }
 
   .character-mouth {
     stroke: var(--primeColor);
-    stroke-width: 1.5;
+    stroke-width: var(--strokeWidth);
     fill: none;
   }
 }

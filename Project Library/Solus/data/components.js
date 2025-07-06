@@ -24,11 +24,28 @@ const renCharacter = () => {
     return element
   }
   const face = renFace()
-  
+
+  function renderHair() {
+
+    const lenght = characterSize * .3;
+    const hairTiltRight = func.getRadPoints(.875, lenght)
+    const hairTiltLeft = func.getRadPoints(.625, lenght)
+
+    const hair = ren.path({ class: 'character-hair' })
+    const [hairMiddle, hairRight, hairLeft] = Array(3).fill().map(() => hair.el.cloneNode()); // Creates three clones of hair
+    hairMiddle.setAttribute('d', `M0 0 0 ${-lenght}`)
+    hairRight.setAttribute('d', `M0 0 ${hairTiltRight.x} ${hairTiltRight.y}`)
+    hairLeft.setAttribute('d', `M0 0 ${hairTiltLeft.x} ${hairTiltLeft.y}`)
+
+    const element = ren.group({ id: 'characterHair', nodes: [hairLeft, hairRight, hairMiddle], transform: `translate(${characterSize/2} 0)`})
+    return element;
+    
+  }
+  const hair = renderHair()
   
   const characterOrigin = ren.circle({class: 'origin character-body',r: 2, fill: 'yellow'})
   
-  const body = ren.group({id: 'character-body', nodes: [base.el, face.el], transform: `scale(1 1) translate(0 ${-characterSize})`})
+  const body = ren.group({id: 'character-body', nodes: [hair.el, base.el, face.el], transform: `scale(1 1) translate(0 ${-characterSize})`})
   const character = ren.group({ id: 'character', nodes: [body.el], transform: `scale(1 1) translate(${-characterSize/2} 0)` })
   
   return character

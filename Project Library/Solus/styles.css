@@ -51,7 +51,7 @@
   .energy-fragment {
     cursor: pointer;
     stroke: var(--primeColor);
-    stroke-width: calc(var(--strokeWidth)*2);
+    stroke-width: calc(var(--strokeWidth)*1.5);
     fill: none;
   }
   .glow {

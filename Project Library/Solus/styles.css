@@ -49,9 +49,10 @@
 
 @layer energy {
   .energy-fragment {
-    fill: var(--primeColor);
+    fill: hsl(from var(--primeColor) h s calc(l -  25));
+    pointer-events: none;
 
-    transition-property: scale;
+    transition-property: scale, fill;
     transition-duration: .2s;
     transition-timing-function: ease;
   }
@@ -61,6 +62,9 @@
   .in-range {
     cursor: pointer;
     scale: 1.5;
+    fill: var(--primeColor);
+
+    pointer-events: all;
   }
 }
 

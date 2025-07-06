@@ -1,6 +1,7 @@
 import * as func from '../../../Code Library/functions.js';
 import * as ren from '../../../Code Library/renderSvg.js';
-import { mainAspect, characterSize, energyBarLength } from "./properties.js";
+import { mainAspect, characterSize, energyBarLength, currentEnergy } from "./properties.js";
+import { updateEnergy } from '../script.js';
 
 const renCharacter = () => {
   
@@ -54,21 +55,18 @@ const character = renCharacter();
 
 const renEnergyFrag = () => {
 
-  let newCords = [];
-
-  for (let i = 3; i >= 0; i -= 1) {
-
-    const rNum = .3*i/3 * Math.random() + (.6 + (.15 - i/3 * .15))
-    const newCord = func.getRadPoints(rNum, i * mainAspect.y*.02)
-    newCords.push(newCord);
-    
-  }
+  const energy = .05;
 
   const fragment = ren.circle({ class: 'energy-fragment', r: mainAspect.y * .015})
   const fragmentGlow = fragment.el.cloneNode();
   fragmentGlow.classList.add('glow')
 
   const element = ren.group({ class: 'energy-element', nodes: [fragmentGlow, fragment.el], transform: `translate(${Math.random() * mainAspect.x - mainAspect.x/2} ${Math.random() * - mainAspect.y*.05 - fragment.attr.r})` })
+
+  fragment.el.addEventListener('click', () => {
+    element.el.remove();
+    updateEnergy(currentEnergy.value + energy)
+  })
   
   return element;
 }
@@ -94,5 +92,3 @@ const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-
 nodes: [energyBar, ground, character, energyFrag]
 })
 document.body.appendChild(mainDs.el);
-
-//func.turn(document.getElementById('character'), 1)

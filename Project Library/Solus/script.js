@@ -1,7 +1,7 @@
 import * as comps from './data/components.js';
 import * as func from '../../Code Library/functions.js';
 import { animateMove } from './data/animation.js';
-import { characterSize, speed, costOnMove, energyBarLength } from './data/properties.js';
+import { characterSize, speed, costOnMove, energyBarLength, currentEnergy } from './data/properties.js';
 
 function checkDirection(event) {
   const keyMap = { a: 1, d: -1 };
@@ -50,22 +50,21 @@ export function isEnergyInRange() {
   
 }
 
-let currentEnergy = .1 * Math.random() + .2;
-function updateEnergy(offset) {
+export function updateEnergy(offset) {
 
-  currentEnergy = func.clamp(offset, 0, 1);
+  currentEnergy.value = func.clamp(offset, 0, 1);
 
   const energyBar = document.getElementById('energyMeter');
   const getStartPos = func.extNumbers(energyBar.getAttribute('d'))
-  const newLength = energyBarLength * currentEnergy;
+  const newLength = energyBarLength * currentEnergy.value;
   const newPos = {x: -energyBarLength/2 + newLength, y: getStartPos[1]}
   
   energyBar.setAttribute('d', `M${getStartPos[0]} ${getStartPos[1]} L${newPos.x} ${getStartPos[1]}`)
-  energyBar.style.stroke = `hsl(${(1 - currentEnergy) * 7} ${(1 - currentEnergy) * 89} ${(currentEnergy) * 52 + 48})`
+  energyBar.style.stroke = `hsl(${(1 - currentEnergy.value) * 7} ${(1 - currentEnergy.value) * 89} ${(currentEnergy.value) * 52 + 48})`
   
 }
 
-updateEnergy(currentEnergy);
+updateEnergy(currentEnergy.value);
 
 let currentDirection = -1; // -1 = Rigth and 1 = Left
 window.addEventListener('keydown', (event) => {
@@ -78,7 +77,7 @@ window.addEventListener('keydown', (event) => {
     const characterFace = document.getElementById('character-face');
     const distance = character.getBBox().width * speed;
 
-    updateEnergy(currentEnergy - costOnMove)
+    updateEnergy(currentEnergy.value - costOnMove)
 
     if (newDirection !== currentDirection) {
       currentDirection = newDirection

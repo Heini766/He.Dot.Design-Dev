@@ -45,6 +45,7 @@ function updateEnergy(offset) {
   const newPos = {x: -energyBarLength/2 + newLength, y: getStartPos[1]}
   
   energyBar.setAttribute('d', `M${getStartPos[0]} ${getStartPos[1]} L${newPos.x} ${getStartPos[1]}`)
+  energyBar.style.stroke = `hsl(${(1 - offset) * 7} ${(1 - offset) * 89} ${(offset) * 52 + 48})`
   
 }
 

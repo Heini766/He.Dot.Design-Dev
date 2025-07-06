@@ -14,7 +14,7 @@
 
 @layer display {
   .main-display {
-    background-color: hsl(0, 0%, 10%);
+    background-color: var(--bgColor);
     max-width: 800px;
     margin: 3rem;
   }
@@ -22,17 +22,16 @@
 
 @layer character {
   .character-base {
-    fill: white;
+    fill: var(--secondColor);
     scale: 1 1;
-    rx: 1;
   }
 
   .character-eye {
-    fill: black;
+    fill: var(--primeColor);
   }
 
   .character-mouth {
-    stroke: black;
+    stroke: var(--primeColor);
     stroke-width: 1.5;
     fill: none;
   }

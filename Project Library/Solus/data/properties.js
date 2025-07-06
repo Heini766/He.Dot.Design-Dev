@@ -6,5 +6,6 @@ export const characterSize = 15;
 
 createCustomProp({
   primeColor: 'white',
+  secondColor: 'black',
   bgColor: '#1f1f1f',
 })

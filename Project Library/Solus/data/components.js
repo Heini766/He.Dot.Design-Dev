@@ -60,7 +60,6 @@ const renEnergyFrag = () => {
   for (let i = 3; i >= 0; i -= 1) {
 
     const rNum = .3*i/3 * Math.random() + (.6 + (.15 - i/3 * .15))
-    console.log(rNum)
     const newCord = func.getRadPoints(rNum, i * mainAspect.y*.02)
     newCords.push(newCord);
     

@@ -1,7 +1,6 @@
 import * as func from '../../../Code Library/functions.js';
 import * as ren from '../../../Code Library/renderSvg.js';
-import { mainAspect } from "./properties.js";
-import { characterSize } from './properties.js';
+import { mainAspect, characterSize, energyBarLength } from "./properties.js";
 
 const renCharacter = () => {
   
@@ -80,7 +79,7 @@ const energyFrag = renEnergyFrag();
 const renEnergyBar = () => {
 
   const bg = ren.path({ class: 'energy-bar-bg',
-    d: `M${-mainAspect.x/4} ${mainAspect.y*.03} L${mainAspect.x/4} ${mainAspect.y*.03}`
+    d: `M${-energyBarLength/2} ${mainAspect.y*.03} L${energyBarLength/2} ${mainAspect.y*.03}`
   })
   const energyMeter = bg.el.cloneNode();
   energyMeter.id = 'energyMeter';

@@ -1,7 +1,7 @@
 import * as comps from './data/components.js';
 import * as func from '../../Code Library/functions.js';
 import { animateMove } from './data/animation.js';
-import { characterSize, speed } from './data/properties.js';
+import { characterSize, speed, energyBarLength } from './data/properties.js';
 
 function checkDirection(event) {
   const keyMap = { a: 1, d: -1 };
@@ -36,6 +36,19 @@ function isEnergyInRange() {
   return nodesInRange[0] ? nodesInRange : false
   
 }
+
+function updateEnergy(offset) {
+
+  const energyBar = document.getElementById('energyMeter');
+  const getStartPos = func.extNumbers(energyBar.getAttribute('d'))
+  const newLength = energyBarLength * offset;
+  const newPos = {x: -energyBarLength/2 + newLength, y: getStartPos[1]}
+  
+  energyBar.setAttribute('d', `M${getStartPos[0]} ${getStartPos[1]} L${newPos.x} ${getStartPos[1]}`)
+  
+}
+
+updateEnergy(1);
 
 let currentDirection = -1; // -1 = Rigth and 1 = Left
 window.addEventListener('keydown', (event) => {

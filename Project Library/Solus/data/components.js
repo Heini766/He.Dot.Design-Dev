@@ -9,15 +9,15 @@ const renCharacter = () => {
 
   function renFace() {
 
-    const eye = ren.circle({ class: 'character-eye', r: characterSize*.125})
+    const eye = ren.circle({ class: 'character-eye', r: characterSize*.1})
     const eyeR = eye.el.cloneNode();
     const eyeL = eye.el.cloneNode();
 
-    eyeR.setAttribute('transform', `translate(${-eye.attr.r * 1.2} 0)`)
-    eyeL.setAttribute('transform', `translate(${eye.attr.r * 1.2} 0)`)
+    eyeR.setAttribute('transform', `translate(${-eye.attr.r * 1.4} 0)`)
+    eyeL.setAttribute('transform', `translate(${eye.attr.r * 1.4} 0)`)
 
     const mouth = ren.path({ class: 'character-mouth', d:  `M${-eye.attr.r} 0 ${eye.attr.r} 0`});
-    mouth.el.setAttribute('transform', `translate(0 ${eye.attr.r * 1.7})`)
+    mouth.el.setAttribute('transform', `translate(0 ${eye.attr.r * 2})`)
 
     const element = ren.group({ id: 'character-face', nodes: [eyeR, eyeL, mouth.el], transform: `translate(${characterSize*.55} ${characterSize*.25})`});
 

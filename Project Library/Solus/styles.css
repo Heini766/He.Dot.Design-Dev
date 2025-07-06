@@ -49,6 +49,7 @@
 
 @layer energy {
   .energy-fragment {
+    cursor: pointer;
     stroke: var(--primeColor);
     stroke-width: calc(var(--strokeWidth)*2);
     fill: none;

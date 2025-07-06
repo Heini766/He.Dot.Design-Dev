@@ -8,6 +8,37 @@ function checkDirection(event) {
   return keyMap[event.key];
 }
 
+function isEnergyInRange() {
+
+  const energyFragments = document.querySelectorAll('.energy-element');
+  if (!energyFragments[0]) {
+    console.log('no energy')
+    return
+  }
+  
+  const character = document.getElementById('character');
+  const getCharacterPos = func.extNumbers(character.getAttribute('transform'));
+  const characterPos = {x: getCharacterPos[2], y: getCharacterPos[3]};
+  
+  const nodesInRange = [];
+  energyFragments.forEach((el) => {
+
+    const getEnergyPos = func.extNumbers(el.getAttribute('transform'));
+    const energyPos = {x: getEnergyPos[0], y: getEnergyPos[1]}
+    const distance = func.getDistance(characterPos, energyPos).euclideanDistance
+    
+    if (characterSize > distance) {
+      nodesInRange.push(el)
+    }
+    
+  })
+
+  return nodesInRange[0] ? nodesInRange : false
+  
+} //Check to see if a energy node is within range of the character
+
+console.log(isEnergyInRange())
+
 let currentDirection = -1; // -1 = Rigth and 1 = Left
 window.addEventListener('keydown', (event) => {
   

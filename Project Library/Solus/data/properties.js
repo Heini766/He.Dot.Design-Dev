@@ -7,6 +7,7 @@ export const characterSize = 20;
 createCustomProp({
   primeColor: 'white',
   secondColor: 'black',
+  accentColor: '#f2e111',
   bgColor: '#1f1f1f',
   strokeWidth: `${characterSize * .1}`,
 })

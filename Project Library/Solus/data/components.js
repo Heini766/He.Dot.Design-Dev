@@ -71,7 +71,7 @@ const renEnergyFrag = () => {
   const fragmentGlow = fragment.el.cloneNode();
   fragmentGlow.classList.add('glow')
 
-  const element = ren.group({ id: 'enrgy-fragment', nodes: [fragmentGlow, fragment.el], transform: `translate(${Math.random() * mainAspect.x - mainAspect.x/2} ${Math.random() * -mainAspect.y*.025})` })
+  const element = ren.group({ class: 'energy-element', nodes: [fragmentGlow, fragment.el], transform: `translate(${Math.random() * mainAspect.x - mainAspect.x/2} ${Math.random() * -mainAspect.y*.025})` })
   
   return element;
 }

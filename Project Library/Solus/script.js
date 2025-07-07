@@ -21,7 +21,6 @@ export function isEnergyInRange() {
   const getCharacterPos = func.extNumbers(character.getAttribute('transform'));
   const characterPos = {x: getCharacterPos[2] + characterSize/2*chDirection, y: getCharacterPos[3]};
   
-  const nodesInRange = [];
   energyFragments.forEach((el) => {
 
     const getEnergyPos = func.extNumbers(el.getAttribute('transform'));
@@ -29,24 +28,16 @@ export function isEnergyInRange() {
     const distance = func.getDistance(characterPos, energyPos).euclideanDistance
     
     if (characterSize > distance) {
-      nodesInRange.push(el)
-    }
-    
-  })
-
-  if (nodesInRange[0]) {
-    nodesInRange.forEach(el => {
       el.childNodes.forEach(el => {
         el.classList.add('in-range')
       })
-    });
-  } else {
-    energyFragments.forEach(el => {
+    } else {
       el.childNodes.forEach(el => {
         el.classList.remove('in-range')
       })
-    })
-  }
+    }
+    
+  })
   
 }
 

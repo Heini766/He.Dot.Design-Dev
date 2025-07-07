@@ -55,7 +55,7 @@ const character = renCharacter();
 
 const renEnergyFrag = () => {
 
-  const energy = Math.random() * .02 + .060;
+  const energy = Math.random() * .02 + .06;
 
   const fragment = ren.circle({ class: 'energy-fragment', r: mainAspect.y * .015})
   const fragmentGlow = fragment.el.cloneNode();
@@ -91,3 +91,8 @@ const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-
 nodes: [energyBar, ground, character]
 })
 document.body.appendChild(mainDs.el);
+
+for ( let i = 0; i < 3; i += 1) {
+  const newFrg = renEnergyFrag()
+  mainDs.el.appendChild(newFrg.el)
+}

@@ -1,6 +1,6 @@
 import * as comps from './data/components.js';
 import * as func from '../../Code Library/functions.js';
-import { animateMove } from './data/animation.js';
+import { animateEnergyBar, animateMove } from './data/animation.js';
 import { characterSize, speed, costOnMove, energyBarLength, currentEnergy } from './data/properties.js';
 
 function checkDirection(event) {
@@ -49,8 +49,9 @@ export function updateEnergy(offset) {
   const getStartPos = func.extNumbers(energyBar.getAttribute('d'))
   const newLength = energyBarLength * currentEnergy.value;
   const newPos = {x: -energyBarLength/2 + newLength, y: getStartPos[1]}
-  
-  energyBar.setAttribute('d', `M${getStartPos[0]} ${getStartPos[1]} L${newPos.x} ${getStartPos[1]}`)
+
+  animateEnergyBar(energyBar, .2, getStartPos, newPos);
+
   energyBar.style.stroke = `hsl(${(1 - currentEnergy.value) * 7} ${(1 - currentEnergy.value) * 89} ${(currentEnergy.value) * 52 + 48})`
   
 }
@@ -68,8 +69,6 @@ window.addEventListener('keydown', (event) => {
     const characterFace = document.getElementById('character-face');
     const distance = character.getBBox().width * speed;
 
-    updateEnergy(currentEnergy.value - costOnMove)
-
     if (newDirection !== currentDirection) {
       currentDirection = newDirection
       func.turn(character, currentDirection)
@@ -77,7 +76,7 @@ window.addEventListener('keydown', (event) => {
       const offset = newDirection < 0 ? .55 : .45;
       characterFace.setAttribute('transform', `translate(${characterSize * offset} ${faceTrans[1]})`)
     }
-    
     animateMove(character, .2, distance, newDirection)
+    updateEnergy(currentEnergy.value - costOnMove)
   }
 })

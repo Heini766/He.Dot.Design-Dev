@@ -33,3 +33,30 @@ export function animateMove(node, duration, distance, direction) {
   id = requestAnimationFrame(animate)
   
 }
+
+export function animateEnergyBar(node, duration, cord1, newCord) {
+
+  let start, id;
+
+  const currentX = func.extNumbers(node.getAttribute('d'))[2];
+  const offset = newCord.x - currentX;
+
+  function animate() {
+
+    if (start === undefined) {
+      start = performance.now();
+    }
+    const elapsed = (performance.now() - start)/1000;
+    const t = elapsed/duration;
+
+    node.setAttribute('d', `M${cord1[0]} ${cord1[1]} L${currentX + t * offset} ${cord1[1]}`)
+
+    if (t < 1) {
+      id =requestAnimationFrame(animate)
+    }
+    
+  }
+
+  id = requestAnimationFrame(animate)
+  
+}

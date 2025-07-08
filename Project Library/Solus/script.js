@@ -56,7 +56,6 @@ export function updateEnergy(offset) {
   
 }
 
-
 let currentDirection = -1; // -1 = Rigth and 1 = Left
 window.addEventListener('keydown', (event) => {
   

@@ -79,6 +79,8 @@ const renEnergyBar = () => {
   const energyMeter = bg.el.cloneNode();
   energyMeter.id = 'energyMeter';
   energyMeter.classList.add('energy-meter')
+  energyMeter.setAttribute('d', `M${-energyBarLength/2} ${mainAspect.y*.03} L${-energyBarLength/2 + currentEnergy.value * energyBarLength} ${mainAspect.y*.03}`)
+  energyMeter.style.stroke = `hsl(${(1 - currentEnergy.value) * 7} ${(1 - currentEnergy.value) * 89} ${(currentEnergy.value) * 52 + 48})`
 
   const element = ren.group({id: 'energyBar', nodes: [bg.el, energyMeter]})
   return element

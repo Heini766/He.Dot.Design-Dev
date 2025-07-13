@@ -58,6 +58,15 @@
     fill: var(--primeColor);
     opacity: .3;
     cursor: pointer;
+
+    transition-property: scale, opacity;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+    
+    &:hover {
+      scale: 1.2;
+      opacity: 1;
+    }
   }
   
 }

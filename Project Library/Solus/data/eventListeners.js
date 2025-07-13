@@ -45,7 +45,7 @@ export function addAimHandler(display, targetNode, parent) {
   const onMouseDown = () => {
 
     const { getRelativePosition, calcLineAngle, clamp, getDistance, getRadPoints, extNumbers } = func;
-    const maxDistance = props.mainAspect.y * .1;
+    const maxDistance = mainAspect.y * .1;
 
     const [parentX, parentY] = extNumbers(parent.getAttribute('transform'))
     const [targetX, targetY] = extNumbers(targetNode.getAttribute('transform'))
@@ -82,7 +82,9 @@ window.addEventListener('graphicsRendered', () => {
   const moveController = document.getElementById('aimMoveController');
   const mainDs = document.getElementById('mainDisplay')
   const aimController = document.getElementById('aimController')
+  const aimToggle = document.getElementById('aimToggle')
 
   moveController.addEventListener('mousedown', addControllerMoveHandler(moveController, mainDs, mainAspect, aimController))
+  aimToggle.addEventListener('mousedown', addAimHandler(mainDs, aimToggle, aimController))
   
 }) // triggers only once all the component elements have rendered.

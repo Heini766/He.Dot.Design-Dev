@@ -64,9 +64,10 @@ window.addEventListener('keydown', (event) => {
   
   const newDirection = checkDirection(event);
 
-  if (newDirection) {
+  const character = document.getElementById('character') ? document.getElementById('character') : undefined;
 
-    const character = document.getElementById('character');
+  if (newDirection && character) {
+
     const characterFace = document.getElementById('character-face');
     const distance = character.getBBox().width * speed;
 

@@ -47,6 +47,21 @@
   }
 }
 
+@layer aim-controller {
+
+  .aim-toggle {
+    fill: var(--primeColor);
+    cursor: pointer;
+  }
+
+  .aim-move-controller {
+    fill: var(--primeColor);
+    opacity: .3;
+    cursor: pointer;
+  }
+  
+}
+
 @layer energy {
   .energy-fragment {
     fill: hsl(from var(--primeColor) h s calc(l -  25));

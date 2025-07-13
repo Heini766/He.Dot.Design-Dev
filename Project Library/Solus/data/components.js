@@ -89,17 +89,34 @@ const energyBar = renEnergyBar();
 
 const renAimController = () => {
 
-  
+  const toggleSize = characterSize * .75;
+  const toggleMoveSize = toggleSize/2;
 
-  const element = ren.group({ id: 'aimController', nodes: [] })
+  const renToggle = () => {
+
+    const base = ren.rect( {class: 'aim-toggle', width: toggleSize, height: toggleSize, x: -toggleSize/2, y: -toggleSize/2})
+    const element = ren.group( {id: 'aimToggle', nodes: [base.el]} )
+    return element
+    
+  }
+  const renMoveController = () => {
+
+    const base = ren.rect( {class: 'aim-move-controller', width: toggleMoveSize, height: toggleMoveSize, x: -toggleMoveSize/2, y: -toggleMoveSize/2} );
+    const element = ren.group( {id: 'aimMoveController', nodes: [base.el], transform: `translate(${toggleSize} ${-toggleMoveSize/2})`} )
+    return element;
+    
+  }
+
+  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, renMoveController().el] })
   return element
   
 }
+const aimController = renAimController();
 
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [energyBar, ground, character]
+nodes: [energyBar, ground, character, aimController]
 })
 document.body.appendChild(mainDs.el);
 

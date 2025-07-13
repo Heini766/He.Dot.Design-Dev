@@ -45,14 +45,17 @@ export function updateEnergy(offset) {
 
   currentEnergy.value = func.clamp(offset, 0, 1);
 
-  const energyBar = document.getElementById('energyMeter');
-  const getStartPos = func.extNumbers(energyBar.getAttribute('d'))
-  const newLength = energyBarLength * currentEnergy.value;
-  const newPos = {x: -energyBarLength/2 + newLength, y: getStartPos[1]}
+  const energyBar = document.getElementById('energyMeter') ? document.getElementById('energyMeter') : undefined;
 
-  animateEnergyBar(energyBar, .2, getStartPos, newPos);
+  if (energyBar) {
+    const getStartPos = func.extNumbers(energyBar.getAttribute('d'))
+    const newLength = energyBarLength * currentEnergy.value;
+    const newPos = {x: -energyBarLength/2 + newLength, y: getStartPos[1]}
 
-  energyBar.style.stroke = `hsl(${(1 - currentEnergy.value) * 7} ${(1 - currentEnergy.value) * 89} ${(currentEnergy.value) * 52 + 48})`
+    animateEnergyBar(energyBar, .2, getStartPos, newPos);
+
+    energyBar.style.stroke = `hsl(${(1 - currentEnergy.value) * 7} ${(1 - currentEnergy.value) * 89} ${(currentEnergy.value) * 52 + 48})`
+  }
   
 }
 
@@ -61,9 +64,10 @@ window.addEventListener('keydown', (event) => {
   
   const newDirection = checkDirection(event);
 
-  if (newDirection) {
+  const character = document.getElementById('character') ? document.getElementById('character') : undefined;
 
-    const character = document.getElementById('character');
+  if (newDirection && character) {
+
     const characterFace = document.getElementById('character-face');
     const distance = character.getBBox().width * speed;
 

@@ -2,6 +2,9 @@ import * as func from '../../../Code Library/functions.js';
 import * as ren from '../../../Code Library/renderSvg.js';
 import { mainAspect, characterSize, energyBarLength, currentEnergy } from "./properties.js";
 import { updateEnergy } from '../script.js';
+import { addControllerMoveHandler, addAimHandler } from './eventListeners.js';
+
+const mainDs = ren.svg({ id: 'mainDisplay', class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}` })
 
 const renCharacter = () => {
   
@@ -87,14 +90,42 @@ const renEnergyBar = () => {
 }
 const energyBar = renEnergyBar();
 
+const renAimController = () => {
+
+  const size = characterSize * .9;
+  const toggleMoveSize = size/2;
+
+  const renToggle = () => {
+
+    const base = ren.rect( {class: 'aim-toggle', width: size, height: size, x: -size/2, y: -size/2})
+    const element = ren.group( {id: 'aimToggle', nodes: [base.el], transform: `translate(0 0)`} )
+    return element
+    
+  }
+  const renMoveController = () => {
+
+    const base = ren.rect( {class: 'aim-move-controller', width: toggleMoveSize, height: toggleMoveSize, x: -toggleMoveSize/2, y: -toggleMoveSize/2} );
+    const element = ren.group( {id: 'aimMoveController', nodes: [base.el], transform: `translate(${size} ${-toggleMoveSize/2})`} )
+    return element;
+    
+  }
+  const moveController = renMoveController().el;
+
+  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, moveController], transform: `translate(0 ${-mainAspect.y/2}) scale(1)` })
+
+  return element
+}
+const aimController = renAimController().el;
+
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
-const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [energyBar, ground, character]
+
+const graphics = [ground.el, aimController, character.el, energyBar.el];
+
+graphics.forEach((el) => {
+  mainDs.el.appendChild(el)
 })
+
 document.body.appendChild(mainDs.el);
 
-for ( let i = 0; i < 3; i += 1) {
-  const newFrg = renEnergyFrag()
-  mainDs.el.appendChild(newFrg.el)
-}
+window.dispatchEvent(new Event('graphicsRendered'));

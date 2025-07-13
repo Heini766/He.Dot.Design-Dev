@@ -47,6 +47,43 @@
   }
 }
 
+@layer aim-controller {
+
+  .aim-toggle {
+    fill: var(--primeColor);
+    cursor: pointer;
+    stroke-width: 0;
+    stroke: var(--primeColor);
+    stroke-linejoin: round;
+
+    transition-property: stroke-width;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+
+    &:hover {
+      stroke-width: 2;
+      stroke: var(--primeColor);
+    }
+    
+  }
+
+  .aim-move-controller {
+    fill: var(--primeColor);
+    opacity: .3;
+    cursor: pointer;
+
+    transition-property: scale, opacity;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+    
+    &:hover {
+      scale: 1.2;
+      opacity: 1;
+    }
+  }
+  
+}
+
 @layer energy {
   .energy-fragment {
     fill: hsl(from var(--primeColor) h s calc(l -  25));

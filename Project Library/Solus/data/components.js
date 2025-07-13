@@ -4,7 +4,7 @@ import { mainAspect, characterSize, energyBarLength, currentEnergy } from "./pro
 import { updateEnergy } from '../script.js';
 import { addControllerMoveHandler, addAimHandler } from './eventListeners.js';
 
-const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}` })
+const mainDs = ren.svg({ id: 'mainDisplay', class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}` })
 
 const renCharacter = () => {
   

@@ -1,4 +1,5 @@
 import * as func from '../../../Code Library/functions.js'
+import { mainAspect } from './properties.js';
 
 export function addControllerMoveHandler(node, display, mainAspect, targetNode) {
 
@@ -78,6 +79,10 @@ export function addAimHandler(display, targetNode, parent) {
 
 window.addEventListener('graphicsRendered', () => {
 
-  console.log(document.getElementById('aimToggle'))
+  const moveController = document.getElementById('aimMoveController');
+  const mainDs = document.getElementById('mainDisplay')
+  const aimController = document.getElementById('aimController')
+
+  moveController.addEventListener('mousedown', addControllerMoveHandler(moveController, mainDs, mainAspect, aimController))
   
 }) // triggers only once all the component elements have rendered.

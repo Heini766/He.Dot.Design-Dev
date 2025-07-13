@@ -111,21 +111,21 @@ const renAimController = () => {
   }
   const moveController = renMoveController().el;
 
-  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, moveController] })
-
-  moveController.addEventListener('mousedown', addControllerMoveHandler(moveController, mainDs.el, mainAspect, element.el))
+  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, moveController], transform: `translate(0 0) scale(1)` })
 
   return element
 }
-const aimController = renAimController();
+const aimController = renAimController().el;
 
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 
-const graphics = [ground.el, aimController.el];
+const graphics = [ground.el, aimController];
 
 graphics.forEach((el) => {
   mainDs.el.appendChild(el)
 })
 
 document.body.appendChild(mainDs.el);
+
+window.dispatchEvent(new Event('graphicsRendered'));

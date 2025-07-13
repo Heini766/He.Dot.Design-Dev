@@ -120,7 +120,7 @@ const aimController = renAimController().el;
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 
-const graphics = [ground.el, aimController, character.el];
+const graphics = [ground.el, aimController, character.el, energyBar.el];
 
 graphics.forEach((el) => {
   mainDs.el.appendChild(el)

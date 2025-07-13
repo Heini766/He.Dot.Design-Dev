@@ -58,7 +58,7 @@ export function addAimHandler(display, targetNode, parent) {
       const { x, y } = getRadPoints(degNor/360, distance)
       const norTrans = distance/maxDistance
 
-      const transform = `translate(${-x + targetX} ${Math.max(-y + targetY, targetY)}) scale(${1 - norTrans * .75}) rotate(${norTrans * 45})`
+      const transform = `translate(${-x + targetX} ${Math.max(-y + targetY, targetY)}) scale(${1 - norTrans * .25}) rotate(${norTrans * 45})`
 
       targetNode.setAttribute('transform', transform)
       

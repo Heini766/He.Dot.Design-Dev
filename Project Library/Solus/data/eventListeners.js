@@ -56,8 +56,9 @@ export function addAimHandler(display, targetNode, parent) {
       const { degNor } = calcLineAngle(curRelPos, {x: parentX, y: parentY})
       const distance = clamp(getDistance(curRelPos, {x: parentX, y: parentY}).euclideanDistance, 0, maxDistance)
       const { x, y } = getRadPoints(degNor/360, distance)
+      const norTrans = distance/maxDistance
 
-      const transform = `translate(${-x + targetX} ${Math.max(-y + targetY, targetY)})`
+      const transform = `translate(${-x + targetX} ${Math.max(-y + targetY, targetY)}) scale(${1 - norTrans * .75}) rotate(${norTrans * 45})`
 
       targetNode.setAttribute('transform', transform)
       

@@ -33,24 +33,15 @@ export function getPosOnLine(pos1, pos2, offset) {
 
 export function getRelativePosition(event, object) {
 
-  const objectData = object.getBoundingClientRect();
-  const objectPos = {x: objectData.x, y: objectData.y};
-  const objectSize = {width: objectData.width, height: objectData.height};
-  const cursorPos = {x: event.clientX, y: event.clientY};
-
-  const cursorRelativeOffset = {
-    x: cursorPos.x - objectPos.x,
-    y: cursorPos.y - objectPos.y
-  };
-
-  const cursorContextPos = {
-    x: cursorRelativeOffset.x / objectSize.width,
-    y: cursorRelativeOffset.y / objectSize.height
-  };
-
-  return cursorContextPos;
+  const { x, y, width, height } = object.getBoundingClientRect();
+  const [vbX, vbY, vbWidth, vbHeight] = extNumbers(object.getAttribute('viewBox'));
   
-}; // Returns the relative position of the cursor to a node object as a percentage
+  return {
+    x: (event.clientX - x) / width * vbWidth + vbX,
+    y: (event.clientY - y) / height * vbHeight + vbY
+  };
+
+} // Returns the relative position of the cursor to a SVG node object
 
 export function getPositionOffset(pos1, pos2)  {
   return {x: pos1.x - pos2.x, y: pos1.y - pos2.y};

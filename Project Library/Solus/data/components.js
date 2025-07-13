@@ -87,6 +87,15 @@ const renEnergyBar = () => {
 }
 const energyBar = renEnergyBar();
 
+const renAimController = () => {
+
+  
+
+  const element = ren.group({ id: 'aimController', nodes: [] })
+  return element
+  
+}
+
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,

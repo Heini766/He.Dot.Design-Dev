@@ -45,7 +45,7 @@ export function addAimHandler(display, targetNode, parent) {
   const onMouseDown = () => {
 
     const { getRelativePosition, calcLineAngle, clamp, getDistance, getRadPoints, extNumbers } = func;
-    const maxDistance = mainAspect.y * .1;
+    const maxDistance = mainAspect.y * .2;
 
     const [parentX, parentY] = extNumbers(parent.getAttribute('transform'))
     const [targetX, targetY] = extNumbers(targetNode.getAttribute('transform'))

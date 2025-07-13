@@ -75,3 +75,9 @@ export function addAimHandler(display, targetNode, parent) {
   targetNode.addEventListener('mousedown', onMouseDown)
   
 }
+
+window.addEventListener('graphicsRendered', () => {
+
+  console.log(document.getElementById('aimToggle'))
+  
+}) // triggers only once all the component elements have rendered.

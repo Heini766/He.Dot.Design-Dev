@@ -92,20 +92,20 @@ const energyBar = renEnergyBar();
 
 const renAimController = () => {
 
-  const toggleSize = characterSize * .75;
-  const toggleMoveSize = toggleSize/2;
+  const size = characterSize * .9;
+  const toggleMoveSize = size/2;
 
   const renToggle = () => {
 
-    const base = ren.rect( {class: 'aim-toggle', width: toggleSize, height: toggleSize, x: -toggleSize/2, y: -toggleSize/2})
-    const element = ren.group( {id: 'aimToggle', nodes: [base.el]} )
+    const base = ren.rect( {class: 'aim-toggle', width: size, height: size, x: -size/2, y: -size/2})
+    const element = ren.group( {id: 'aimToggle', nodes: [base.el], transform: `translate(0 0)`} )
     return element
     
   }
   const renMoveController = () => {
 
     const base = ren.rect( {class: 'aim-move-controller', width: toggleMoveSize, height: toggleMoveSize, x: -toggleMoveSize/2, y: -toggleMoveSize/2} );
-    const element = ren.group( {id: 'aimMoveController', nodes: [base.el], transform: `translate(${toggleSize} ${-toggleMoveSize/2})`} )
+    const element = ren.group( {id: 'aimMoveController', nodes: [base.el], transform: `translate(${size} ${-toggleMoveSize/2})`} )
     return element;
     
   }

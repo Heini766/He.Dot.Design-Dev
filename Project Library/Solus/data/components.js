@@ -2,6 +2,9 @@ import * as func from '../../../Code Library/functions.js';
 import * as ren from '../../../Code Library/renderSvg.js';
 import { mainAspect, characterSize, energyBarLength, currentEnergy } from "./properties.js";
 import { updateEnergy } from '../script.js';
+import { addControllerMoveHandler, addAimHandler } from './eventListeners.js';
+
+const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}` })
 
 const renCharacter = () => {
   
@@ -106,16 +109,23 @@ const renAimController = () => {
     return element;
     
   }
+  const moveController = renMoveController().el;
 
-  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, renMoveController().el] })
+  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, moveController] })
+
+  moveController.addEventListener('mousedown', addControllerMoveHandler(moveController, mainDs.el, mainAspect, element.el))
+
   return element
-  
 }
 const aimController = renAimController();
 
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
-const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [ground, aimController]
+
+const graphics = [ground.el, aimController.el];
+
+graphics.forEach((el) => {
+  mainDs.el.appendChild(el)
 })
+
 document.body.appendChild(mainDs.el);

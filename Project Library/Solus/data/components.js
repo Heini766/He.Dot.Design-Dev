@@ -111,7 +111,7 @@ const renAimController = () => {
   }
   const moveController = renMoveController().el;
 
-  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, moveController], transform: `translate(0 0) scale(1)` })
+  const element = ren.group({ id: 'aimController', nodes: [renToggle().el, moveController], transform: `translate(0 ${-mainAspect.y/2}) scale(1)` })
 
   return element
 }

@@ -116,11 +116,6 @@ const aimController = renAimController();
 const ground = ren.path({class: 'ground', d: `M${-mainAspect.x/2} 0 ${mainAspect.x} 0`})
 
 const mainDs = ren.svg({ class: 'main-display', viewBox: `${-mainAspect.x/2} ${-mainAspect.y * .95} ${mainAspect.x} ${mainAspect.y}`,
-nodes: [energyBar, ground, character, aimController]
+nodes: [ground, aimController]
 })
 document.body.appendChild(mainDs.el);
-
-for ( let i = 0; i < 3; i += 1) {
-  const newFrg = renEnergyFrag()
-  mainDs.el.appendChild(newFrg.el)
-}

@@ -60,3 +60,13 @@ export function animateEnergyBar(node, duration, cord1, newCord) {
   id = requestAnimationFrame(animate)
   
 }
+
+export function animateBodyOnAim(offset, direction) {
+
+  const character =  document.getElementById('character');
+  const body = character.firstChild;
+  const bodySize = body.getBBox()
+
+  console.log(direction)
+  
+}

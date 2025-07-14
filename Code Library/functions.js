@@ -281,9 +281,9 @@ export function turn(el, offset) {
   const [childSX, childSY, childX, childY] = getTransform(el.firstChild);
   const displacement = offset * el.firstChild.getBBox().width;
 
-  el.setAttribute('transform', `scale(1 1) translate(${mainX + displacement} ${mainY})`);
-  el.firstChild.setAttribute('transform', `scale(1 1) translate(${childX - displacement} ${childY})`);
-} // Takes a node element that has a firstChildElement
+  el.setAttribute('transform', `scale(${mainSX} ${mainSY}) translate(${mainX + displacement} ${mainY})`);
+  el.firstChild.setAttribute('transform', `scale(${childSX} ${childSY}) translate(${childX - displacement} ${childY})`);
+} // Takes a node element that has a firstChildElement. offset is a value from -1 to 1. -1 = Right 1 = Left
 
 export function triangularWave(x) {
     return x < 0.5 ? 2 * x : 2 * (1 - x);

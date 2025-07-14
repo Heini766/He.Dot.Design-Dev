@@ -1,5 +1,6 @@
 import * as func from '../../../Code Library/functions.js'
 import { mainAspect } from './properties.js';
+import { animateBodyOnAim } from './animation.js';
 
 export function addControllerMoveHandler(node, display, mainAspect, targetNode) {
 
@@ -50,6 +51,8 @@ export function addAimHandler(display, targetNode, parent) {
     const [parentX, parentY] = extNumbers(parent.getAttribute('transform'))
     const [targetX, targetY] = extNumbers(targetNode.getAttribute('transform'))
 
+    const directionCheck = checkDirection(document.getElementById('character-body'))
+
     const onMouseMove = (event) => {
 
       const curRelPos = getRelativePosition(event, display);
@@ -59,8 +62,9 @@ export function addAimHandler(display, targetNode, parent) {
       const norTrans = distance/maxDistance
 
       const transform = `translate(${-x + targetX} ${Math.max(-y + targetY, targetY)}) scale(${1 - norTrans * .25}) rotate(${norTrans * 45})`
-
       targetNode.setAttribute('transform', transform)
+
+      animateBodyOnAim(x/distance, directionCheck)
       
     }
 
@@ -75,6 +79,13 @@ export function addAimHandler(display, targetNode, parent) {
   }
 
   targetNode.addEventListener('mousedown', onMouseDown)
+  
+}
+
+function checkDirection(node) {
+
+  const extTrans = func.extNumbers(node.getAttribute('transform'))
+  return extTrans[extTrans.length-2] >= 0
   
 }
 

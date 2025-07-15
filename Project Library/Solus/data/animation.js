@@ -61,12 +61,22 @@ export function animateEnergyBar(node, duration, cord1, newCord) {
   
 }
 
-export function animateBodyOnAim(offset, direction) {
+export function animateBodyOnAim(direction, drawOffset) {
 
   const character =  document.getElementById('character');
   const body = character.firstChild;
   const bodySize = body.getBBox()
 
-  console.log(direction)
+  const stretchY = 1 - drawOffset * .25;
+  const stretchX = 1/stretchY;
+
+  body.style.scale = `${stretchX} ${stretchY}`;
+
+  const onMouseUp = () => {
+    body.style.scale = `1`;
+    window.removeEventListener('mouseup', onMouseUp)
+  }
+
+  window.addEventListener('mouseup', onMouseUp)
   
 }

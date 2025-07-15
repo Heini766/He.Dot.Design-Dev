@@ -64,7 +64,7 @@ export function addAimHandler(display, targetNode, parent) {
       const transform = `translate(${-x + targetX} ${Math.max(-y + targetY, targetY)}) scale(${1 - norTrans * .25}) rotate(${norTrans * 45})`
       targetNode.setAttribute('transform', transform)
 
-      animateBodyOnAim(x/distance, directionCheck)
+      animateBodyOnAim(directionCheck, distance/maxDistance)
       
     }
 

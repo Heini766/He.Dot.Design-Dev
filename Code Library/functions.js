@@ -273,18 +273,29 @@ export function normaliseNodes(data, view) {
   
 }; // data - a string containing path cords. view - dimensions of the graphics viewBox in the form of an object.
 
-export function turn(el, offset) {
-  const getTransform = (elem, fallback = '0 0') => 
-    extNumbers(elem.getAttribute('transform') || fallback);
-
-  const [mainSX, mainSY, mainX, mainY] = getTransform(el);
-  const [childSX, childSY, childX, childY] = getTransform(el.firstChild);
-  const displacement = offset * el.firstChild.getBBox().width;
-
-  el.setAttribute('transform', `scale(${mainSX} ${mainSY}) translate(${mainX + displacement} ${mainY})`);
-  el.firstChild.setAttribute('transform', `scale(${childSX} ${childSY}) translate(${childX - displacement} ${childY})`);
-} // Takes a node element that has a firstChildElement. offset is a value from -1 to 1. -1 = Right 1 = Left
-
 export function triangularWave(x) {
     return x < 0.5 ? 2 * x : 2 * (1 - x);
 }
+
+export function moveOrigin(node, offset) {
+
+  if (node.tagName !== 'g' || node.firstChild.tagName !== 'g') {
+    console.log('ERROR: parent node and first child node must be group elements')
+    return
+  }
+
+  const isValid = offset && typeof offset === 'object' && !Array.isArray(offset) && Object.values(offset).every(el => typeof el === 'number');
+  if (!isValid) {
+    console.log(`ERROR: given offset is formatted incorrectly`);
+    console.log(offset)
+    return
+  }
+
+  const {width, height} = node.firstChild.getBBox();
+
+  node.firstChild.setAttribute('transform', `translate(${width * -offset.x} ${height * -offset.y})`)
+
+  const nodePos = node.getAttribute('transform') ? func.extNumbers(node.getAttribute('transform')) : [0, 0]
+  node.setAttribute('transform', `translate(${width * offset.x + nodePos[0]} ${height * offset.y + nodePos[1]})`)
+  
+} // takes a parent group node with a firstChild group node

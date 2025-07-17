@@ -235,44 +235,6 @@ export function checkOverlap(container, shape, size, name) {
   
 }; // Returns an array containing two shapes that overlap. size - needs to be a number not a string. name - specify a class name
 
-export function normaliseNodes(data, view) {
-
-  const viewOffset = {x: view.x/2, y: view.y/2};
-  const extedData = extNumbers(data);
-  let normalisedData = [];
-  let temp = {};
-
-  extedData.forEach((el, index) => {
-    if (index % 2 === 0) {  // Even index
-      temp.x = el - viewOffset.x;
-    } else {  // Odd index
-      temp.y = el - viewOffset.y;
-      normalisedData.push({...temp});  // Push a copy
-    }
-  });
-
-  let newString = ``;
-  
-  normalisedData.forEach((el, index) => {
-    
-    let newCordData
-    
-    if (index === 0) {
-      newCordData = `M${el.x} ${el.y}`;
-    } else if (index === normalisedData.length - 1) {
-      newCordData = ` L${el.x} ${el.y} Z`;
-    } else {
-      newCordData = ` L${el.x} ${el.y}`;
-    };
-
-    newString += newCordData;
-    
-  })
-
-  return newString;
-  
-}; // data - a string containing path cords. view - dimensions of the graphics viewBox in the form of an object.
-
 export function triangularWave(x) {
     return x < 0.5 ? 2 * x : 2 * (1 - x);
 }

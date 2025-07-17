@@ -11,7 +11,7 @@ export function renCharacter(size) {
 
   const renBody = () => {
 
-    const base = ren.rect({class: 'solus-base', width: size, height: size})
+    const base = ren.rect({id: 'solusBase',class: 'solus-base', width: size, height: size})
 
     const renFace = () => {
 
@@ -28,10 +28,32 @@ export function renCharacter(size) {
       
       const element = ren.group({id: 'solusFace', nodes: [renEyes().el, mouth.el], transform: `translate(${size/2} ${size*.45})`})
       return element
+    }
+
+    const renHair = () => {
+
+      const singleHair = ren.path({class: 'hair'});
+
+      let hair = [];
+
+      const deviation = .1;
+      for (let i = 0; i < 3; i += 1) {
+        const newHair = singleHair.el.cloneNode();
+        const offset = (.75 - deviation) + i * deviation
+        const {x, y} = func.getRadPoints(offset, 7.5);
+        newHair.setAttribute('d', `M0 0 ${x} ${y}`)
+        hair.push(newHair)
+      }
+
+      const element = ren.group({id: 'solus-hair', transform: `translate(${size/2} 0)`})
+      hair.forEach((el) => {
+        element.el.appendChild(el)
+      })
+      return element
       
     }
 
-    const element = ren.group({id: 'solusBody', nodes: [base.el, renFace().el]})
+    const element = ren.group({id: 'solusBody', nodes: [renHair().el, base.el, renFace().el]})
     return element
   } 
 

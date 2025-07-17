@@ -239,7 +239,7 @@ export function triangularWave(x) {
     return x < 0.5 ? 2 * x : 2 * (1 - x);
 }
 
-export function moveOrigin(node, offset) {
+export function moveOrigin(node, relativeNode, offset) {
 
   if (node.tagName !== 'g' || node.firstChild.tagName !== 'g') {
     console.log('ERROR: parent node and first child node must be group elements')
@@ -252,8 +252,8 @@ export function moveOrigin(node, offset) {
     console.log(offset)
     return
   }
-
-  const {width, height} = node.firstChild.getBBox();
+  
+  const {width, height} = relativeNode.getBBox();
   if (width === 0 && height === 0) {
     console.log('Node seams to have not been rendered yet')
   }

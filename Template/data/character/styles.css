@@ -11,3 +11,14 @@
     height: 100vh;
   }
 }
+
+@layer display {
+  .main-display {
+    background-color: hsl(0, 0%, 20%);
+    max-width: 500px;
+  }
+
+  .origin-marker {
+    fill: blue;
+  }
+}

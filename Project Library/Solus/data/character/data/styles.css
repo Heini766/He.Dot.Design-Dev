@@ -1,0 +1,11 @@
+@layer body {
+  .solus-base {
+    fill: var(--primeColor);
+  }
+}
+
+@layer origin {
+  .origin-marker.solus {
+    fill: red;
+  }
+}

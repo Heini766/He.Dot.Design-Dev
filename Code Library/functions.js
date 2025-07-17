@@ -292,10 +292,13 @@ export function moveOrigin(node, offset) {
   }
 
   const {width, height} = node.firstChild.getBBox();
+  if (width === 0 && height === 0) {
+    console.log('Node seams to have not been rendered yet')
+  }
 
   node.firstChild.setAttribute('transform', `translate(${width * -offset.x} ${height * -offset.y})`)
 
-  const nodePos = node.getAttribute('transform') ? func.extNumbers(node.getAttribute('transform')) : [0, 0]
+  const nodePos = node.getAttribute('transform') ? extNumbers(node.getAttribute('transform')) : [0, 0]
   node.setAttribute('transform', `translate(${width * offset.x + nodePos[0]} ${height * offset.y + nodePos[1]})`)
   
 } // takes a parent group node with a firstChild group node

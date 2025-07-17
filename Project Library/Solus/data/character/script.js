@@ -5,4 +5,4 @@ mainDs.el.appendChild(renCharacter(20).el)
 
 document.body.appendChild(mainDs.el)
 
-moveOrigin(document.getElementById('characterSolus'), {x: .5, y: .5})
+moveOrigin(document.getElementById('characterSolus'), {x: .5, y: 1})

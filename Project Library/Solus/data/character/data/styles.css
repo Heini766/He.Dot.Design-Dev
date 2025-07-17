@@ -2,6 +2,11 @@
   .solus-base {
     fill: var(--primeColor);
   }
+
+  .solus-mouth {
+    stroke: black;
+    stroke-width: var(--stStrokeWidth);
+  }
 }
 
 @layer origin {

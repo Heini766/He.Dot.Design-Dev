@@ -16,21 +16,20 @@ export function renCharacter(size) {
     const renFace = () => {
 
       const renEyes = () => {
-        const eye = ren.circle({class: 'solus-eye', r: size*.12});
+        const eye = ren.circle({class: 'solus-eye', r: size*.1});
         const [eyeL, eyeR] = [eye.el.cloneNode(), eye.el.cloneNode()]
-        eyeL.setAttribute('transform', `translate(${size*.35} ${size*.25})`)
-        eyeR.setAttribute('transform', `translate(${size*.65} ${size*.25})`)
+        eyeL.setAttribute('transform', `translate(${size*.12} ${0})`)
+        eyeR.setAttribute('transform', `translate(${-size*.12} ${0})`)
 
-        const element = ren.group({id: 'solusEyes', nodes: [eyeR, eyeL]})
+        const element = ren.group({id: 'solusEyes', nodes: [eyeR, eyeL], transform: `translate(${0} ${-size * .2})`})
         return element
       }
+      const mouth = ren.path({class: 'solus-mouth', d: `M${-size*.15} ${0} ${size*.15} ${0}`})
       
-      const element = ren.group({id: 'solusFace', nodes: [renEyes().el]})
+      const element = ren.group({id: 'solusFace', nodes: [renEyes().el, mouth.el], transform: `translate(${size/2} ${size*.45})`})
       return element
       
     }
-
-    
 
     const element = ren.group({id: 'solusBody', nodes: [base.el, renFace().el]})
     return element
@@ -38,12 +37,13 @@ export function renCharacter(size) {
 
   const origin = originMarker.el.cloneNode()
   origin.classList.add('solus')
-  const element = ren.group({id: 'characterSolus', nodes: [renBody().el, origin]})
+  const element = ren.group({id: 'characterSolus', nodes: [renBody().el, origin], transform: `translate(${-size/2} ${-size/2})`})
   return element
 }
 
 // css properties
 
 func.createCustomProp({
-  primeColor: 'White'
+  primeColor: 'White',
+  stStrokeWidth: 2
 })

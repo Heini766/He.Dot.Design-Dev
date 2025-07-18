@@ -6,6 +6,7 @@ const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path
 const circleElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 const rectElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+const imgElement = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 
 export function svg(data) {
 
@@ -125,3 +126,19 @@ export function text(data) {
   return {el: newText, attr: data};
   
 };
+
+export function img(data) {
+
+  const newImg = imgElement.cloneNode();
+  const propNames = Object.keys(data);
+  const propValues = Object.values(data);
+  //let i = 0;
+
+  propNames.forEach((el, index) => {
+
+    newImg.setAttribute(`${el}`, `${propValues[index]}`)
+    //i += 1
+  })
+  return {el: newImg, attr: data}
+  
+}

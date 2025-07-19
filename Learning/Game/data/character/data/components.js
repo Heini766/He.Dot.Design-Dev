@@ -1,4 +1,5 @@
 import * as ren from '../../../../../Code Library/renderSvg.js';
+import { turnCharacter } from '../../eventListeners/eventListeners.js';
 
 const mainAspect = {x: 200, y: 200}
 const originMarker = ren.circle({class: 'origin-marker', r: 1})
@@ -18,6 +19,8 @@ export const renCharacter = (mainAspect) => {
     return el
     
   }
+  
+  window.addEventListener('keydown', turnCharacter)
   
   const el = ren.group({id: 'character', transform: `translate(${-baseSize/2} ${-baseSize/2})`, nodes: [renBody().el, originMarker.el.cloneNode()]})
   return el

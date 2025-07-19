@@ -256,9 +256,11 @@ export function moveOrigin(node, relativeNode, offset) {
   const {width, height} = relativeNode.getBBox();
   if (width === 0 && height === 0) {
     console.log('Node seams to have not been rendered yet')
+    return
   }
 
-  node.firstChild.setAttribute('transform', `translate(${width * -offset.x} ${height * -offset.y})`)
+  const [originOffsetX, originOffsetY] = [width * -offset.x, height * -offset.y]
+  node.firstChild.setAttribute('transform', `translate(${originOffsetX} ${originOffsetY})`)
 
   const nodePos = node.getAttribute('transform') ? extNumbers(node.getAttribute('transform')) : [0, 0]
   node.setAttribute('transform', `translate(${width * offset.x + nodePos[0]} ${height * offset.y + nodePos[1]})`)

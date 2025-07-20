@@ -2,10 +2,10 @@ import * as ren from '../../../../../Code Library/renderSvg.js';
 
 const dsAspect = {x: 100, y: 100}
 
-const originMarker = ren.circle({class: `origin-marker`, r: 1})
+export const originMarker = ren.circle({class: `origin-marker`, r: 1})
 
 const totalLines = 9;
-const spacing = dsAspect.x/totalLines
+export const spacing = dsAspect.x/totalLines
 
 export const renDisplay = () => {
 

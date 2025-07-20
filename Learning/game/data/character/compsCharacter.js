@@ -1,6 +1,7 @@
 import * as ren from '../../../../Code Library/renderSvg.js';
 import * as func from '../../../../Code Library/functions.js';
-import { originMarker, spacing } from '../display/components.js';
+
+import { originMarker, spacing } from '../display/compsDisplay.js';
 
 export const renCharacter = () => {
 

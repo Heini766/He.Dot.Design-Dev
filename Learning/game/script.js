@@ -1,5 +1,5 @@
-import { renCharacter } from "./data/character/components.js";
-import { renDisplay } from "./data/display/components.js";
+import { renCharacter } from "./data/character/compsCharacter.js";
+import { renDisplay } from "./data/display/compsDisplay.js";
 import { moveOrigin } from "../../Code Library/functions.js";
 
 const gameDisplay = renDisplay().el;

@@ -24,3 +24,12 @@
     opacity: .5;
   }
 }
+
+@layer grid {
+  .grid-line {
+    stroke: white;
+    opacity: .15;
+    fill: none;
+    stroke-width: .25;
+  }
+}

@@ -9,3 +9,12 @@
   }
   
 }
+
+@layer grid {
+  .grid-line {
+    fill: none;
+    stroke: white;
+    opacity: .15;
+    stroke-width: .5;
+  }
+}

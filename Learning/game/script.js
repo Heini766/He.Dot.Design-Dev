@@ -1,3 +1,3 @@
-import { mainDs } from "./data/display/components.js";
+import { renDisplay } from "./data/display/components.js"
 
-document.body.appendChild(mainDs.el)
+document.body.appendChild(renDisplay().el)

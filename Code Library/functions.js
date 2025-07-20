@@ -262,7 +262,11 @@ export function moveOrigin(node, relativeNode, offset) {
   const [originOffsetX, originOffsetY] = [width * -offset.x, height * -offset.y]
   node.firstChild.setAttribute('transform', `translate(${originOffsetX} ${originOffsetY})`)
 
+  const [prevOffsetX, prevOffsetY] = node.getAttribute('originShift') ? extNumbers(node.getAttribute('originShift')) : [0, 0]
+  const [reverseX, reverseY] = [prevOffsetX * width, prevOffsetY * height]
   const nodePos = node.getAttribute('transform') ? extNumbers(node.getAttribute('transform')) : [0, 0]
-  node.setAttribute('transform', `translate(${width * offset.x + nodePos[0]} ${height * offset.y + nodePos[1]})`)
+  node.setAttribute('transform', `translate(${-originOffsetX + nodePos[0] - reverseX} ${-originOffsetY + nodePos[1] - reverseY})`)
+
+  node.setAttribute('originShift', `${offset.x} ${offset.y}`)
   
 } // takes a parent group node with a firstChild group node

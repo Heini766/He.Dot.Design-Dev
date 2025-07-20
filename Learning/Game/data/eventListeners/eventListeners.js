@@ -1,4 +1,10 @@
+import * as func from '../../../../Code Library/functions.js';
 import { turn } from "../nativeFunctions/functions.js";
+import { createCustomProp } from "../../../../Code Library/functions.js";
+
+const cssProps = createCustomProp({
+  stEffectsDur: `.3s`
+})
 
 function turnCheck(key) {
   const keys = ['a', 's', 'd', 'w'];
@@ -11,11 +17,24 @@ function turnCheck(key) {
   return check
 }
 
+let removeAni;
+
 export const turnCharacter = (event) => {
 
   const check = turnCheck(event.key)
+  
   if (check) {
     
+    const indicator = document.getElementById('indicator')
+    indicator.classList.add('ani-pop-in')
+
+    if (removeAni) {
+      clearTimeout(removeAni)
+    }
+    removeAni = setTimeout(() => {
+      indicator.classList.remove('ani-pop-in')
+    }, func.extNumbers(cssProps.stEffectsDur)[0] * 100);
+  
     let originOffset;
     
     if (check === 'a') {

@@ -13,7 +13,7 @@ export const renCharacter = (mainAspect) => {
   const renBody = () => {
 
     const body = ren.rect({id: 'characterBody', class:'character-body', width: baseSize, height: baseSize})
-    const indicator = ren.rect({ id: 'indicator', width: baseSize * .25, height: baseSize * .25 })
+    const indicator = ren.rect({ id: 'indicator', class: 'indicator', width: baseSize * .25, height: baseSize * .25 })
     
     const el = ren.group( {id: 'characterBody', nodes: [body.el, indicator.el]} )
     return el
@@ -22,7 +22,7 @@ export const renCharacter = (mainAspect) => {
   
   window.addEventListener('keydown', turnCharacter)
   
-  const el = ren.group({id: 'character', transform: `translate(${-baseSize/2} ${-baseSize/2})`, nodes: [renBody().el, originMarker.el.cloneNode()]})
+  const el = ren.group({id: 'character', transform: `translate(${-baseSize/2} ${-baseSize/2})`, nodes: [renBody().el]})
   return el
   
 }

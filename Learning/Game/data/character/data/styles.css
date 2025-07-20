@@ -3,3 +3,25 @@
   fill: white;
   
 }
+
+@layer indicator {
+
+  #indicator {
+    fill: hsl(182, 73%, 41%);
+  }
+
+  .ani-pop-in {
+      animation: pop-in ease forwards;
+      animation-duration: var(--stEffectsDur);
+    }
+
+  @keyframes pop-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+}

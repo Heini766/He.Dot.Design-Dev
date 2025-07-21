@@ -148,8 +148,9 @@ export function calcLineAngle(point1, point2) {
 }; // Returns the angle (radians, degrees, normalised degrees) based on two points. 
 
 export function extNumbers(string) {
-  const nums = string.match(/-?\d+\.?\d*/g).map(Number);
-  return nums;
+  if (typeof string !== 'string') return []; // Handle non-string input
+  const nums = string.match(/-?\d+\.?\d*/g)?.map(Number) || [];
+  return nums.filter(n => !isNaN(n)); // Remove NaN entries (invalid numbers)
 }; // Returns an array containing the numbers in a string
 
 export function getTagElements(container, tagName) {
@@ -270,3 +271,23 @@ export function moveOrigin(node, relativeNode, offset) {
   node.setAttribute('originShift', `${offset.x} ${offset.y}`)
   
 } // takes a parent group node with a firstChild group node
+
+export function newMoveOrigin(parentNode, baseNode, offset) {
+
+  const [currentShiftX, currentShiftY] = parentNode.getAttribute('originShift') ? extNumbers(parentNode.getAttribute('originShift')) : [0, 0];
+
+  const {width, height} = baseNode.getBBox();
+  const {offsetX, offsetY} = {offsetX: width * offset.x, offsetY: height * offset.y}
+  console.log(currentShiftX * width, currentShiftY)
+
+  parentNode.firstChild.setAttribute('transform', `translate(${-offsetX} ${-offsetY})`);
+  
+  const [parentPosX, parentPosY] = parentNode.getAttribute('transform') ? extNumbers(parentNode.getAttribute('transform')) : [0, 0];
+  console.log(parentPosX - currentShiftX * width/2, parentPosY +
+     currentShiftY * height/2)
+
+  parentNode.setAttribute('transform', `translate(${parentPosX + offsetX} ${parentPosY + offsetY})`)
+  parentNode.setAttribute('originShift', `${offset.x} ${offset.y}`)
+} // parentNode = The group node that contains the entire entity
+  // baseNode = Is used to determine the base dimensions in calculating the transforms
+  // offset = an object that has x and y values determaning the origin offset

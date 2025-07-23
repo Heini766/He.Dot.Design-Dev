@@ -278,15 +278,12 @@ export function newMoveOrigin(parentNode, baseNode, offset) {
 
   const {width, height} = baseNode.getBBox();
   const {offsetX, offsetY} = {offsetX: width * offset.x, offsetY: height * offset.y}
-  console.log(currentShiftX * width, currentShiftY)
 
   parentNode.firstChild.setAttribute('transform', `translate(${-offsetX} ${-offsetY})`);
   
   const [parentPosX, parentPosY] = parentNode.getAttribute('transform') ? extNumbers(parentNode.getAttribute('transform')) : [0, 0];
-  console.log(parentPosX - currentShiftX * width/2, parentPosY +
-     currentShiftY * height/2)
 
-  parentNode.setAttribute('transform', `translate(${parentPosX + offsetX} ${parentPosY + offsetY})`)
+  parentNode.setAttribute('transform', `translate(${parentPosX + offsetX - currentShiftX * width} ${parentPosY + offsetY - currentShiftY * height})`)
   parentNode.setAttribute('originShift', `${offset.x} ${offset.y}`)
 } // parentNode = The group node that contains the entire entity
   // baseNode = Is used to determine the base dimensions in calculating the transforms

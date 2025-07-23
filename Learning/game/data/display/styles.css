@@ -13,8 +13,9 @@
 @layer grid {
   .grid-line {
     fill: none;
-    stroke: white;
-    opacity: .15;
-    stroke-width: .5;
+    stroke: rgb(48, 48, 48);
+    opacity: 1;
+    stroke-width: 3;
+    stroke-linecap: round;
   }
 }

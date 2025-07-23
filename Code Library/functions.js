@@ -240,39 +240,7 @@ export function triangularWave(x) {
     return x < 0.5 ? 2 * x : 2 * (1 - x);
 }
 
-export function moveOrigin(node, relativeNode, offset) {
-
-  if (node.tagName !== 'g' || node.firstChild.tagName !== 'g') {
-    console.log('ERROR: parent node and first child node must be group elements')
-    return
-  }
-
-  const isValid = offset && typeof offset === 'object' && !Array.isArray(offset) && Object.values(offset).every(el => typeof el === 'number');
-  if (!isValid) {
-    console.log(`ERROR: given offset is formatted incorrectly`);
-    console.log(offset)
-    return
-  }
-  
-  const {width, height} = relativeNode.getBBox();
-  if (width === 0 && height === 0) {
-    console.log('Node seams to have not been rendered yet')
-    return
-  }
-
-  const [originOffsetX, originOffsetY] = [width * -offset.x, height * -offset.y]
-  node.firstChild.setAttribute('transform', `translate(${originOffsetX} ${originOffsetY})`)
-
-  const [prevOffsetX, prevOffsetY] = node.getAttribute('originShift') ? extNumbers(node.getAttribute('originShift')) : [0, 0]
-  const [reverseX, reverseY] = [prevOffsetX * width, prevOffsetY * height]
-  const nodePos = node.getAttribute('transform') ? extNumbers(node.getAttribute('transform')) : [0, 0]
-  node.setAttribute('transform', `translate(${-originOffsetX + nodePos[0] - reverseX} ${-originOffsetY + nodePos[1] - reverseY})`)
-
-  node.setAttribute('originShift', `${offset.x} ${offset.y}`)
-  
-} // takes a parent group node with a firstChild group node
-
-export function newMoveOrigin(parentNode, baseNode, offset) {
+export function moveOrigin(parentNode, baseNode, offset) {
 
   const [currentShiftX, currentShiftY] = parentNode.getAttribute('originShift') ? extNumbers(parentNode.getAttribute('originShift')) : [0, 0];
 

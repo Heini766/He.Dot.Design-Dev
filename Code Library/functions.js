@@ -148,8 +148,9 @@ export function calcLineAngle(point1, point2) {
 }; // Returns the angle (radians, degrees, normalised degrees) based on two points. 
 
 export function extNumbers(string) {
-  const nums = string.match(/-?\d+\.?\d*/g).map(Number);
-  return nums;
+  if (typeof string !== 'string') return []; // Handle non-string input
+  const nums = string.match(/-?\d+\.?\d*/g)?.map(Number) || [];
+  return nums.filter(n => !isNaN(n)); // Remove NaN entries (invalid numbers)
 }; // Returns an array containing the numbers in a string
 
 export function getTagElements(container, tagName) {
@@ -239,34 +240,19 @@ export function triangularWave(x) {
     return x < 0.5 ? 2 * x : 2 * (1 - x);
 }
 
-export function moveOrigin(node, relativeNode, offset) {
+export function moveOrigin(parentNode, baseNode, offset) {
 
-  if (node.tagName !== 'g' || node.firstChild.tagName !== 'g') {
-    console.log('ERROR: parent node and first child node must be group elements')
-    return
-  }
+  const [currentShiftX, currentShiftY] = parentNode.getAttribute('originShift') ? extNumbers(parentNode.getAttribute('originShift')) : [0, 0];
 
-  const isValid = offset && typeof offset === 'object' && !Array.isArray(offset) && Object.values(offset).every(el => typeof el === 'number');
-  if (!isValid) {
-    console.log(`ERROR: given offset is formatted incorrectly`);
-    console.log(offset)
-    return
-  }
+  const {width, height} = baseNode.getBBox();
+  const {offsetX, offsetY} = {offsetX: width * offset.x, offsetY: height * offset.y}
+
+  parentNode.firstChild.setAttribute('transform', `translate(${-offsetX} ${-offsetY})`);
   
-  const {width, height} = relativeNode.getBBox();
-  if (width === 0 && height === 0) {
-    console.log('Node seams to have not been rendered yet')
-    return
-  }
+  const [parentPosX, parentPosY] = parentNode.getAttribute('transform') ? extNumbers(parentNode.getAttribute('transform')) : [0, 0];
 
-  const [originOffsetX, originOffsetY] = [width * -offset.x, height * -offset.y]
-  node.firstChild.setAttribute('transform', `translate(${originOffsetX} ${originOffsetY})`)
-
-  const [prevOffsetX, prevOffsetY] = node.getAttribute('originShift') ? extNumbers(node.getAttribute('originShift')) : [0, 0]
-  const [reverseX, reverseY] = [prevOffsetX * width, prevOffsetY * height]
-  const nodePos = node.getAttribute('transform') ? extNumbers(node.getAttribute('transform')) : [0, 0]
-  node.setAttribute('transform', `translate(${-originOffsetX + nodePos[0] - reverseX} ${-originOffsetY + nodePos[1] - reverseY})`)
-
-  node.setAttribute('originShift', `${offset.x} ${offset.y}`)
-  
-} // takes a parent group node with a firstChild group node
+  parentNode.setAttribute('transform', `translate(${parentPosX + offsetX - currentShiftX * width} ${parentPosY + offsetY - currentShiftY * height})`)
+  parentNode.setAttribute('originShift', `${offset.x} ${offset.y}`)
+} // parentNode = The group node that contains the entire entity
+  // baseNode = Is used to determine the base dimensions in calculating the transforms
+  // offset = an object that has x and y values determaning the origin offset

@@ -2,6 +2,7 @@ import * as ren from '../../../../Code Library/renderSvg.js';
 import * as func from '../../../../Code Library/functions.js';
 
 import { originMarker, spacing } from '../display/compsDisplay.js';
+import { moveCharacter, turn } from '../local functions/functions.js';
 
 export const renCharacter = (size) => {
 
@@ -16,6 +17,9 @@ export const renCharacter = (size) => {
     
   }
   const base = renBase().el;
+
+  window.addEventListener('keydown', turn);
+  window.addEventListener('keydown', moveCharacter)
 
   const character = ren.group({id: 'character', nodes: [base, marker]})
   return character;

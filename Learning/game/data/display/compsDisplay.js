@@ -1,6 +1,6 @@
 import * as ren from '../../../../../Code Library/renderSvg.js';
 
-const dsAspect = {x: 100, y: 100}
+export const dsAspect = {x: 100, y: 100}
 
 export const originMarker = ren.circle({class: `origin-marker`, r: 1})
 

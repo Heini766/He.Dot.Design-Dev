@@ -1,7 +1,8 @@
 import { direction, moveCharacter } from "./functions.js";
-import { spacing } from "../display/compsDisplay.js";
+import { dsAspect, spacing } from "../display/compsDisplay.js";
 import { extNumbers } from "../../../../Code Library/functions.js";
 import * as timing from "../../../../Code Library/timingFunctions.js";
+import { clamp } from "../../../../Code Library/functions.js";
 
 function putDirection(input) {
 
@@ -28,6 +29,8 @@ export function animateMove(duration, direction, character) {
   const [chX, chY] = extNumbers(character.getAttribute('transform'));
   const drMatrix = putDirection(direction);
 
+  const boundaryX = {min: -dsAspect.x/2 + spacing * 2, max: dsAspect.x/2 - spacing}
+
   const animate = () => {
 
     if (start === undefined) {
@@ -38,7 +41,7 @@ export function animateMove(duration, direction, character) {
 
     const offsetX = t * spacing * drMatrix.x;
     const offsetY = t * spacing * drMatrix.y;
-    character.setAttribute('transform', `translate(${chX + offsetX} ${chY + offsetY})`)
+    character.setAttribute('transform', `translate(${chX + offsetX, boundaryX.min, boundaryX.max} ${chY + offsetY})`)
 
     if (t < 1) {
       id = requestAnimationFrame(animate)

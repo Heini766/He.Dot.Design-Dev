@@ -19,12 +19,13 @@ export const renCharacter = (size) => {
       const pointer = ren.rect({class: 'pointer', width: pointerSize, height: pointerSize}).el
       pointer.setAttribute('transform', `translate(${-pointerSize/2} ${spacing * .15})`)
       
-      const el = ren.group({id: 'arrow', nodes: [pointer], transform: `translate(${spacing/2} ${spacing/2})`})
+      const el = ren.group({id: 'pointer', nodes: [pointer]}).el;
+      el.style.translate = `${spacing/2}px ${spacing/2}px`
       return el;
       
     }
 
-    const el = ren.group({id: 'characterBase', nodes: [base.el, renArrow().el]})
+    const el = ren.group({id: 'characterBase', nodes: [base.el, renArrow()]})
     return el
     
   }
@@ -33,7 +34,7 @@ export const renCharacter = (size) => {
   window.addEventListener('keydown', turn);
   window.addEventListener('keydown', moveCharacter)
 
-  const character = ren.group({id: 'character', nodes: [base, marker]})
+  const character = ren.group({id: 'character', nodes: [base]})
   return character;
   
 }

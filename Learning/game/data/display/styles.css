@@ -29,7 +29,7 @@
 }
 
 @layer character {
-  .direction-arrow {
-    fill: red;
+  .pointer {
+    fill: black;
   }
 }

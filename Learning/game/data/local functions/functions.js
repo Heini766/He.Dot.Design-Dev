@@ -2,7 +2,7 @@ import { moveOrigin } from "../../../../Code Library/functions.js";
 import { animateMove } from "./animation.js";
 
 const moveKeys = ['w', 'a', 's', 'd']
-const actionKeys = ['Enter']
+const actionKeys = [' ']
 export const direction = ['up', 'left', 'down', 'right']
 const offsets = [{x: 0.5, y: 1}, {x: 1, y: 0.5}, {x: 0.5, y: 0}, {x: 0, y: 0.5}]
 
@@ -49,10 +49,19 @@ function transOrigin(inputDirection) {
 
 export function turn(event) {
 
-  const direction = directionCheck(event);
+  const newDirection = directionCheck(event);
+  const pointer = document.getElementById('pointer');
 
-  if (direction) {
-    transOrigin(direction)
+  const degrees = [180, 90, 0, 270]
+
+  direction.forEach((el, index) => {
+    if (el === newDirection) {
+      pointer.setAttribute('transform', `rotate(${degrees[index]})`)
+    }
+  })
+
+  if (newDirection) {
+    transOrigin(newDirection)
   }
   
 }

@@ -34,7 +34,7 @@ export const renDisplay = () => {
     id: 'mainDisplay',
     class: 'main-display',
     viewBox: `${-dsAspect.x/2 + spacing/2} ${-dsAspect.y/2 + spacing/2} ${dsAspect.x} ${dsAspect.y}`,
-    nodes: [bg, originMarker]
+    nodes: [bg]
   })
   return mainDs
   

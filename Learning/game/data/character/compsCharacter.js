@@ -1,7 +1,7 @@
 import * as ren from '../../../../Code Library/renderSvg.js';
 import * as func from '../../../../Code Library/functions.js';
 
-import { originMarker } from '../display/compsDisplay.js';
+import { originMarker, spacing } from '../display/compsDisplay.js';
 import { moveCharacter, turn } from '../local functions/functions.js';
 
 export const renCharacter = (size) => {
@@ -13,7 +13,18 @@ export const renCharacter = (size) => {
 
     const base = ren.rect({class: 'character-base', width: size, height: size})
 
-    const el = ren.group({id: 'characterBase', nodes: [base.el]})
+    const renArrow = () => {
+
+      const pointerSize = spacing*.25
+      const pointer = ren.rect({class: 'pointer', width: pointerSize, height: pointerSize}).el
+      pointer.setAttribute('transform', `translate(${-pointerSize/2} ${spacing * .15})`)
+      
+      const el = ren.group({id: 'arrow', nodes: [pointer], transform: `translate(${spacing/2} ${spacing/2})`})
+      return el;
+      
+    }
+
+    const el = ren.group({id: 'characterBase', nodes: [base.el, renArrow().el]})
     return el
     
   }

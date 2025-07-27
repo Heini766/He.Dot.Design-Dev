@@ -27,3 +27,9 @@
     stroke-linecap: round;
   }
 }
+
+@layer character {
+  .direction-arrow {
+    fill: red;
+  }
+}

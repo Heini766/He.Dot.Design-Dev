@@ -1,4 +1,4 @@
-import { direction, moveCharacter } from "./functions.js";
+import { direction, moveCharacter, turn } from "./functions.js";
 import { dsAspect, spacing } from "../display/compsDisplay.js";
 import { extNumbers } from "../../../../Code Library/functions.js";
 import * as timing from "../../../../Code Library/timingFunctions.js";
@@ -24,19 +24,21 @@ function putDirection(input) {
 function calcBoudary(inpDirection) {
 
   const boudarys = [
-    {xMax: dsAspect.x/2 - spacing/2, xMin: -dsAspect.x/2 + spacing/2, yMax: dsAspect.y/2, yMin: -dsAspect.y/2 + spacing}, // up facing calculations
-    {xMax: dsAspect.x/2, xMin: -dsAspect.x/2 + spacing, yMax: dsAspect.y/2 - spacing/2, yMin: -dsAspect.y/2 + spacing/2}, // left facing calculations
-    {xMax: dsAspect.x/2 - spacing/2, xMin: -dsAspect.x/2 + spacing/2, yMax: dsAspect.y/2 - spacing, yMin: -dsAspect.y/2}, // down facing calculations
-    {xMax: dsAspect.x/2 - spacing, xMin: -dsAspect/2, yMax: dsAspect/2 - spacing/2, yMin: -dsAspect/2 + spacing/2}, // right facing calculations
+    {xMax: dsAspect.x/2 - spacing/2, xMin: -spacing*2 - spacing/2, yMax: dsAspect.y/2, yMin: -spacing*2}, // up facing calculations #
+    {xMax: dsAspect.x/2, xMin: -spacing*3 + spacing, yMax: dsAspect.y/2 - spacing/2, yMin: -spacing*3 + spacing/2}, // left facing calculations #
+    {xMax: dsAspect.x/2 - spacing/2, xMin: -spacing*2 - spacing/2, yMax: spacing*3, yMin: -dsAspect.y/2 + spacing}, // down facing calculations #
+    {xMax: dsAspect.x/2 - spacing, xMin: -spacing*3, yMax: dsAspect.y/2 - spacing/2, yMin: -spacing*3 + spacing/2}, // right facing calculations #
   ]
 
+  let boudary;
   direction.forEach((el, index) => {
 
     if (el === inpDirection) {
-      console.log(boudarys[index])
+      boudary = boudarys[index]
     }
     
   })
+  return boudary
   
 }
 
@@ -44,11 +46,12 @@ export function animateMove(duration, direction, character) {
 
   let start, id;
   window.removeEventListener('keydown', moveCharacter);
+  window.removeEventListener('keydown', turn);
 
   const [chX, chY] = extNumbers(character.getAttribute('transform'));
   const drMatrix = putDirection(direction);
 
-  calcBoudary(direction)
+  const boudaries = calcBoudary(direction);
 
   const animate = () => {
 
@@ -60,11 +63,12 @@ export function animateMove(duration, direction, character) {
 
     const offsetX = t * spacing * drMatrix.x;
     const offsetY = t * spacing * drMatrix.y;
-    character.setAttribute('transform', `translate(${chX + offsetX} ${chY + offsetY})`)
+    character.setAttribute('transform', `translate(${clamp(chX + offsetX, boudaries.xMin, boudaries.xMax)} ${clamp(chY + offsetY, boudaries.yMin, boudaries.yMax)})`)
 
     if (t < 1) {
       id = requestAnimationFrame(animate)
     } else {
+      window.addEventListener('keydown', turn);
       window.addEventListener('keydown', moveCharacter)
     }
     

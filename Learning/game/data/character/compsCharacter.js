@@ -7,6 +7,7 @@ import { moveCharacter, turn } from '../local functions/functions.js';
 export const renCharacter = (size) => {
 
   const marker = originMarker.el.cloneNode();
+  marker.classList.add('character')
 
   const renBase = () => {
 
@@ -21,7 +22,7 @@ export const renCharacter = (size) => {
   window.addEventListener('keydown', turn);
   window.addEventListener('keydown', moveCharacter)
 
-  const character = ren.group({id: 'character', nodes: [base]})
+  const character = ren.group({id: 'character', nodes: [base, marker]})
   return character;
   
 }

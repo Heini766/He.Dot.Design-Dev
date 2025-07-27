@@ -21,6 +21,25 @@ function putDirection(input) {
   
 }
 
+function calcBoudary(inpDirection) {
+
+  const boudarys = [
+    {xMax: dsAspect.x/2 - spacing/2, xMin: -dsAspect.x/2 + spacing/2, yMax: dsAspect.y/2, yMin: -dsAspect.y/2 + spacing}, // up facing calculations
+    {xMax: dsAspect.x/2, xMin: -dsAspect.x/2 + spacing, yMax: dsAspect.y/2 - spacing/2, yMin: -dsAspect.y/2 + spacing/2}, // left facing calculations
+    {xMax: dsAspect.x/2 - spacing/2, xMin: -dsAspect.x/2 + spacing/2, yMax: dsAspect.y/2 - spacing, yMin: -dsAspect.y/2}, // down facing calculations
+    {xMax: dsAspect.x/2 - spacing, xMin: -dsAspect/2, yMax: dsAspect/2 - spacing/2, yMin: -dsAspect/2 + spacing/2}, // right facing calculations
+  ]
+
+  direction.forEach((el, index) => {
+
+    if (el === inpDirection) {
+      console.log(boudarys[index])
+    }
+    
+  })
+  
+}
+
 export function animateMove(duration, direction, character) {
 
   let start, id;
@@ -29,7 +48,7 @@ export function animateMove(duration, direction, character) {
   const [chX, chY] = extNumbers(character.getAttribute('transform'));
   const drMatrix = putDirection(direction);
 
-  const boundaryX = {min: -dsAspect.x/2 + spacing * 2, max: dsAspect.x/2 - spacing}
+  calcBoudary(direction)
 
   const animate = () => {
 
@@ -41,7 +60,7 @@ export function animateMove(duration, direction, character) {
 
     const offsetX = t * spacing * drMatrix.x;
     const offsetY = t * spacing * drMatrix.y;
-    character.setAttribute('transform', `translate(${chX + offsetX, boundaryX.min, boundaryX.max} ${chY + offsetY})`)
+    character.setAttribute('transform', `translate(${chX + offsetX} ${chY + offsetY})`)
 
     if (t < 1) {
       id = requestAnimationFrame(animate)

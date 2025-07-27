@@ -3,7 +3,7 @@ import { animateMove } from "./animation.js";
 
 const moveKeys = ['w', 'a', 's', 'd']
 const actionKeys = ['Enter']
-export const direction = ['down', 'right', 'up', 'left']
+export const direction = ['up', 'left', 'down', 'right']
 const offsets = [{x: 0.5, y: 1}, {x: 1, y: 0.5}, {x: 0.5, y: 0}, {x: 0, y: 0.5}]
 
 function directionCheck(event) {

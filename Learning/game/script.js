@@ -9,4 +9,4 @@ gameDisplay.appendChild(renCharacter(spacing).el)
 
 const character = document.getElementById('character');
 
-moveOrigin(character, document.getElementById('characterBase'), {x: .5, y: .5})
+moveOrigin(character, document.getElementById('characterBase'), {x: 0, y: 0.5})

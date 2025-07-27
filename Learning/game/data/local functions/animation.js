@@ -1,23 +1,30 @@
 import { direction, moveCharacter, turn } from "./functions.js";
 import { dsAspect, spacing } from "../display/compsDisplay.js";
-import { extNumbers } from "../../../../Code Library/functions.js";
+import { extNumbers, triangularWave } from "../../../../Code Library/functions.js";
 import * as timing from "../../../../Code Library/timingFunctions.js";
 import { clamp } from "../../../../Code Library/functions.js";
 
 function putDirection(input) {
 
   const calcs = [{x: 0, y: -1}, {x: -1, y: 0}, {x: 0, y: 1}, {x: 1, y: 0}]
-  let matrix;
+  let matrix, transAxes;
 
   direction.forEach((el, index) => {
 
     if (el === input) {
       matrix = calcs[index]
+
+      if (index === 0 || index === 2) {
+        transAxes = 'y'
+      } else {
+        transAxes = 'x'
+      }
+      
     }
     
   })
 
-  return matrix
+  return [matrix, transAxes]
   
 }
 
@@ -45,11 +52,12 @@ function calcBoudary(inpDirection) {
 export function animateMove(duration, direction, character) {
 
   let start, id;
+  let stretchX, stretchY
   window.removeEventListener('keydown', moveCharacter);
   window.removeEventListener('keydown', turn);
 
   const [chX, chY] = extNumbers(character.getAttribute('transform'));
-  const drMatrix = putDirection(direction);
+  const [drMatrix, axes] = putDirection(direction);
 
   const boudaries = calcBoudary(direction);
 
@@ -64,6 +72,16 @@ export function animateMove(duration, direction, character) {
     const offsetX = t * spacing * drMatrix.x;
     const offsetY = t * spacing * drMatrix.y;
     character.setAttribute('transform', `translate(${clamp(chX + offsetX, boudaries.xMin, boudaries.xMax)} ${clamp(chY + offsetY, boudaries.yMin, boudaries.yMax)})`)
+
+    if (axes === 'x') {
+      stretchX = 1 + triangularWave(t) * .15;
+      stretchY = 1/stretchX;
+    } else {
+      stretchY = 1 + triangularWave(t) * .15;
+      stretchX = 1/stretchY
+    }
+
+    character.firstChild.style.scale = `${stretchX} ${stretchY}`
 
     if (t < 1) {
       id = requestAnimationFrame(animate)

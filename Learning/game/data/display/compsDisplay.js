@@ -39,3 +39,12 @@ export const renDisplay = () => {
   return mainDs
   
 }
+
+export const renStats = () => {
+
+  const statsAspect = {x: dsAspect.x * .2, y: dsAspect.y}
+
+  const mainDs = ren.svg({id: 'statsDisplay', class: 'stats-display', viewBox: `${-statsAspect.x/2} ${-statsAspect.y/2} ${statsAspect.x} ${statsAspect.y}`})
+  return mainDs
+  
+}

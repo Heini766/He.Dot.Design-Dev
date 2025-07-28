@@ -1,7 +1,12 @@
 @layer display {
   .main-display {
     background-color: hsl(0, 0%, 15%);
-    max-width: 400px;
+    max-height: 400px;
+  }
+
+  .stats-display {
+    background-color: hsl(0, 100%, 15%);
+    max-height: 400px;
   }
 
   .origin-marker {

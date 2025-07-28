@@ -19,7 +19,7 @@ export const renCharacter = (size) => {
       const pointer = ren.rect({class: 'pointer', width: pointerSize, height: pointerSize}).el
       pointer.setAttribute('transform', `translate(${-pointerSize/2} ${spacing * .15})`)
       
-      const el = ren.group({id: 'pointer', nodes: [pointer]}).el;
+      const el = ren.group({id: 'pointer', nodes: [pointer], transform: `rotate(0)`}).el;
       el.style.translate = `${spacing/2}px ${spacing/2}px`
       return el;
       

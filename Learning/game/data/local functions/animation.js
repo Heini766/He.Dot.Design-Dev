@@ -61,6 +61,8 @@ export function animateMove(duration, direction, character) {
 
   const boudaries = calcBoudary(direction);
 
+  const speed = extNumbers(document.getElementById('speedValue').innerHTML)[0];
+
   const animate = () => {
 
     if (start === undefined) {
@@ -69,8 +71,8 @@ export function animateMove(duration, direction, character) {
     const elapsed = (performance.now() - start)/1000;
     const t = timing.easeInOutQuad(Math.min(elapsed/duration, 1));
 
-    const offsetX = t * spacing * drMatrix.x;
-    const offsetY = t * spacing * drMatrix.y;
+    const offsetX = t * spacing * speed * drMatrix.x;
+    const offsetY = t * spacing * speed * drMatrix.y;
     character.setAttribute('transform', `translate(${clamp(chX + offsetX, boudaries.xMin, boudaries.xMax)} ${clamp(chY + offsetY, boudaries.yMin, boudaries.yMax)})`)
 
     if (axes === 'x') {

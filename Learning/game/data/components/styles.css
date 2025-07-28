@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+.btn {
+  cursor: pointer;
+
+  .btn-base {
+    transition-property: scale;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+  }
+
+  &:hover {
+    .btn-base {
+      scale: 1.2;
+    }
+  }
+
+  &:active {
+    .btn-base {
+      scale: 1.1;
+    }
+  }
+}
+
+.btn-base {
+  fill: white;
+}
+
+.btns-marker {
+  stroke: black;
+  stroke-width: 1.5;
+}
+
+.title {
+  font-family: 'Lexend';
+  fill: white;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  text-align: center;
+  font-size: .35rem;
+  user-select: none;
+}

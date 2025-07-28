@@ -95,26 +95,3 @@ export function animateMove(duration, direction, character) {
   id = requestAnimationFrame(animate);
   
 }
-
-export function animatePointer(duration, deg) {
-
-  let start, id;
-
-  const curDeg = extNumbers(document.getElementById('pointer').getAttribute('transform'))[0];
-
-  const animate = () => {
-
-    if (start === undefined) {
-      start = performance.now();
-    }
-    const elpased = (performance.now() - start)/1000;
-    const t = Math.min(elpased/duration, 1);
-
-    if (t < 1) {
-      id = requestAnimationFrame(animate)
-    }
-  }
-
-  id = requestAnimationFrame(animate)
-  
-}

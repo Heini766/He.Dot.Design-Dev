@@ -97,3 +97,34 @@ export function animateMove(duration, direction, character) {
   id = requestAnimationFrame(animate);
   
 }
+
+export function animateFold(duration, node) {
+
+  let id, start
+  node.style.pointerEvents = 'none';
+
+  const animate = () => {
+
+    if (start === undefined) {
+      start = performance.now()
+    }
+    const elapsed = (performance.now() - start)/1000;
+    const t = timing.easeOutSine(Math.min(elapsed/duration, 1));
+
+    node.style.opacity = `${1 - t}`
+    node.style.scale = `${1 - t} 1`
+
+    if (t < 1) {
+      id = requestAnimationFrame(animate)
+    } else {
+      node.style.display = 'none';
+      node.style.pointerEvents = 'all';
+      node.style.scale = 1;
+      node.style.opacity = 1;
+    }
+    
+  }
+
+  id = requestAnimationFrame(animate)
+  
+}

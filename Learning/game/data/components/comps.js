@@ -1,6 +1,7 @@
 import * as ren from '../../../../Code Library/renderSvg.js';
 import { extNumbers, clamp } from '../../../../Code Library/functions.js';
 import { dsAspect } from '../display/compsDisplay.js';
+import { animateFold } from '../local functions/animation.js';
 
 let maxMinSpeed = {max: 3, min: 1}
 
@@ -12,7 +13,7 @@ function addSpeed() {
   node.innerHTML = `${newSpeed}`
 
   if (newSpeed >= maxMinSpeed.max) {
-    document.getElementById('addBtn').style.display = 'none';
+    animateFold(.2, document.getElementById('addBtn'))
   }
   if (newSpeed > maxMinSpeed.min) {
     document.getElementById('subtractBtn').style.display = 'block';
@@ -28,7 +29,7 @@ function reduceSpeed() {
   node.innerHTML = `${newSpeed}`
 
   if (newSpeed <= maxMinSpeed.min) {
-    document.getElementById('subtractBtn').style.display = 'none';
+    animateFold(.2, document.getElementById('subtractBtn'))
   }
   if (newSpeed <= maxMinSpeed.max) {
     document.getElementById('addBtn').style.display = 'block';

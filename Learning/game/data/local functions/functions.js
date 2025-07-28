@@ -1,5 +1,5 @@
 import { moveOrigin } from "../../../../Code Library/functions.js";
-import { animateMove, animatePointer } from "./animation.js";
+import { animateMove } from "./animation.js";
 
 const moveKeys = ['w', 'a', 's', 'd']
 const actionKeys = [' ']
@@ -56,7 +56,6 @@ export function turn(event) {
 
   direction.forEach((el, index) => {
     if (el === newDirection) {
-      animatePointer(.5, degrees[index])
       pointer.setAttribute('transform', `rotate(${degrees[index]})`)
     }
   })

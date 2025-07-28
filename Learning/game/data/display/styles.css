@@ -31,6 +31,22 @@
     stroke-width: 3;
     stroke-linecap: round;
   }
+
+  .glow-line {
+    stroke: hsl(199, 90%, 85%);
+    stroke-width: 2;
+  }
+
+  .circle-mask1 {
+    fill: white;
+    scale: 1;
+    filter: blur(10px);
+  }
+
+  .glow {
+    filter: blur(.5px);
+    mask: url(#mask1);
+  }
 }
 
 @layer character {

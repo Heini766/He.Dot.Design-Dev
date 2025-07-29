@@ -7,6 +7,16 @@ export const originMarker = ren.circle({class: `origin-marker`, r: 1})
 const totalLines = 8;
 export const spacing = dsAspect.x/totalLines;
 
+const masks = () => {
+  
+  const maskShape = ren.circle({class: 'circle-mask1', r: spacing, cx: spacing/2, cy: spacing/2})
+  const maskTag = ren.mask({id: 'mask1', nodes: [maskShape.el]})
+
+  const el = ren.defs({nodes: [maskTag.el]})
+  return el;
+  
+}
+
 export const renDisplay = () => {
 
   const renGrid = () => {
@@ -27,14 +37,19 @@ export const renDisplay = () => {
     
   }
   const grid = renGrid()
+  const gridGlow = grid.el.cloneNode(true);
+  gridGlow.childNodes.forEach((el) => {
+    el.classList.add('glow-line')
+  })
+  gridGlow.classList.add('glow')
 
-  const bg = ren.group({id: 'game-bg', nodes: [grid.el]})
+  const bg = ren.group({id: 'game-bg', nodes: [grid.el, gridGlow]})
 
   const mainDs = ren.svg({
     id: 'mainDisplay',
     class: 'main-display',
     viewBox: `${-dsAspect.x/2 + spacing/2} ${-dsAspect.y/2 + spacing/2} ${dsAspect.x} ${dsAspect.y}`,
-    nodes: [bg]
+    nodes: [masks(), bg]
   })
   return mainDs
   

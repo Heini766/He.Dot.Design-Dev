@@ -7,6 +7,8 @@ const circleElement = document.createElementNS('http://www.w3.org/2000/svg', 'ci
 const rectElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 const imgElement = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+const defsElement = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+const maskElement = document.createElementNS('http://www.w3.org/2000/svg', 'mask')
 
 export function svg(data) {
 
@@ -140,5 +142,50 @@ export function img(data) {
     //i += 1
   })
   return {el: newImg, attr: data}
+  
+};
+
+export function defs(data) {
+
+  const newDef = defsElement.cloneNode();
+  const propNames = Object.keys(data);
+  const propValues = Object.values(data);
+  let nodes = []
+
+  propNames.forEach((el, index) => {
+
+  if (el === 'nodes') {
+    data.nodes.forEach((el) => {
+      newDef.appendChild(el);
+      nodes.push(el);
+    })
+  } else {
+    newDef.setAttribute(`${el}`, `${propValues[index]}`)
+  }
+  })
+  return {el: newDef, nodes: nodes}
+  
+}
+
+export function mask(data) {
+
+  const newMask = maskElement.cloneNode();
+  const propNames = Object.keys(data);
+  const propValues = Object.values(data);
+  let nodes = []
+
+  propNames.forEach((el, index) => {
+
+    if (el === 'nodes') {
+      propValues[index].forEach((el) => {
+        newMask.appendChild(el)
+        nodes.push(el)
+      })
+    } else {
+      newMask.setAttribute(`${el}`, `${propValues[index]}`)
+    }
+    
+  })
+  return {el: newMask, nodes: nodes}
   
 }

@@ -1,11 +1,51 @@
-@layer display {
-  .main-display {
-    background-color: hsl(0, 0%, 15%);
-    max-width: 400px;
+@font-face {
+  font-family: AvenirNext;
+  src: url('../Fonts/AvenirNext/AvenirNextLTPro-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+} /* Avenir Next - Reg */
+@font-face {
+  font-family: AvenirNext;
+  src: url('../Fonts/AvenirNext/AvenirNextLTPro-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+} /* Avenir Next - Bold */
+
+.header-section {
+  color: white;
+  height: 100vh;
+  font-family: AvenirNext;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@layer logo {
+
+  #logo {
+    max-width: 300px;
+    background-color: hsl(0, 0%, 10%);
   }
 
-  .origin-marker {
-    fill: red;
+  .logo-text {
+    fill: white;
+    text-anchor: middle;
+    text-transform: uppercase;
+    dominant-baseline: middle;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .logo-icon-img {
+    mask: url(#mask1);
+    mask-mode: alpha;
+  }
+
+  .mask-shape1 {
+    rx: 5px;
+    filter: blur(1px);
   }
   
 }

@@ -1,3 +1,3 @@
-import { headerSection } from "./data/Header/components.js";
+import { headerSection } from "./data/Landing Page/components.js";
 
 document.body.appendChild(headerSection)

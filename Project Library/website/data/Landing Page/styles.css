@@ -26,26 +26,28 @@
 
   #logo {
     max-width: 300px;
-    background-color: hsl(0, 0%, 10%);
+    /* background-color: hsl(0, 0%, 10%); */
   }
 
-  .logo-text {
+  #shape1 {
+    filter: blur(5px);
+  }
+
+  .word-mark {
+
     fill: white;
-    text-anchor: middle;
-    text-transform: uppercase;
-    dominant-baseline: middle;
-    user-select: none;
     cursor: pointer;
-  }
 
-  .logo-icon-img {
+   &.outline {
+    fill: none; opacity: .75;
+    stroke: white;
+    stroke-width: .8;
+    stroke-linecap: round; stroke-linejoin: round;
+
     mask: url(#mask1);
     mask-mode: alpha;
-  }
-
-  .mask-shape1 {
-    rx: 5px;
-    filter: blur(1px);
+    }
+   
   }
   
 }

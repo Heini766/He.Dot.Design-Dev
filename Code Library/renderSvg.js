@@ -8,7 +8,26 @@ const rectElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect
 const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 const imgElement = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 const defsElement = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-const maskElement = document.createElementNS('http://www.w3.org/2000/svg', 'mask')
+const maskElement = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+const useElement = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+
+function genContent(config, node) {
+
+  config.propNames.forEach((el, index) => {
+
+    if (el === 'nodes') {
+      config.propValues[index].forEach((el) => {
+        node.appendChild(el)
+      })
+    } else if (el === 'content') {
+      node.innerHTML = `${config.propValues[index]}`
+    } else {
+      node.setAttribute(`${el}`, `${config.propValues[index]}`)
+    }
+    
+  })
+  
+}
 
 export function svg(data) {
 
@@ -187,5 +206,16 @@ export function mask(data) {
     
   })
   return {el: newMask, nodes: nodes}
+  
+}
+
+export function use(data) {
+
+  const newUse = useElement.cloneNode();
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+
+  genContent(config, newUse);
+
+  return {el: newUse}
   
 }

@@ -17,7 +17,9 @@ function genContent(config, node) {
 
     if (el === 'nodes') {
       config.propValues[index].forEach((el) => {
-        node.appendChild(el)
+        if (el) {
+          node.appendChild(el)
+        }
       })
     } else if (el === 'content') {
       node.innerHTML = `${config.propValues[index]}`
@@ -46,7 +48,7 @@ export function group(data) {
 
   genContent(config, newG);
 
-  return {el: newG, nodes: nodes};
+  return {el: newG, attr: data};
   
 }; // Creates a group element.
 

@@ -25,16 +25,30 @@
 @layer logo {
 
   #logo {
-    max-width: 300px;
-    background-color: hsl(0, 0%, 15%);
+    max-width: 250px;
+    cursor: pointer;
+  }
+
+  .logo-word-mark-container {
+
+    &.vfx {
+      mask: url(#mask1);
+      mask-mode: alpha;
+    }
   }
 
   .logo-word-mark {
-    fill: white;
-    scale: .5;
 
-    mask: url(#mask1);
-    mask-mode: alpha;
+    fill: white;
+    scale: .7;
+
+  }
+
+  .logo-word-mark.vfx {
+    fill: var(--brandColor);
+    stroke: var(--brandColor);
+    stroke-width: 1;
+    opacity: .5;
   }
   
 }

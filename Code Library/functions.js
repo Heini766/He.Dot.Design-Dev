@@ -257,7 +257,7 @@ export function moveOrigin(parentNode, baseNode, offset) {
   // baseNode = Is used to determine the base dimensions in calculating the transforms
   // offset = an object that has x and y values determaning the origin offset
 
-  export function searchNodes(nodeArray, shapeID) {
+export function searchNodes(nodeArray, shapeID) {
 
     let shape;
     nodeArray.forEach((el) => {
@@ -268,4 +268,8 @@ export function moveOrigin(parentNode, baseNode, offset) {
 
     return shape ? shape : `'${shapeID}' not found`
     
-  }
+}
+
+export function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}

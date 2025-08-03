@@ -257,7 +257,7 @@ export function moveOrigin(parentNode, baseNode, offset) {
   // baseNode = Is used to determine the base dimensions in calculating the transforms
   // offset = an object that has x and y values determaning the origin offset
 
-  export function searchDef(nodeArray, shapeID) {
+  export function searchNodes(nodeArray, shapeID) {
 
     let shape;
     nodeArray.forEach((el) => {

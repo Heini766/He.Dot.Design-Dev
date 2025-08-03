@@ -17,7 +17,7 @@ function genContent(config, node) {
 
     if (el === 'nodes') {
       config.propValues[index].forEach((el) => {
-        node.appendChild(el.el)
+        node.appendChild(el)
       })
     } else if (el === 'content') {
       node.innerHTML = `${config.propValues[index]}`

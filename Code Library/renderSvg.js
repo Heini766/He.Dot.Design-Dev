@@ -17,7 +17,7 @@ function genContent(config, node) {
 
     if (el === 'nodes') {
       config.propValues[index].forEach((el) => {
-        node.appendChild(el)
+        node.appendChild(el.el)
       })
     } else if (el === 'content') {
       node.innerHTML = `${config.propValues[index]}`
@@ -31,135 +31,76 @@ function genContent(config, node) {
 
 export function svg(data) {
 
-  const newSvg = SVG.cloneNode(true);
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let nodes = [];
-  
-  let i = 0;
-  propNames.forEach((element) => {
+  const newSvg = SVG.cloneNode();
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-    if (element === 'nodes') {
-      data.nodes.forEach((element) => {
-        newSvg.appendChild(element.el);
-        nodes.push(element);
-      })
-    } else {
-      newSvg.setAttribute(`${element}`, `${propValues[i]}`)
-    }
-    i += 1;
-  })
+  genContent(config, newSvg);
 
-  return {el:newSvg, nodes: nodes};
+  return {el: newSvg, nodes: newSvg.childNodes};
 }; // Creates an SVG element.
 
 export function group(data) {
 
-  const newGroup = g.cloneNode(true);
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let nodes = [];
-  
-  let i = 0;
-  propNames.forEach((element) => {
+  const newG = g.cloneNode();
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-    if (element === 'nodes') {
-      data.nodes.forEach((element) => {
-      newGroup.appendChild(element);
-      nodes.push(element);
-    })
-    } else {
-      newGroup.setAttribute(`${element}`, `${propValues[i]}`)
-    }
-    i += 1;
-  })
-  return {el:newGroup, nodes: nodes};
+  genContent(config, newG);
+
+  return {el: newG, nodes: nodes};
   
 }; // Creates a group element.
 
 export function path(data) {
 
-  const newPath = pathElement.cloneNode(true);
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let i = 0;
+  const newPath = pathElement.cloneNode();
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  propNames.forEach((element) => {
-    newPath.setAttribute(`${element}`, `${propValues[i]}`);
-    i += 1;
-  })
+  genContent(config, newPath);
+
   return {el: newPath, attr: data};
 
 }; // Creates a path element. 
 
 export function circle(data) {
 
-  const newCircle = circleElement.cloneNode(true);
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let i = 0;
-  
-  propNames.forEach((element) => {
+  const newCircle = circleElement.cloneNode();
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-    if (element === 'event') {
-      newCircle.addEventListener(propValues[i][0], propValues[i][1])
-    } else {
-      newCircle.setAttribute(`${element}`, `${propValues[i]}`);
-    }
-    i += 1;
-  })
-  
-  return {el: newCircle, attr: data};
+  genContent(config, newCircle);
+
+  return {el: newCircle}
   
 }; // creates circle element.
 
 export function rect(data) {
 
-  const newRect = rectElement.cloneNode(true);
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let i = 0;
+  const newRect = rectElement.cloneNode();
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  propNames.forEach((element) => {
-    newRect.setAttribute(`${element}`, `${propValues[i]}`)
-    i += 1;
-  })
-  return {el: newRect, attr: data};
+  genContent(config, newRect);
+
+  return {el: newRect, attr: data}
   
 }; // creates rectangle element.
 
 export function text(data) {
 
-  const newText = textElement.cloneNode(true);
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let i = 0;
+ const newText = textElement.cloneNode();
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  propNames.forEach((element) => {
+  genContent(config, newText);
 
-    if (element === 'content') {
-      newText.textContent = `${propValues[i]}`;
-    } else {
-      newText.setAttribute(`${element}`, `${propValues[i]}`)
-    };
-    i += 1;
-  })
-  return {el: newText, attr: data};
+  return {el: newText, attr: data}
   
 };
 
 export function img(data) {
 
   const newImg = imgElement.cloneNode();
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  //let i = 0;
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  propNames.forEach((el, index) => {
+  genContent(config, newUse);
 
-    newImg.setAttribute(`${el}`, `${propValues[index]}`)
-    //i += 1
-  })
   return {el: newImg, attr: data}
   
 };
@@ -167,45 +108,22 @@ export function img(data) {
 export function defs(data) {
 
   const newDef = defsElement.cloneNode();
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let nodes = []
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  propNames.forEach((el, index) => {
+  genContent(config, newDef);
 
-  if (el === 'nodes') {
-    data.nodes.forEach((el) => {
-      newDef.appendChild(el);
-      nodes.push(el);
-    })
-  } else {
-    newDef.setAttribute(`${el}`, `${propValues[index]}`)
-  }
-  })
-  return {el: newDef, nodes: nodes}
+  return {el: newDef, nodes: newDef.childNodes}
   
 }
 
 export function mask(data) {
 
   const newMask = maskElement.cloneNode();
-  const propNames = Object.keys(data);
-  const propValues = Object.values(data);
-  let nodes = []
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  propNames.forEach((el, index) => {
+  genContent(config, newMask);
 
-    if (el === 'nodes') {
-      propValues[index].forEach((el) => {
-        newMask.appendChild(el)
-        nodes.push(el)
-      })
-    } else {
-      newMask.setAttribute(`${el}`, `${propValues[index]}`)
-    }
-    
-  })
-  return {el: newMask, nodes: nodes}
+  return {el: newMask}
   
 }
 

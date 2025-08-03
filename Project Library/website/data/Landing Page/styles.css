@@ -28,5 +28,19 @@
     max-width: 300px;
     background-color: hsl(0, 0%, 15%);
   }
+
+  .logo-word-mark {
+    fill: white;
+    scale: .5;
+
+    mask: url(#mask1);
+    mask-mode: alpha;
+  }
   
+}
+
+@layer masks {
+  .mask1 {
+    filter: blur(5px);
+  }
 }

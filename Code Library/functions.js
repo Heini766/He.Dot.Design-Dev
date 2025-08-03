@@ -256,3 +256,16 @@ export function moveOrigin(parentNode, baseNode, offset) {
 } // parentNode = The group node that contains the entire entity
   // baseNode = Is used to determine the base dimensions in calculating the transforms
   // offset = an object that has x and y values determaning the origin offset
+
+  export function searchDef(nodeArray, shapeID) {
+
+    let shape;
+    nodeArray.forEach((el) => {
+      if (el.getAttribute('id') === `${shapeID}`) {
+        shape = el;
+      }
+    })
+
+    return shape ? shape : `'${shapeID}' not found`
+    
+  }

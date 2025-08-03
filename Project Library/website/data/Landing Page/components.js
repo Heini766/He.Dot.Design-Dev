@@ -1,6 +1,7 @@
 import * as ren from '../../../../Code Library/renderSvg.js';
 import * as renHtml from '../../../../Code Library/renderHTML.js';
 import { getRelativePosition, searchNodes, isMobileDevice } from '../../../../Code Library/functions.js';
+import { scaleFade } from './animation.js';
 
 const renLogo = () => {
 
@@ -29,6 +30,8 @@ const renLogo = () => {
   const wordMark = renWordMark(1, 'logo-word-mark', 'logo-word-mark-container');
   
   const el = ren.svg({id: 'logo', viewBox: `${-logoAspect.x/2} ${-logoAspect.y/2} ${logoAspect.x} ${logoAspect.y}`, nodes: [defTag.el, wordMark.el, wordMarkVfx.el]})
+  el.el.addEventListener('mousemove', moveMask)
+  el.el.addEventListener('click', logoClick)
   return el
   
 }
@@ -41,7 +44,9 @@ function moveMask(event) {
   mask1.style.cy = `${relPos.y}`
 }
 
-logo.el.addEventListener('mousemove', moveMask)
-
+export function logoClick() {
+  logo.el.removeEventListener('click', logoClick)
+  scaleFade(.5, logo.el)
+}
 
 export const headerSection = renHtml.section({class: 'header-section', nodes: [logo.el]})

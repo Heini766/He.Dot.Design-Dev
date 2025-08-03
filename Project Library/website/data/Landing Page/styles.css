@@ -26,28 +26,7 @@
 
   #logo {
     max-width: 300px;
-    /* background-color: hsl(0, 0%, 10%); */
-  }
-
-  #shape1 {
-    filter: blur(5px);
-  }
-
-  .word-mark {
-
-    fill: white;
-    cursor: pointer;
-
-   &.outline {
-    fill: none; opacity: .75;
-    stroke: white;
-    stroke-width: .8;
-    stroke-linecap: round; stroke-linejoin: round;
-
-    mask: url(#mask1);
-    mask-mode: alpha;
-    }
-   
+    background-color: hsl(0, 0%, 15%);
   }
   
 }

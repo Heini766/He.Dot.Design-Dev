@@ -1,0 +1,21 @@
+.nav-container {
+  display: flex;
+  gap: clamp(1rem, 100vw * .025, 3rem);
+}
+
+@media  (width < 800px) {
+  .nav-container {
+    flex-direction: column;
+  }
+}
+
+.nav-btn {
+  width: calc(100vw * .25);
+  max-width: 200px; min-width: 135px;
+}
+
+.nav-text {
+  fill: white;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}

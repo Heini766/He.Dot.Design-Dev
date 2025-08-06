@@ -101,7 +101,7 @@ export function img(data) {
   const newImg = imgElement.cloneNode();
   const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  genContent(config, newUse);
+  genContent(config, newImg);
 
   return {el: newImg, attr: data}
   

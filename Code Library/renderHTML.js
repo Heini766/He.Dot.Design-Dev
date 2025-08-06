@@ -1,6 +1,7 @@
 const divEl = document.createElement('div');
 const headerEl = document.createElement('header');
 const secEl = document.createElement('section');
+const anchorEl = document.createElement('a');
 
 function genContent(config, node) {
 
@@ -51,4 +52,14 @@ export function header(data) {
 
   return  newHeader
   
+}
+
+
+export function a(data) {
+
+  const newA = anchorEl.cloneNode()
+  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+  genContent(config, newA)
+
+  return newA
 }

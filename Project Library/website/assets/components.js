@@ -33,8 +33,14 @@ export function renNavBtn(data) {
   
 } // {numId: '?', btnContent: '?'}
 
-export function renBackBtn() {
+export function renBackBtn(data) {
 
-  
+  const aspect  = {x: 50, y: 35}
+
+  const path = ren.path({class: 'back-arrow', transform: `translate(${-41/2} -15)`, d: `M15.3157 0 0 15.0003 15.3157 30l5.2239-5.2793-4.0058-3.9235c-.1736-.1699-.2924-.3874-.3413-.6248-.0489-.2373-.0257-.4838.0665-.708.0923-.2242.2496-.4161.4518-.5511.2021-.135.4401-.2071.6836-.2071H41v-7.4101H17.3932c-.2434 0-.4814-.0721-.6835-.2071-.2022-.135-.3594-.3268-.4517-.551a1.215216 1.215216 0 0 1-.0665-.70798c.049-.23732.1678-.4548.3413-.62473l4.0068-3.92367L15.3157 0Z`})
+
+  const svg = ren.svg({id: 'backBtn', class: 'back-btn', viewBox: `${-aspect.x/2} ${-aspect.y/2} ${aspect.x} ${aspect.y}`, nodes: [path.el]})
+  const element = renHtml.a({class: `back-anchor`, href: `${data.href}`, nodes: [svg.el]})
+  return element
   
 }

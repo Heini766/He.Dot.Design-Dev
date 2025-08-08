@@ -43,3 +43,16 @@
     transform: translateY(-100px);
   }
 }
+
+.back-anchor {
+  position: absolute; top: 0; right: 0;
+  margin: 16px ;
+}
+
+.back-btn {
+  min-width: 35px;
+}
+
+.back-arrow {
+  fill: cyan;
+}

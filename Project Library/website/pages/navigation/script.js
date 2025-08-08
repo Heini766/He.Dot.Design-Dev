@@ -1,5 +1,5 @@
 import * as renHtml from '../../../../Code Library/renderHTML.js'
-import { renNavBtn } from "../../assets/components.js";
+import { renBackBtn, renNavBtn } from "../../assets/components.js";
 
 const navs = ['about', 'work', 'contact'];
 
@@ -14,5 +14,8 @@ const renNavBar = () => {
   return renHtml.div({class: 'nav-container', nodes: btns})
   
 }
+const nodes = [renNavBar(), renBackBtn({href: '../../index.html'})]
 
-document.body.appendChild(renNavBar())
+nodes.forEach((el) => {
+  document.body.appendChild(el)
+})

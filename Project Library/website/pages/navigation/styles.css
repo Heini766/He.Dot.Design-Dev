@@ -10,12 +10,36 @@
 }
 
 .nav-btn {
-  width: calc(100vw * .25);
+  width: calc(100vw * .15);
   max-width: 200px; min-width: 135px;
+  cursor: pointer;
+
+  &:hover {
+    .nav-bg-img {
+      transform: translateY(-100px);
+    }
+    .nav-text {
+      scale: .95;
+    }
+  }
 }
 
 .nav-text {
+  font-family: AvenirNext; font-weight: bold; text-transform: uppercase;
+  transition-property: scale; transition-duration: .15s; transition-timing-function: ease;
+  user-select: none;
   fill: white;
   text-anchor: middle;
   dominant-baseline: middle;
+}
+
+.nav-bg-img {
+  opacity: .25;
+  transition-property: transform; transition-duration: .25s; transition-timing-function: ease;
+}
+
+@media screen and (pointer: coarse) {
+  .nav-bg-img {
+    transform: translateY(-100px);
+  }
 }

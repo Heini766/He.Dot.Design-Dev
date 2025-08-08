@@ -24,7 +24,7 @@ export function renNavBtn(data) {
     const aspect = {x: 100, y: 100}
 
     const text = ren.text({class: 'nav-text', content: `${data.btnContent}`})
-    const bg = ren.img({class: 'nav-bg-img', href: `../../assets/img/navBg/${data.btnContent}.png`, x: `${-aspect.x/2}`, y: `${-aspect.y/2}`, height: `${aspect.y}`})
+    const bg = ren.img({class: 'nav-bg-img', href: `../../assets/img/navBg/${data.btnContent}.png`, x: `${-aspect.x/2}`, y: `${aspect.y/2}`, height: `${aspect.y}`})
 
     return ren.svg({id: `navBtn${Number(data.numId) + 1}`, class: 'nav-btn', viewBox: `${-aspect.x/2} ${-aspect.y/2} ${aspect.x} ${aspect.y}`, nodes: [bg.el, text.el]})
     
@@ -32,3 +32,9 @@ export function renNavBtn(data) {
   return renHtml.a({nodes: [renBtn().el]})
   
 } // {numId: '?', btnContent: '?'}
+
+export function renBackBtn() {
+
+  
+  
+}

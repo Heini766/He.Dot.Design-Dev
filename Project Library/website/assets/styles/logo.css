@@ -4,8 +4,7 @@
 
 .logo-wordmark {
   width: calc(100vw * .25);
-  max-width: 300px; min-width: 200px;
-  background-color: hsl(0, 0%, 15%);
+  max-width: 400px; min-width: 300px;
 
   &:hover {
     .logo-wordmark-container {
@@ -16,7 +15,7 @@
 }
 
 @media screen and (pointer: fine) {
-  .logo-wordmark {
+  .logo-wordmark-container {
     cursor: pointer;
   }
 }

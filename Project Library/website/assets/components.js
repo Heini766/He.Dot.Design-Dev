@@ -1,5 +1,12 @@
 import * as ren from '../../../Code Library/renderSvg.js';
 import * as renHtml from '../../../Code Library/renderHTML.js';
+import { createCustomProp } from '../../../Code Library/functions.js';
+
+const props = {
+  brandColor: `#2DCCD3`,
+}
+createCustomProp(props)
+
 
 export function renLogo() {
 
@@ -21,12 +28,13 @@ export function renNavBtn(data) {
 
   const renBtn = () => {
 
-    const aspect = {x: 100, y: 100}
+    const [aspect, sh1] = [{x: 100, y: 50}, {x: 85, y: 10}];
 
     const text = ren.text({class: 'nav-text', content: `${data.btnContent}`})
-    const bg = ren.img({class: 'nav-bg-img', href: `../../assets/img/navBg/${data.btnContent}.png`, x: `${-aspect.x/2}`, y: `${aspect.y/2}`, height: `${aspect.y}`})
+    const highlight = ren.rect({class: 'highlight', width: sh1.x, height: sh1.y, y: -sh1.y * .25})
+    const highlightContainer = ren.group({id: 'highlight', class: 'highlight-container', transform: `translate(${-sh1.x/2})`, nodes: [highlight.el]})
 
-    return ren.svg({id: `navBtn${Number(data.numId) + 1}`, class: 'nav-btn', viewBox: `${-aspect.x/2} ${-aspect.y/2} ${aspect.x} ${aspect.y}`, nodes: [bg.el, text.el]})
+    return ren.svg({id: `navBtn${Number(data.numId) + 1}`, class: 'nav-btn', viewBox: `${-aspect.x/2} ${-aspect.y/2} ${aspect.x} ${aspect.y}`, nodes: [highlightContainer.el, text.el]})
     
   }
   return renHtml.a({nodes: [renBtn().el]})

@@ -3,6 +3,15 @@
   gap: clamp(1rem, 100vw * .025, 3rem);
 }
 
+@media  (pointer: fine) {
+  .nav-container {
+    flex-direction: column;
+    gap: 0;
+    position: absolute; left: 0; top: 0;
+    margin: 2rem;
+  }
+}
+
 @media  (width < 550px) {
   .nav-container {
     flex-direction: column;
@@ -15,38 +24,37 @@
   cursor: pointer;
 
   &:hover {
-    .nav-bg-img {
-      transform: translateY(-100px);
+    .highlight {
+      scale: 1 1;
     }
     .nav-text {
       scale: .95;
+      fill: var(--brandColor);
+      stroke: black; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+      paint-order: stroke markers fill;
     }
   }
 }
 
 .nav-text {
   font-family: AvenirNext; font-weight: bold; text-transform: uppercase;
-  transition-property: scale; transition-duration: .15s; transition-timing-function: ease;
+  transition-property: scale, fill; transition-duration: .25s; transition-timing-function: ease;
   user-select: none;
   fill: white;
   text-anchor: middle;
   dominant-baseline: middle;
 }
 
-.nav-bg-img {
-  opacity: .25;
-  transition-property: transform; transition-duration: .25s; transition-timing-function: ease;
-}
-
-@media screen and (pointer: coarse) {
-  .nav-bg-img {
-    transform: translateY(-100px);
-  }
+.highlight {
+  scale: 0 1;
+  rx: 1;
+  fill: var(--brandColor);
+  transition-property: scale; transition-duration: .5s; transition-timing-function: ease-in-out;
 }
 
 .back-anchor {
   position: absolute; top: 0; right: 0;
-  margin: 16px ;
+  margin: 16px 50px;
 }
 
 .back-btn {
@@ -54,5 +62,5 @@
 }
 
 .back-arrow {
-  fill: cyan;
+  fill: var(--brandColor);
 }

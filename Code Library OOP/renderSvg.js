@@ -19,7 +19,7 @@ function genContent(config, node) {
   
 }
 
- class SVG {
+export class SVG {
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   constructor(config) {
     this.node.setAttribute(`xmlns`, `http://www.w3.org/2000/svg`)

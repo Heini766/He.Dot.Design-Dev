@@ -1,11 +1,12 @@
-import * as ren from '../../../../../Code Library/renderSvg.js';
+import { SVG } from "../../../Code Library OOP/renderSvg.js"
 
-const dsAspect = {x: 100, y: 100}
+const aspect = {x: 100, y: 100}
 
-const originMarker = ren.circle({class: `origin-marker`, r: 1})
-export const mainDs = ren.svg({
-  id: 'mainDisplay',
-  class: 'main-display',
-  viewBox: `${-dsAspect.x/2} ${-dsAspect.y/2} ${dsAspect.x} ${dsAspect.y}`,
-  nodes: [originMarker]
+export const mainDs = new SVG({id: 'mainDisplay', class: 'main-display', viewBox: `${-aspect.x/2} ${-aspect.y/2} ${aspect.x} ${aspect.y}`});
+
+mainDs.addNodes(() => {
+
+  const marker = mainDs.create.circle({class: 'origin-marker', r: aspect.x*.01})
+  return [marker]
+  
 })

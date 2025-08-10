@@ -1,7 +1,10 @@
 import * as renHtml from '../../../../Code Library/renderHTML.js'
 import { renBackBtn, renNavBtn } from "../../assets/components.js";
+import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
 const navs = ['about', 'work', 'contact'];
+
+console.log(dayjs().$d)
 
 const renNavBar = () => {
 

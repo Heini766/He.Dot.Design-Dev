@@ -1,10 +1,4 @@
-const divEl = document.createElement('div');
-const headerEl = document.createElement('header');
-const secEl = document.createElement('section');
-const anchorEl = document.createElement('a');
-
 function genContent(config, node) {
-
   config.propNames.forEach((el, index) => {
 
     if (el === 'nodes') {
@@ -18,48 +12,43 @@ function genContent(config, node) {
     }
     
   })
-  
 }
 
-export function div(data) {
+export class HTML {
 
-  const newDiv = divEl.cloneNode();
-  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+  create = {
+    div(data) {
+      const newDiv = document.createElement('div')
+      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
 
-  genContent(config, newDiv)
+      genContent(config, newDiv)
 
-  return newDiv
+      return newDiv
+    },
+    section(data) {
+      const newSec = document.createElement('section')
+      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+
+      genContent(config, newSec)
+
+      return newSec
+    },
+    h1(data) {
+      const newH1 = document.createElement('h1')
+      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+
+      genContent(config, newH1)
+
+      return newH1
+    },
+    a(data) {
+      const newA = document.createElement('a')
+      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+
+      genContent(config, newA)
+
+      return newA
+    }
+  }
   
-}
-
-export function section(data) {
-
-  const newSec = secEl.cloneNode();
-  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-
-  genContent(config, newSec)
-
-  return newSec
-  
-}
-
-export function header(data) {
-
-  const newHeader = headerEl.cloneNode();
-  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-
-  genContent(config, newHeader)
-
-  return  newHeader
-  
-}
-
-
-export function a(data) {
-
-  const newA = anchorEl.cloneNode()
-  const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-  genContent(config, newA)
-
-  return newA
 }

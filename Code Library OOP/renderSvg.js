@@ -30,77 +30,17 @@ export class SVG {
   }
 
   addNodes(data) {
-    const newNodes = data()
-    newNodes.forEach((el) => [
+      data().forEach((el) => [
       this.node.appendChild(el)
     ])
   }
 
-  create = {
-
-    path(data) {
-      const newPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newPath);
-  
-      return newPath
-    },
-    circle(data) {
-    const newCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  ren(tag, data) {
+    const newTag = document.createElementNS('http://www.w3.org/2000/svg', `${tag}`);
     const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-    genContent(config, newCircle);
-  
-    return newCircle
-    },
-    rect(data) {
-      const newRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newRect);
-  
-      return newRect
-    },
-    text(data) {
-      const newText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newText)
 
-      return newText
-    },
-    img(data) {
-      const newImg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newImg)
+    genContent(config, newTag);
 
-      return newImg
-    },
-    group(data) {
-      const newG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newG)
-
-      return newG
-    },
-    defs(data) {
-      const newDef = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newDef)
-
-      return newDef
-    },
-    mask(data) {
-      const newMask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newMask)
-
-      return newMask
-    },
-    use(data) {
-      const newUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-      const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-      genContent(config, newUse)
-
-      return newUse
-    }
-
+    return newTag
   }
 }

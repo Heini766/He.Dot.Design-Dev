@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 100 100">
+  <path fill="url(#a)" d="M50 100c27.6142 0 50-22.3858 50-50S77.6142 0 50 0 0 22.3858 0 50s22.3858 50 50 50Z"/>
+  <path fill="url(#b)" d="M50 100c27.6142 0 50-22.3858 50-50S77.6142 0 50 0 0 22.3858 0 50s22.3858 50 50 50Z"/>
+  <defs>
+    <radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="rotate(38.4575 -29.608742 59.851103) scale(24.829 34.4446)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BBEFF1"/>
+      <stop offset="1" stop-color="#2DCCD3"/>
+    </radialGradient>
+    <radialGradient id="b" cx="0" cy="0" r="1" gradientTransform="rotate(66.1008 -7.61835 38.537672) scale(174.82 158.892)" gradientUnits="userSpaceOnUse">
+      <stop stop-opacity="0"/>
+      <stop offset=".2" stop-opacity=".07451"/>
+      <stop offset=".39" stop-opacity=".309804"/>
+      <stop offset=".44" stop-opacity=".180392"/>
+      <stop offset=".5" stop-opacity=".407843"/>
+      <stop offset="1"/>
+    </radialGradient>
+  </defs>
+</svg>

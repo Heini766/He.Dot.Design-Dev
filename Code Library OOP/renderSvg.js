@@ -30,16 +30,33 @@ export class SVG {
   }
 
   addNodes(data) {
-      data().forEach((el) => [
-      this.node.appendChild(el)
-    ])
+    const nodes = data();
+    nodes.forEach((el, i) => {
+      const id = el.node.getAttribute('id')
+      this[`${id ? id : `nodeUndef${i}`}`] = el;
+      this.node.appendChild(el.node);
+    })
   }
 
   ren(tag, data) {
-    const newTag = document.createElementNS('http://www.w3.org/2000/svg', `${tag}`);
-    const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+    const newTag = new class {
 
-    genContent(config, newTag);
+      node = document.createElementNS('http://www.w3.org/2000/svg', `${tag}`);
+
+      constructor() {
+        const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+        genContent(config, this.node);
+      }
+
+      addNodes(data) {
+        const nodes = data();
+        nodes.forEach((el, i) => {
+          const id = el.node.getAttribute('id')
+          this[`${id ? id : `nodeUndef${i}`}`] = el;
+          this.node.appendChild(el.node);
+        })
+      }
+    }
 
     return newTag
   }

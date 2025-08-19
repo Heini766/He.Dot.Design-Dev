@@ -3,41 +3,21 @@ import { HTML } from "../../../Code Library OOP/renderHTML.js";
 
 const aspect = {x: 100, y: 100}
 
-export const mainDs = new SVG({id: 'mainDisplay', class: 'main-display', viewBox: `${-aspect.x/2} ${-aspect.y/2} ${aspect.x} ${aspect.y}`});
+export const navMenu = new HTML('nav', {id: 'navigation', class: 'nav-menu'});
 
-mainDs.addNodes(() => {
+navMenu.addNodes(() => {
 
-  const def =  mainDs.ren('defs', {id: 'defNode'});
-  def.addNodes(() => {
-
-    const radGrade = mainDs.ren('radialGradient', {id: 'radGrade1',r: 0.2})
-    const stopCount = 1;
-    radGrade.addNodes(() => {
-
-      const stops = []
-      
-      for (let i = 0; i <= stopCount; i += 1) {
-        const newStop = mainDs.ren('stop', {class: `radialStop${i + 1}`, offset: `${i/stopCount}`});
-        stops.push(newStop)
-      }
-      return stops
-    })
-    
-    return [radGrade]
-  })
-  const shapeSize = {width: 50, height: 50}
-  const shape1 = mainDs.ren('rect', {class: 'shape1', width: shapeSize.width, height: shapeSize.height, x: -shapeSize.width/2, y: -shapeSize.height/2})
+  const btns = ['Chapter 1', 'Chapter 2', 'Chapter 3']
+  let navBtns = []
   
-  return [def, shape1]
+  btns.forEach((el, i) => {
+    const newAnchor = navMenu.ren('a', {class: 'nav-anchor', id: `navA${i + 1}`, href: `https://www.youtube.com/watch?v=h84fYAsvsco&list=RDMM&index=3`});
+    newAnchor.addNodes(() => {
+      return [navMenu.ren('h2', {id: `navTitle${i + 1}`, class: 'nav-title', content: `${el}`})]
+    })
+    navBtns.push(newAnchor)
+  })
+
+  return navBtns
+  
 })
-
-export const myDiv = new HTML('div', {id: 'myDiv', class: 'box'})
-
-myDiv.addNodes(() => {
-  return [
-    myDiv.ren('h1', {id: 'h1Tag', content: 'Heinrich'}),
-    myDiv.ren('a', {href: '#', class: 'anchor1'})
-  ]
-})
-
-console.log(myDiv.h1Tag.node)

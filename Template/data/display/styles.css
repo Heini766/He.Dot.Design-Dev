@@ -11,21 +11,33 @@
 }
 
 @layer comps {
-  .shape1 {
-    fill: url(#radGrade1);
+
+  .nav-menu {
+    display: flex;
+    position: absolute; top: 0; gap: 1rem;
   }
 
-  .radialStop1 {
-    stop-color: rgb(255, 255, 255);
-  }
-   .radialStop2 {
-    stop-color: rgb(255, 255, 255); stop-opacity: 0;
-  }
+  .nav-anchor {
+    padding-inline: 1rem;
+    padding-block: .5rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid hsl(0 0 100 / 0);
 
-  .box {
-    height: 100px;
-    padding-inline: 2rem;
-    color: white;
-    background-color: gray;
+    &:hover {
+
+      border-bottom: 1px solid white;
+      
+      .nav-title {
+        color: gray;
+      }
+    }
+    
+  }
+  
+  .nav-title {
+    color: white; font-family: 'Times New Roman', Times, serif; letter-spacing: .05rem;
+    margin: 0;
+    user-select: none;
   }
 }

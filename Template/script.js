@@ -1,6 +1,6 @@
-import { mainDs, myDiv } from "./data/display/components.js";
+import {navMenu} from "./data/display/components.js";
 
-const elements = [mainDs, myDiv]
+const elements = [navMenu]
 
 elements.forEach((el) => {
 

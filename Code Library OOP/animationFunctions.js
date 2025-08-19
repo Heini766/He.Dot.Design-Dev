@@ -1,3 +1,27 @@
+export function createAni(duration, callBack, fillMode) {
+  let start, id;
+
+  const animate = () => {
+
+    if (start === undefined) {
+      start = performance.now()
+    }
+    const elapsed = (performance.now() - start)/1000;
+    const t =  Math.min(elapsed/duration, 1);
+    callBack(t)
+    console.log(fillMode)
+    if (t < 1) {
+      id = requestAnimationFrame(animate)
+    } else if (fillMode === 'loop') {
+      start = performance.now();
+      id = requestAnimationFrame(animate)
+    }
+
+  }
+
+  id = requestAnimationFrame(animate)
+}
+
 export function easeInQuad(t) {
   return t * t;
 };
@@ -42,7 +66,7 @@ export function easeOutExpo(t) {
   return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 };
 
-function easeInOutExpo(t) {
+export function easeInOutExpo(t) {
   if (t === 0) return 0;
   if (t === 1) return 1;
   return t < 0.5 ? Math.pow(2, 20 * t - 10) / 2 : (2 - Math.pow(2, -20 * t + 10)) / 2;

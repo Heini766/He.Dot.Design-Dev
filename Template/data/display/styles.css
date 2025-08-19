@@ -10,26 +10,6 @@
   
 }
 
-@layer defs {
-  .grade1 {
-
-    --color: white;
-    &.stop0 {
-     stop-color: var(--color); stop-opacity: 0;
-    }
-    &.stop1 {
-      stop-color: var(--color);
-    }
-    &.stop2 {
-      stop-color: var(--color); stop-opacity: 0;
-    }
-  }
-}
-
 @layer comps {
-
-  .rect1 {
-    fill: url(#grade1);
-  }
   
 }

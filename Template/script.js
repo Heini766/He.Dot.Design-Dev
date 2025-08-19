@@ -1,3 +1,9 @@
-import { mainDs } from "./data/display/components.js";
+import { mainDs, myDiv } from "./data/display/components.js";
 
-document.body.appendChild(mainDs.node)
+const elements = [mainDs, myDiv]
+
+elements.forEach((el) => {
+
+  document.body.appendChild(el.node)
+  
+})

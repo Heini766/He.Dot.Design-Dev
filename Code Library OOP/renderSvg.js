@@ -52,7 +52,7 @@ export class SVG {
         const nodes = data();
         nodes.forEach((el, i) => {
           const id = el.node.getAttribute('id')
-          this[`${id ? id : `nodeUndef${i}`}`] = el;
+          if (id) this[id] = el
           this.node.appendChild(el.node);
         })
       }

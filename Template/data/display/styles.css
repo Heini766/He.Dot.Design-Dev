@@ -11,5 +11,21 @@
 }
 
 @layer comps {
-  
+  .shape1 {
+    fill: url(#radGrade1);
+  }
+
+  .radialStop1 {
+    stop-color: rgb(255, 255, 255);
+  }
+   .radialStop2 {
+    stop-color: rgb(255, 255, 255); stop-opacity: 0;
+  }
+
+  .box {
+    height: 100px;
+    padding-inline: 2rem;
+    color: white;
+    background-color: gray;
+  }
 }

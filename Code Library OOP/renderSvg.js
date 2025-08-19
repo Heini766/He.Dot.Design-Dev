@@ -1,4 +1,3 @@
-
 function genContent(config, node) {
 
   config.propNames.forEach((el, index) => {

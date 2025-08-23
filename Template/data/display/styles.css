@@ -11,33 +11,8 @@
 }
 
 @layer comps {
-
-  .nav-menu {
-    display: flex;
-    position: absolute; top: 0; gap: 1rem;
-  }
-
-  .nav-anchor {
-    padding-inline: 1rem;
-    padding-block: .5rem;
-    cursor: pointer;
-    text-decoration: none;
-    border-bottom: 1px solid hsl(0 0 100 / 0);
-
-    &:hover {
-
-      border-bottom: 1px solid white;
-      
-      .nav-title {
-        color: gray;
-      }
-    }
-    
-  }
-  
-  .nav-title {
-    color: white; font-family: 'Times New Roman', Times, serif; letter-spacing: .05rem;
-    margin: 0;
-    user-select: none;
+  .canvas {
+    max-width: 500px;
+    background-color: gray;
   }
 }

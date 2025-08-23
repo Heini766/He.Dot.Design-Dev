@@ -1,6 +1,6 @@
-import {navMenu} from "./data/display/components.js";
+import {canvas} from "./data/display/components.js";
 
-const elements = [navMenu]
+const elements = [canvas]
 
 elements.forEach((el) => {
 

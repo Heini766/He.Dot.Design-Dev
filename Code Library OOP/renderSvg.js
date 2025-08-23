@@ -35,7 +35,7 @@ export class SVG {
       this[`${id ? id : `nodeUndef${i}`}`] = el;
       this.node.appendChild(el.node);
     })
-  }
+  } // data should be an array containing the added nodes
 
   ren(tag, data) {
     const newTag = new class {
@@ -43,8 +43,12 @@ export class SVG {
       node = document.createElementNS('http://www.w3.org/2000/svg', `${tag}`);
 
       constructor() {
-        const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-        genContent(config, this.node);
+        if (typeof(data) === 'object') {
+          const config = {propNames: Object.keys(data), propValues: Object.values(data)};
+          genContent(config, this.node);
+        } else {
+          console.log(`No attributes found for the '${tag}' tag`)
+        }
       }
 
       addNodes(data) {

@@ -9,7 +9,6 @@ export function createAni(duration, callBack, fillMode) {
     const elapsed = (performance.now() - start)/1000;
     const t =  Math.min(elapsed/duration, 1);
     callBack(t)
-    console.log(fillMode)
     if (t < 1) {
       id = requestAnimationFrame(animate)
     } else if (fillMode === 'loop') {

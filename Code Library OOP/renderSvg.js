@@ -32,7 +32,7 @@ export class SVG {
     const nodes = data();
     nodes.forEach((el, i) => {
       const id = el.node.getAttribute('id')
-      this[`${id ? id : `nodeUndef${i}`}`] = el;
+      if (id) this[id] = el;
       this.node.appendChild(el.node);
     })
   } // data should be an array containing the added nodes
@@ -53,7 +53,7 @@ export class SVG {
 
       addNodes(data) {
         const nodes = data();
-        nodes.forEach((el, i) => {
+        nodes.forEach((el) => {
           const id = el.node.getAttribute('id')
           if (id) this[id] = el
           this.node.appendChild(el.node);

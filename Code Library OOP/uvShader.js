@@ -13,7 +13,7 @@ export class UVMapper {
 
     this.#generateUVCoordinates(gridSize);
     this.#createUVNodes(shapeCallback);
-  }
+  } //The shapeCallBack function must return a node object
 
   #generateUVCoordinates(gridSize) {
     for (let y = 0; y <= gridSize.y; y += 1) {

@@ -1,5 +1,4 @@
 import { SVG } from "../../../Code Library OOP/renderSvg.js";
-import { UVMapper } from "../../../Code Library OOP/uvShader.js";
 
 const aspect = {x: 100, y: 100}
 

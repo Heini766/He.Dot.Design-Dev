@@ -1,23 +1,3 @@
-function genContent(config, node) {
-
-  config.propNames.forEach((el, index) => {
-
-    if (el === 'nodes') {
-      config.propValues[index].forEach((el) => {
-        if (el) {
-          node.appendChild(el)
-        }
-      })
-    } else if (el === 'content') {
-      node.innerHTML = `${config.propValues[index]}`
-    } else {
-      node.setAttribute(`${el}`, `${config.propValues[index]}`)
-    }
-    
-  })
-  
-}
-
 export class SVG {
   
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

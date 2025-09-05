@@ -1,67 +1,41 @@
-function genContent(config, node) {
-  config.propNames.forEach((el, index) => {
-
-    if (el === 'nodes') {
-      config.propValues[index].forEach((el) => {
-        node.appendChild(el)
-      })
-    } else if (el === 'content') {
-      node.innerHTML = `${config.propValues[index]}`
-    } else {
-      node.setAttribute(`${el}`, `${config.propValues[index]}`)
-    }
-    
-  })
-}
-
 export class HTML {
-
   node = undefined;
 
-  constructor(tag, data) {
-    const newEl = document.createElement(tag);
-    const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-
-    genContent(config, newEl);
-
-    this.node = newEl
+  constructor(tag, data = {}) {
+    this.node = document.createElement(tag);
+    this.setAttributes(data);
   }
 
-  addNodes(data) {
-    const nodes = data()
-    nodes.forEach((el, i) => {
-      const id = el.node.getAttribute('id');
-      this[`${id ? id : `undefNode${i}`}`] = el;
-      this.node.appendChild(el.node)
-    })
+  setAttributes(attributes = {}) {
+    Object.entries(attributes).forEach(([key, value]) => {
+      if (key === 'textContent') {
+        this.node.textContent = value;
+      } else if (key === 'innerHTML') {
+        this.node.innerHTML = value;
+      } else if (key.startsWith('on') && typeof value === 'function') {
+        this.node.addEventListener(key.slice(2), value);
+      } else {
+        this.node.setAttribute(key, value);
+      }
+    });
+    return this; // For method chaining
   }
-  
-  ren(tag, data) {
 
-    const newEl = new class {
-      node = undefined;
-      constructor() {
-        const newTag = document.createElement(tag)
-        const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-
-        genContent(config, newTag);
-
-        this.node = newTag
-      }
-
-      addNodes(data) {
-        const nodes = data()
-        nodes.forEach((el, i) => {
-          const id = el.node.getAttribute('id');
-          if (id) this[id] = el
-          this.node.appendChild(el.node)
-        })
-      }
-
-    }
-
-    return newEl
+  addNodes(nodes) {
+    const nodeArray = Array.isArray(nodes) ? nodes : [nodes];
     
+    nodeArray.forEach(node => {
+      const element = node.node || node;
+      const id = element.getAttribute?.('id');
+      
+      if (id) this[id] = node;
+      this.node.appendChild(element);
+    });
+    
+    return this; // For method chaining
   }
-  
+
+  static create(tag, attributes = {}) {
+    return new HTML(tag, attributes);
+  }
 }

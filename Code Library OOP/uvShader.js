@@ -2,17 +2,12 @@ export class UVMapper {
   #uvCoordinates = [];
   #uvNodes = [];
 
-  constructor(gridSize, shapeCallback) {
+  constructor(gridSize) {
     if (!gridSize || typeof gridSize.x !== 'number' || typeof gridSize.y !== 'number') {
       throw new Error('gridSize must be an object with x and y properties');
     }
-    
-    if (typeof shapeCallback !== 'function') {
-      throw new Error('shapeCallback must be a function');
-    }
 
     this.#generateUVCoordinates(gridSize);
-    this.#createUVNodes(shapeCallback);
   } //The shapeCallBack function must return a node object
 
   #generateUVCoordinates(gridSize) {
@@ -26,7 +21,7 @@ export class UVMapper {
     }
   }
 
-  #createUVNodes(shapeCallback) {
+  getUV(shapeCallback) {
     this.#uvCoordinates.forEach((coordinate, index) => {
       const shape = shapeCallback(coordinate, index);
       if (shape && shape.node) {
@@ -43,17 +38,5 @@ export class UVMapper {
     this.#uvNodes.forEach((node, index) => {
       callback(node, this.#uvCoordinates[index]);
     });
-  }
-
-  get nodes() {
-    return [...this.#uvNodes]; // Return a copy to prevent external modification
-  }
-
-  get coordinates() {
-    return [...this.#uvCoordinates]; // Return a copy to prevent external modification
-  }
-
-  get size() {
-    return this.#uvNodes.length;
   }
 }

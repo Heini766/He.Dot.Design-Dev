@@ -21,7 +21,7 @@ export class UVMapper {
     }
   }
 
-  getUV(shapeCallback) {
+  getUVs(shapeCallback) {
     this.#uvCoordinates.forEach((coordinate, index) => {
       const shape = shapeCallback(coordinate, index);
       if (shape && shape.node) {

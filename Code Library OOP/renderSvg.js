@@ -20,47 +20,39 @@ function genContent(config, node) {
 
 export class SVG {
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  constructor(config) {
-    this.node.setAttribute(`xmlns`, `http://www.w3.org/2000/svg`)
-    const [keys, values] = [Object.keys(config), Object.values(config)]
-    keys.forEach((el, index) => {
-      this.node.setAttribute(`${keys[index]}`, `${values[index]}`)
-    })
+  
+  constructor(config = {}) {
+    Object.entries(config).forEach(([key, value]) => {
+      this.node.setAttribute(key, value);
+    });
   }
 
-  addNodes(data) {
-    const nodes = data();
-    nodes.forEach((el, i) => {
-      const id = el.node.getAttribute('id')
-      if (id) this[id] = el;
-      this.node.appendChild(el.node);
-    })
-  } // data should be an array containing the added nodes
+  addNodes(nodes) {
+    const nodeArray = typeof nodes === 'function' ? nodes() : nodes;
+    
+    nodeArray.forEach(node => {
+      const id = node.node?.getAttribute('id');
+      if (id) this[id] = node;
+      this.node.appendChild(node.node);
+    });
+    
+    return this; // For method chaining
+  }
 
-  ren(tag, data) {
-    const newTag = new class {
-
-      node = document.createElementNS('http://www.w3.org/2000/svg', `${tag}`);
-
-      constructor() {
-        if (typeof(data) === 'object') {
-          const config = {propNames: Object.keys(data), propValues: Object.values(data)};
-          genContent(config, this.node);
-        } else {
-          console.log(`No attributes found for the '${tag}' tag`)
-        }
+  create(tag, attributes = {}) {
+    const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    
+    Object.entries(attributes).forEach(([key, value]) => {
+      element.setAttribute(key, value);
+    });
+    
+    return {
+      node: element,
+      addNodes: (nodes) => {
+        const nodeArray = typeof nodes === 'function' ? nodes() : nodes;
+        nodeArray.forEach(node => element.appendChild(node.node));
+        return element;
       }
-
-      addNodes(data) {
-        const nodes = data();
-        nodes.forEach((el) => {
-          const id = el.node.getAttribute('id')
-          if (id) this[id] = el
-          this.node.appendChild(el.node);
-        })
-      }
-    }
-
-    return newTag
+    };
   }
 }

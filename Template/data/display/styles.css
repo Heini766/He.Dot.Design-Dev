@@ -12,7 +12,11 @@
 
 @layer comps {
   .canvas {
-    max-width: 500px;
-    background-color: rgb(128, 128, 128);
+    max-width: 600px;
+    /* background-color: rgb(128, 128, 128); */
+  }
+
+  .path {
+    fill: none; stroke: hsl(180, 70%, 35%); stroke-width: 1; stroke-linecap: round;
   }
 }

@@ -13,7 +13,7 @@
 @layer comps {
   .canvas {
     max-width: 600px;
-    /* background-color: rgb(128, 128, 128); */
+    background-color: rgb(128, 128, 128);
   }
 
   .path {

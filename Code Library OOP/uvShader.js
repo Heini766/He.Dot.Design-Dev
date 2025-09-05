@@ -1,7 +1,7 @@
 export class UVMapper {
   #uvCoordinates = [];
   #uvNodes = [];
-
+  
   constructor(gridSize) {
     if (!gridSize || typeof gridSize.x !== 'number' || typeof gridSize.y !== 'number') {
       throw new Error('gridSize must be an object with x and y properties');

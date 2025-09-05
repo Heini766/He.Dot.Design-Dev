@@ -34,7 +34,7 @@ const enterEventHandler = () => {
       if (distance < 21) {
         if (paths[i]) {
           paths[i].setAttribute('d', `M${curPos.x} ${curPos.y} L${uvPos.x} ${uvPos.y}`)
-          paths[i].style.stroke = `rgb(255 ${uv.x * 255} ${uv.y * 255})`
+          paths[i].style.stroke = `rgb(${uv.x * 255} ${uv.y * 255} 255 )`
           i++
         }
       }

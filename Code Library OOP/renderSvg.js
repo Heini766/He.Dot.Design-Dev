@@ -19,6 +19,7 @@ function genContent(config, node) {
 }
 
 export class SVG {
+  
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   
   constructor(config = {}) {
@@ -55,4 +56,5 @@ export class SVG {
       }
     };
   }
+
 }

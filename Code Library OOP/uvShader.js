@@ -8,7 +8,7 @@ export class UVMapper {
     }
 
     this.#generateUVCoordinates(gridSize);
-  } //The shapeCallBack function must return a node object
+  }
 
   #generateUVCoordinates(gridSize) {
     for (let y = 0; y <= gridSize.y; y += 1) {
@@ -21,16 +21,16 @@ export class UVMapper {
     }
   }
 
-  getUVs(shapeCallback) {
+  getUVs(callBack) {
     this.#uvCoordinates.forEach((coordinate, index) => {
-      const shape = shapeCallback(coordinate, index);
+      const shape = callBack(coordinate, index);
       if (shape && shape.node) {
         this.#uvNodes.push(shape.node);
       }
     });
   }
 
-  forEachNode(callback) {
+  forEachNode(callBack) {
     if (typeof callback !== 'function') {
       throw new Error('callback must be a function');
     }

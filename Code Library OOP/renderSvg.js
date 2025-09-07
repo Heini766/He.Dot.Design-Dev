@@ -20,7 +20,7 @@ export class SVG {
     return this; // For method chaining
   }
 
-  create(tag, attributes = {}) {
+  ren(tag, attributes = {}) {
     const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
     
     Object.entries(attributes).forEach(([key, value]) => {

@@ -31,12 +31,12 @@ export class UVMapper {
   }
 
   forEachNode(callBack) {
-    if (typeof callback !== 'function') {
+    if (typeof callBack !== 'function') {
       throw new Error('callback must be a function');
     }
 
     this.#uvNodes.forEach((node, index) => {
-      callback(node, this.#uvCoordinates[index]);
+      callBack(node, this.#uvCoordinates[index]);
     });
   }
 }

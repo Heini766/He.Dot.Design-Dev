@@ -43,10 +43,6 @@ export function getRelativePosition(event, object) {
 
 } // Returns the relative position of the cursor to a SVG node object
 
-export function getPositionOffset(pos1, pos2)  {
-  return {x: pos1.x - pos2.x, y: pos1.y - pos2.y};
-}; // Takes two cordinates and returns the offset
-
 export function getRandomPos(size, ratio) {
   return {
     x: (Math.random() * (ratio.x - 2 * size) + size) - ratio.x / 2,
@@ -74,18 +70,6 @@ export function gerRelativeRPos(r, cords) {
 export function clamp(number, min, max) {
     return Math.min(Math.max(number, min), max);
 }; // Clamps the result of a calculation.
-
-export function getRandomResult() {
-let bin
-const rNum = Math.random();
-const onOff = Math.round(rNum);
-if (onOff === 1) {
-  bin = true;
-} else {
-  bin = false;
-};
-return {boolean: bin, rNum: rNum}
-}; // Returns a boolean + a random number between 0 and 1 (rNum)
 
 export function createCustomProp(data) {
 
@@ -153,89 +137,6 @@ export function extNumbers(string) {
   return nums.filter(n => !isNaN(n)); // Remove NaN entries (invalid numbers)
 }; // Returns an array containing the numbers in a string
 
-export function getTagElements(container, tagName) {
-
-  const nodes = container.childNodes;
-  let elements = [];
-  nodes.forEach((element) => {
-
-    if (element.localName === tagName) {
-      elements.push(element);
-    }
-    
-  });
-
-  return elements
-  
-}; // Returns the node elements (in the form of an array) in a container which has a specified tag name
-
-export function getClassElements(array, classId) {
-
-  let elements = [];
-  
-  array.forEach((element) => {
-
-    const currentEl = element
-    const classes = currentEl.classList;
-
-    classes.forEach((el) => {
-      if (el === classId) {
-        elements.push(currentEl);
-      }
-    })
-    
-  });
-
-  return elements;
-  
-}; // Takes an array of nodes and return those who has the specified class name
-
-export function checkOverlap(container, shape, size, name) {
-
-  const shapeAtt = shape.getAttribute('transform');
-  const shapeTransform = extNumbers(shapeAtt);
-  const shapePos = {x: shapeTransform[0], y: shapeTransform[1]};
-
-  const allObjects = container.childNodes;
-  let relativeShapes = [];
-  let overlappingObjects;
-
-  for (let i = 0; i < allObjects.length; i++) {
-
-    const currentObject = allObjects[i];
-    const curShapeAtt = currentObject.getAttribute('transform');
-    if (!curShapeAtt) {
-
-    } else {
-      const curShapeTransform = extNumbers(curShapeAtt);
-      const relShapePos = {x: curShapeTransform[0], y: curShapeTransform[1]};
-      const shapeTest = (relShapePos.x/shapePos.x)/(relShapePos.y/shapePos.y);
-
-      if (shapeTest === 1) {
-      } else {
-        relativeShapes.push(currentObject);
-      };
-    }
-  } // Filters the array
-
-  for (let i = 0; i < relativeShapes.length; i++) {
-
-    const currentObject = relativeShapes[i];
-    const curShapeAtt = currentObject.getAttribute('transform');
-    const curShapeTransform = extNumbers(curShapeAtt);
-    const currentObjectPos = {x: curShapeTransform[0], y: curShapeTransform[1]};
-    const positionOffset = getDistance(currentObjectPos, shapePos);
-
-    if (positionOffset < size && currentObject.classList.contains(name)) {
-      overlappingObjects = {ob1: shape, ob2: currentObject};
-      i = relativeShapes.length;
-    };
-  }; // Finds overlapping objects
-
-  return overlappingObjects
-  
-}; // Returns an array containing two shapes that overlap. size - needs to be a number not a string. name - specify a class name
-
 export function triangularWave(x) {
     return x < 0.5 ? 2 * x : 2 * (1 - x);
 }
@@ -257,18 +158,17 @@ export function moveOrigin(parentNode, baseNode, offset) {
   // baseNode = Is used to determine the base dimensions in calculating the transforms
   // offset = an object that has x and y values determaning the origin offset
 
-export function searchNodes(nodeArray, shapeID) {
-
-    let shape;
-    nodeArray.forEach((el) => {
-      if (el.getAttribute('id') === `${shapeID}`) {
-        shape = el;
-      }
-    })
-
-    return shape ? shape : `'${shapeID}' not found`
+export function getRandomItems(array, count) {
+    const shuffled = [...array]; // Create a copy
     
-}
+    // Fisher-Yates shuffle
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+    return shuffled.slice(0, count);
+} // Takes an array and returns a given number of random values from the array.
 
 export function isMobileDevice() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

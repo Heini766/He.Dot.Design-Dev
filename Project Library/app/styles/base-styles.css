@@ -25,3 +25,10 @@
   }
   
 }
+
+@layer comps {
+  .canvas {
+    background-color: gray;
+    width: 500px;
+  }
+}

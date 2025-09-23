@@ -1,5 +1,5 @@
 export class UVMapper {
-  #uvCoordinates = [];
+  uvCoordinates = [];
   #uvNodes = [];
   
   constructor(gridSize) {
@@ -13,7 +13,7 @@ export class UVMapper {
   #generateUVCoordinates(gridSize) {
     for (let y = 0; y <= gridSize.y; y += 1) {
       for (let x = 0; x <= gridSize.x; x += 1) {
-        this.#uvCoordinates.push({
+        this.uvCoordinates.push({
           x: x / gridSize.x,
           y: y / gridSize.y
         });
@@ -22,7 +22,7 @@ export class UVMapper {
   }
 
   getUVs(callBack) {
-    this.#uvCoordinates.forEach((coordinate, index) => {
+    this.uvCoordinates.forEach((coordinate, index) => {
       const shape = callBack(coordinate, index);
       if (shape && shape.node) {
         this.#uvNodes.push(shape.node);
@@ -36,7 +36,7 @@ export class UVMapper {
     }
 
     this.#uvNodes.forEach((node, index) => {
-      callBack(node, this.#uvCoordinates[index]);
+      callBack(node, this.uvCoordinates[index]);
     });
   }
 }

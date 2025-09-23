@@ -1,0 +1,22 @@
+@font-face {
+  font-family: AvenirNext;
+  src: url('../fonts/AvenirNextLTPro-Bold.otf') format('opentype');
+  font-weight: bold;
+}
+
+@layer base {
+
+  body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    font-family: AvenirNext, Helvetica, sans-serif;
+  }
+
+  .top-nav {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  
+}

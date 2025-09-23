@@ -11,12 +11,17 @@
     color: white;
     margin: 0;
     font-family: AvenirNext, Helvetica, sans-serif;
+    height: 100vh;
   }
 
   .top-nav {
     display: flex;
     width: 100%;
     justify-content: center;
+  }
+
+  .main-section {
+    display: flex; justify-content: center; align-items: center;
   }
   
 }

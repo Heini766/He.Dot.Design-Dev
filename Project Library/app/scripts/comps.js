@@ -28,6 +28,7 @@ display.addNodes(() => {
     const toolFooter = display.ren('footer', {id: 'toolFooter', class: 'tool-footer'});
     toolFooter.addNodes(() => {
       const runBtn = display.ren('button', {id: 'runBtn', class: 'run-btn', content: 'Run'});
+      runBtn.createListener({event: 'click', func: () => {console.log('btn clicked')}})
       return [runBtn]
     })
     

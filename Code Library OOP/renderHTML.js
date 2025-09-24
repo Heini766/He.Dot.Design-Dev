@@ -16,7 +16,7 @@ function configureElement(node, config) {
 
 export class HTML {
 
-  #listeners = [];
+  listeners = [];
 
   constructor(tag, data = {}) {
     this.node = document.createElement(tag);
@@ -60,25 +60,27 @@ export class HTML {
 
       try {
         this.node.addEventListener(data.event, data.func);
-        this.#listeners.push(data);
+        this.listeners.push(data);
       } catch (error) {
         console.error('Failed to add event listener:', error)
       }
 
     })
 
-    return this.#listeners.length;
+    return this.listeners.length;
   }
 
   removeListener(index) {
-    const target = this.#listeners[index - 1];
+    const target = this.listeners[index - 1];
     if (target) this.node.removeEventListener(target.event, target.func);
   }
 
   ren(tag, data) {
     const newElement = new HTMLElement(tag, data);
-
+    
     newElement.addNodes = this.addNodes.bind(newElement);
+    newElement.createListener = this.createListener.bind(newElement);
+    newElement.removeListener = this.removeListener.bind(newElement);
     return newElement
   }
   
@@ -86,6 +88,9 @@ export class HTML {
 
 // Helper class for created elements, used by HTML and ren()
 class HTMLElement {
+
+  listeners = [];
+  
   constructor(tag, config) {
     this.node = document.createElement(tag);
     configureElement(this.node, config);

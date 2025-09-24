@@ -76,7 +76,10 @@ export class HTML {
 
   removeListener(index) {
     const target = this.listeners[index - 1];
-    if (target) this.node.removeEventListener(target.event, target.func);
+    if (target) {
+      this.node.removeEventListener(target.event, target.func);
+      this.listeners.splice(index -1, 1);
+    }
   }
 
   ren(tag, data) {

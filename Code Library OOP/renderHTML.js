@@ -47,7 +47,7 @@ export class HTML {
     });
   }
 
-  createListener(config) {
+  addListener(config) {
 
     const configArray = Array.isArray(config) ? config : [config];
     
@@ -59,7 +59,11 @@ export class HTML {
       }
 
       try {
-        this.node.addEventListener(data.event, data.func);
+        function callBack() {
+          data.func(this)
+        }
+        
+        this.node.addEventListener(data.event, callBack);
         this.listeners.push(data);
       } catch (error) {
         console.error('Failed to add event listener:', error)
@@ -79,7 +83,7 @@ export class HTML {
     const newElement = new HTMLElement(tag, data);
     
     newElement.addNodes = this.addNodes.bind(newElement);
-    newElement.createListener = this.createListener.bind(newElement);
+    newElement.addListener = this.addListener.bind(newElement);
     newElement.removeListener = this.removeListener.bind(newElement);
     return newElement
   }

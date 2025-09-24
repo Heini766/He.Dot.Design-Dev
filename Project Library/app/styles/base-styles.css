@@ -58,11 +58,16 @@
     display: flex; flex-direction: column; gap: .75rem;
   }
 
+  .run-btn {
+    background-color: var(--brandColor); 
+    width: 100%;
+  }
+
   .tool-btn {
     color: white; background-color: black;
     padding-block: .75rem; padding-inline: 1rem;
 
-    &:hover, &:focus, &:active{
+    &:hover, &.active{
       outline: 1px solid var(--brandColor);
       border-radius: .25rem;
     }

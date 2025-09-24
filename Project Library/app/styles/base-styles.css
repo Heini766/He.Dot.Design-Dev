@@ -12,6 +12,14 @@
     margin: 0;
     font-family: AvenirNext, Helvetica, sans-serif;
     height: 100vh;
+    user-select: none;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    padding-block: .2rem;
+    font-family:  monospace;
   }
 
   .top-nav {
@@ -28,7 +36,35 @@
 
 @layer comps {
   .canvas {
-    background-color: gray;
+    border: 2px solid var(--brandColor);
     width: 500px;
+  }
+
+  .ui-container {
+    display: flex;
+  }
+
+  .tool-bar {
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 1rem; margin-inline: 1rem; border-radius: .5rem;
+    background-color: rgb(56, 56, 56);
+  }
+
+  .tool-footer {
+    display: flex; justify-content: center;
+  }
+
+  .btn-container {
+    display: flex; flex-direction: column; gap: .75rem;
+  }
+
+  .tool-btn {
+    color: white; background-color: black;
+    padding-block: .75rem; padding-inline: 1rem;
+
+    &:hover, &:focus, &:active{
+      outline: 1px solid var(--brandColor);
+      border-radius: .25rem;
+    }
   }
 }

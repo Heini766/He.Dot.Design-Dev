@@ -16,6 +16,8 @@ function configureElement(node, config) {
 
 export class HTML {
 
+  #listeners = [];
+
   constructor(tag, data = {}) {
     this.node = document.createElement(tag);
     this.setAttributes(data);
@@ -43,6 +45,34 @@ export class HTML {
       const id = item.node.getAttribute('id');
       if (id) this[id] = item;
     });
+  }
+
+  createListener(config) {
+
+    const configArray = Array.isArray(config) ? config : [config];
+    
+    configArray.forEach((data) => {
+
+      if (!data.event || !data.func) {
+        console.warn('Invalid listener config:', data);
+        return;
+      }
+
+      try {
+        this.node.addEventListener(data.event, data.func);
+        this.#listeners.push(data);
+      } catch (error) {
+        console.error('Failed to add event listener:', error)
+      }
+
+    })
+
+    return this.#listeners.length;
+  }
+
+  removeListener(index) {
+    const target = this.#listeners[index - 1];
+    if (target) this.node.removeEventListener(target.event, target.func);
   }
 
   ren(tag, data) {

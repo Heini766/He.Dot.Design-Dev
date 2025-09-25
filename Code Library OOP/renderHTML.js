@@ -1,5 +1,22 @@
 export class HTML {
 
+  ren(tag, data) {
+    const newElement = new HTMLElement(tag, data);
+    return newElement
+  }
+  
+}
+
+// Helper class for created elements, used by HTML and ren()
+class HTMLElement {
+
+  listeners = [];
+  
+  constructor(tag, config) {
+    this.node = document.createElement(tag);
+    configureElement(this.node, config);
+  }
+
   addNodes(dataFunction) {
     const nodes = dataFunction();
     nodes.forEach(item => {
@@ -9,7 +26,7 @@ export class HTML {
     });
   }
 
-  addListener(config) {
+    addListener(config) {
 
     const configArray = Array.isArray(config) ? config : [config];
     
@@ -43,27 +60,7 @@ export class HTML {
       this.listeners.splice(index -1, 1);
     }
   }
-
-  ren(tag, data) {
-    const newElement = new HTMLElement(tag, data);
-    
-    newElement.addNodes = this.addNodes.bind(newElement);
-    newElement.addListener = this.addListener.bind(newElement);
-    newElement.removeListener = this.removeListener.bind(newElement);
-    return newElement
-  }
   
-}
-
-// Helper class for created elements, used by HTML and ren()
-class HTMLElement {
-
-  listeners = [];
-  
-  constructor(tag, config) {
-    this.node = document.createElement(tag);
-    configureElement(this.node, config);
-  }
 }
 
 function configureElement(node, config) {

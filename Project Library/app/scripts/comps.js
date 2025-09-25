@@ -1,8 +1,13 @@
-import { HTML } from '../../../Code Library OOP/renderHTML.js';
-import { SVG } from '../../../Code Library OOP/renderSvg.js';
+// HTML - https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderHTML.js
+// SVG - https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderSvg.js
+
+import { HTML } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderHTML.js';
+import { SVG } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderSvg.js';
 import { toolClickHandle } from './functions.js';
 
-const display = new HTML('div', {id: 'uiContainer', class: 'ui-container'});
+const docHTML = new HTML();
+console.log(docHTML)
+const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
 const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas'});
 
 const tools = ['Path', 'Rectangle', 'Circle']

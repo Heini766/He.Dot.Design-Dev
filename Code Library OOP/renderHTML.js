@@ -1,19 +1,3 @@
-function configureElement(node, config) {
-
-  if (!config) return;
-
-  for (const [key, value] of Object.entries(config)) {
-    if (key === 'nodes' && Array.isArray(value)) {
-      value.forEach(nodeToAppend => nodeToAppend && node.appendChild(nodeToAppend.node));
-    } else if (key === 'content') {
-      node.innerHTML = value;
-    } else {
-      node.setAttribute(key, value);
-    }
-  }
-  
-}
-
 export class HTML {
 
   addNodes(dataFunction) {
@@ -80,4 +64,20 @@ class HTMLElement {
     this.node = document.createElement(tag);
     configureElement(this.node, config);
   }
+}
+
+function configureElement(node, config) {
+
+  if (!config) return;
+
+  for (const [key, value] of Object.entries(config)) {
+    if (key === 'nodes' && Array.isArray(value)) {
+      value.forEach(nodeToAppend => nodeToAppend && node.appendChild(nodeToAppend.node));
+    } else if (key === 'content') {
+      node.innerHTML = value;
+    } else {
+      node.setAttribute(key, value);
+    }
+  }
+  
 }

@@ -1,5 +1,5 @@
 
-// tool events
+// Tool events - functions that trigger when tool buttons are interacted with
 
 export const toolClickHandle = (target) => {
 

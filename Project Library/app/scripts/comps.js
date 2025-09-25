@@ -1,6 +1,3 @@
-// HTML - https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderHTML.js
-// SVG - https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderSvg.js
-
 import { HTML } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@main/Code%20Library%20OOP/renderHTML.js';
 import { SVG } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderSvg.js';
 import { toolClickHandle } from './functions.js';
@@ -10,7 +7,7 @@ console.log(docHTML)
 const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
 const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas'});
 
-const tools = ['Path', 'Rectangle', 'Circle']
+const tools = ['Path', 'Rectangle', 'Circle', 'Polyline']
 
 document.getElementById('mainSection').appendChild(display.node);
 
@@ -19,6 +16,7 @@ display.addNodes(() => {
   const toolBar = docHTML.ren('div', {id: 'toolBar', class: 'tool-bar'});
   const btnContainer = docHTML.ren('div', {id: 'btnContainer', class: 'btn-container'});
   const toolBtns = [];
+
   tools.forEach((tool, i) => {
     const newTool = docHTML.ren('button', {class: 'tool-btn', id: `toolBtn${i}`, content: `${tool}`});
     newTool.addListener({event: 'click', func: toolClickHandle})

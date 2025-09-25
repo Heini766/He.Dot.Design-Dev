@@ -2,6 +2,8 @@ export class SVG {
 
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
+  listeners = [];
+
   constructor(config) {
     configureElement(this.node, config);
   }

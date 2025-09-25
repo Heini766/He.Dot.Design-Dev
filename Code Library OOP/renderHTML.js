@@ -16,28 +16,6 @@ function configureElement(node, config) {
 
 export class HTML {
 
-  listeners = [];
-
-  constructor(tag, data = {}) {
-    this.node = document.createElement(tag);
-    this.setAttributes(data);
-  }
-
-  setAttributes(attributes = {}) {
-    Object.entries(attributes).forEach(([key, value]) => {
-      if (key === 'textContent') {
-        this.node.textContent = value;
-      } else if (key === 'innerHTML') {
-        this.node.innerHTML = value;
-      } else if (key.startsWith('on') && typeof value === 'function') {
-        this.node.addEventListener(key.slice(2), value);
-      } else {
-        this.node.setAttribute(key, value);
-      }
-    });
-    return this; // For method chaining
-  }
-
   addNodes(dataFunction) {
     const nodes = dataFunction();
     nodes.forEach(item => {

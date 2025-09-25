@@ -16,11 +16,11 @@ document.getElementById('mainSection').appendChild(display.node);
 
 display.addNodes(() => {
 
-  const toolBar = display.ren('div', {id: 'toolBar', class: 'tool-bar'});
-  const btnContainer = display.ren('div', {id: 'btnContainer', class: 'btn-container'});
+  const toolBar = docHTML.ren('div', {id: 'toolBar', class: 'tool-bar'});
+  const btnContainer = docHTML.ren('div', {id: 'btnContainer', class: 'btn-container'});
   const toolBtns = [];
   tools.forEach((tool, i) => {
-    const newTool = display.ren('button', {class: 'tool-btn', id: `toolBtn${i}`, content: `${tool}`});
+    const newTool = docHTML.ren('button', {class: 'tool-btn', id: `toolBtn${i}`, content: `${tool}`});
     newTool.addListener({event: 'click', func: toolClickHandle})
     
     toolBtns.push(newTool)
@@ -28,9 +28,9 @@ display.addNodes(() => {
 
   btnContainer.addNodes(() => {return toolBtns})
   toolBar.addNodes(() => {
-    const toolFooter = display.ren('footer', {id: 'toolFooter', class: 'tool-footer'});
+    const toolFooter = docHTML.ren('footer', {id: 'toolFooter', class: 'tool-footer'});
     toolFooter.addNodes(() => {
-      const runBtn = display.ren('button', {id: 'runBtn', class: 'run-btn', content: 'run'});
+      const runBtn = docHTML.ren('button', {id: 'runBtn', class: 'run-btn', content: 'run'});
       return [runBtn]
     })
     

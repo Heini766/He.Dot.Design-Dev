@@ -19,4 +19,8 @@
   .path {
     fill: none; stroke: hsl(180, 70%, 35%); stroke-width: 1; stroke-linecap: round;
   }
+
+  .div-container {
+    width: 100px; height: 100px; background-color: cyan; cursor: pointer;
+  }
 }

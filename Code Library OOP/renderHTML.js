@@ -64,14 +64,14 @@ export class HTML {
         }
         
         this.node.addEventListener(data.event, callBack);
-        this.listeners.push({event: data.event, func: callBack()});
+        this.listeners.push({event: data.event, func: callBack});
       } catch (error) {
         console.error('Failed to add event listener:', error)
       }
 
     })
 
-    return this.listeners.length;
+    return this.listeners;
   }
 
   removeListener(index) {

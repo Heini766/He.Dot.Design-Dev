@@ -3,11 +3,10 @@ import { SVG } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs
 import { toolClickHandle } from './functions.js';
 
 const docHTML = new HTML();
-console.log(docHTML)
 const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
 const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas'});
 
-const tools = ['Path', 'Rectangle', 'Circle', 'Polyline']
+const tools = ['Path']
 
 document.getElementById('mainSection').appendChild(display.node);
 

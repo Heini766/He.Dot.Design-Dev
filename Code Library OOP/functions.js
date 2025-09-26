@@ -4,8 +4,7 @@ export function getDistance(pos1, pos2) {
   const euclideanD = Math.sqrt(dx * dx + dy * dy);  // Euclidean distance
   return {
     euclideanDistance: euclideanD,
-    dx: dx,
-    dy: dy
+    dxy: {x: dx, y: dy}
   };
 }; // Returns the distance between two points
 

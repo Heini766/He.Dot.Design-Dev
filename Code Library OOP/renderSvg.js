@@ -29,8 +29,8 @@ export class SVG {
       }
 
       try {
-        function callBack() {
-          data.func(this)
+        function callBack(event) {
+          data.func(event, this)
         }
         
         this.node.addEventListener(data.event, callBack);

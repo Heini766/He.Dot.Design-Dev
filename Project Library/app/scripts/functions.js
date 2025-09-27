@@ -1,17 +1,18 @@
-
 // Tool events - functions that trigger when tool buttons are interacted with
 
-export const toolClickHandle = (target) => {
+export const changeToolStyles = (event, target) => {
 
-  const btnContainer = document.getElementById('btnContainer')
+  const btnContainer = document.getElementById('btnContainer');
 
-  if (!target.classList.contains('active')) {
+  const targetClassList = target.node.classList;
+
+  if (!targetClassList.contains('active')) {
     btnContainer.childNodes.forEach((node) => {
       node.classList.remove('active')
     })
-    target.classList.add('active')
+    targetClassList.add('active')
   } else {
-    target.classList.remove('active')
-  }
+    targetClassList.remove('active')
+  } // Changes classes for styling
 
 }

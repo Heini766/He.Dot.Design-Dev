@@ -1,6 +1,5 @@
 export class SVG {
 
-  listeners = [];
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
   listeners = [];
@@ -18,33 +17,6 @@ export class SVG {
     });
   }
 
-<<<<<<< HEAD
-  addListener(config) {
-
-    const configArray = Array.isArray(config) ? config : [config];
-    
-    configArray.forEach((data) => {
-
-      if (!data.event || !data.func) {
-        console.warn('Invalid listener config:', data);
-        return;
-      }
-
-      try {
-        function callBack() {
-          data.func(this)
-        }
-        
-        this.node.addEventListener(data.event, callBack);
-        this.listeners.push(data);
-      } catch (error) {
-        console.error('Failed to add event listener:', error)
-      }
-
-    })
-
-    return this.listeners.length;
-=======
   addListener(event, func) {
     if (!event || !func) {
       console.warn('Invalid listener config:', event, func);
@@ -98,7 +70,6 @@ export class SVG {
         return this; // Return this for chaining
       }
     };
->>>>>>> main
   }
 
   removeListener(index) {

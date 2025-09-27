@@ -26,31 +26,59 @@ class HTMLElement {
     });
   }
 
-  addListener(config) {
+  addListener(event, func) {
+    if (!event || !func) {
+      console.warn('Invalid listener config:', event, func);
+      return;
+    }
 
-    const configArray = Array.isArray(config) ? config : [config];
-    
-    configArray.forEach((data) => {
+    const callbacks = []; // Store all callbacks in the chain
+    let currentCallback;
 
-      if (!data.event || !data.func) {
-        console.warn('Invalid listener config:', data);
-        return;
-      }
+    try {
+      // Create the initial callback
+      currentCallback = (event) => {
+        return func(event, this);
+      };
+      
+      callbacks.push(currentCallback);
+      this.node.addEventListener(event, currentCallback);
+      this.listeners.push({ event: event, func: currentCallback });
+    } catch (error) {
+      console.error('Failed to add event listener:', error);
+      return;
+    }
 
-      try {
-        function callBack(event) {
-          data.func(event, this)
+    return {
+      and: (nextFunc) => {
+        if (typeof nextFunc !== 'function') return this;
+        
+        // Remove the previous callback
+        this.node.removeEventListener(event, currentCallback);
+        
+        // Create a new callback that chains the functions
+        const previousCallback = currentCallback;
+        currentCallback = (event) => {
+          const previousResult = previousCallback(event);
+          return nextFunc(previousResult, event, this);
+        };
+        
+        callbacks.push(currentCallback);
+        
+        // Update the listener
+        this.node.addEventListener(event, currentCallback);
+        
+        // Update the listeners array
+        const listenerIndex = this.listeners.findIndex(
+          l => l.event === event && l.func === previousCallback
+        );
+        if (listenerIndex !== -1) {
+          this.listeners[listenerIndex].func = currentCallback;
         }
         
-        this.node.addEventListener(data.event, callBack);
-        this.listeners.push({event: data.event, func: callBack});
-      } catch (error) {
-        console.error('Failed to add event listener:', error)
+        return this; // Return this for chaining
       }
-
-    })
-
-    return this.listeners;
+    };
   }
 
   removeListener(index) {

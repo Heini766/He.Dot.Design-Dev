@@ -26,7 +26,7 @@ class HTMLElement {
     });
   }
 
-    addListener(config) {
+  addListener(config) {
 
     const configArray = Array.isArray(config) ? config : [config];
     

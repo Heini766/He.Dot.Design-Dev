@@ -26,7 +26,7 @@ class HTMLElement {
     });
   }
 
-    addListener(config) {
+  addListener(config) {
 
     const configArray = Array.isArray(config) ? config : [config];
     
@@ -38,8 +38,8 @@ class HTMLElement {
       }
 
       try {
-        function callBack() {
-          data.func(this)
+        function callBack(event) {
+          data.func(event, this)
         }
         
         this.node.addEventListener(data.event, callBack);

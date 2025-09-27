@@ -1,4 +1,4 @@
-import { getRelativePosition } from '../../../Code Library OOP/functions.js';
+import { getDistance, getRelativePosition } from '../../../Code Library OOP/functions.js';
 import { HTML } from '../../../Code Library OOP/renderHTML.js';
 import { SVG } from '../../../Code Library OOP/renderSvg.js';
 import { changeToolStyles, renInspectorContent } from './functions.js';
@@ -41,6 +41,18 @@ const tools = [{
       }
 
       function upHandle() {
+
+        const length  = value.newPath.node.getTotalLength();
+
+        if (length < 5) {
+          value.newPath.node.remove()
+        } else {
+
+          value.newPath.addListener('click', () => {
+            console.log('select')
+          })
+          
+        }
 
         canvas.listeners.forEach((data) => {
           if (data.event === 'mousedown') return

@@ -10,3 +10,6 @@ const shape = canvas.ren('circle', {class: 'shape', id: `shape`, r: 5});
 canvas.addNodes(() => {return [container]})
 container.addNodes(() => {return [shape]})
 
+
+
+

@@ -21,6 +21,7 @@ export class SVG {
 
     const configArray = Array.isArray(config) ? config : [config];
     
+    let callBack;
     configArray.forEach((data) => {
 
       if (!data.event || !data.func) {
@@ -29,8 +30,8 @@ export class SVG {
       }
 
       try {
-        function callBack(event) {
-          data.func(event, this)
+        callBack = (event) => {
+          return data.func(event, this)
         }
         
         this.node.addEventListener(data.event, callBack);
@@ -41,7 +42,13 @@ export class SVG {
 
     })
 
-    return this.listeners;
+    return new class {
+      and(func) {
+        const passValue = callBack();
+        if (typeof(func) !== 'function') return
+        func(passValue)
+      }
+    };
   }
 
   removeListener(index) {

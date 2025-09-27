@@ -1,7 +1,7 @@
 import { getRelativePosition } from '../../../Code Library OOP/functions.js';
 import { HTML } from '../../../Code Library OOP/renderHTML.js';
 import { SVG } from '../../../Code Library OOP/renderSvg.js';
-import { changeToolStyles } from './functions.js';
+import { changeToolStyles, renInspectorContent } from './functions.js';
 
 const docHTML = new HTML();
 const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas', id: 'canvas'});
@@ -61,7 +61,8 @@ document.getElementById('mainSection').appendChild(display.node);
 
 display.addNodes(() => {
 
-  const toolBar = docHTML.ren('div', {id: 'toolBar', class: 'tool-bar'});
+  const toolBar = docHTML.ren('div', {id: 'toolBar', class: 'tool-bar bar'});
+  const inspector = docHTML.ren('div', {id: 'inspectorBar', class: 'inspector'});
   const btnContainer = docHTML.ren('div', {id: 'btnContainer', class: 'btn-container'});
   const toolBtns = [];
 
@@ -84,6 +85,6 @@ display.addNodes(() => {
   })
   
 
-  return [toolBar, canvas]
+  return [toolBar, canvas, inspector]
   
 })

@@ -22,6 +22,14 @@
     font-family:  monospace;
   }
 
+  label {
+    font-family: monospace;
+  }
+
+  input {
+    width: 100%;
+  }
+
   .top-nav {
     display: flex;
     width: 100%;
@@ -40,13 +48,22 @@
     width: 500px;
   }
 
-  .ui-container {
+  .main-section {
     display: flex;
+    justify-content: center;
   }
 
-  .tool-bar {
+  .ui-container {
+    display: grid;
+    max-width: 800px;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .bar {
     display: flex; flex-direction: column; justify-content: space-between;
-    padding: 1rem; margin-inline: 1rem; border-radius: .5rem;
+    padding: 1rem; border-radius: .5rem;
     background-color: rgb(56, 56, 56);
   }
 

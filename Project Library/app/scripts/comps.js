@@ -1,10 +1,11 @@
-import { HTML } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@main/Code%20Library%20OOP/renderHTML.js';
+import { HTML } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderHTML.js';
 import { SVG } from 'https://cdn.jsdelivr.net/gh/Heini766/He.Dot.Design-Dev@refs/heads/main/Code%20Library%20OOP/renderSvg.js';
 import { toolClickHandle } from './functions.js';
 
 const docHTML = new HTML();
-const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
+console.log(docHTML)
 const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas'});
+const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
 
 const tools = ['Path']
 
@@ -18,7 +19,7 @@ display.addNodes(() => {
 
   tools.forEach((tool, i) => {
     const newTool = docHTML.ren('button', {class: 'tool-btn', id: `toolBtn${i}`, content: `${tool}`});
-    newTool.addListener({event: 'click', func: toolClickHandle})
+    newTool.addListener('click', toolClickHandle)
     
     toolBtns.push(newTool)
   })

@@ -44,8 +44,17 @@ export const pathTool = {
 
           let isSelected, cleanup;
           value.newPath.addListener('click', (event, target) => {
+
+            canvas.node.childNodes.forEach(item => {
+              const selectedNode =  item.classList.contains('is-selected');
+              if (selectedNode && item !== target.node) {
+                item.classList.remove('is-selected')
+              }
+            })
+            
             if (!isSelected) {
               isSelected = true
+              target.node.classList.add('is-selected');
               cleanup = renInspectorContent(display.inspectorBar)
             } else {
               cleanup()

@@ -2,72 +2,13 @@ import { getDistance, getRelativePosition } from '../../../Code Library OOP/func
 import { HTML } from '../../../Code Library OOP/renderHTML.js';
 import { SVG } from '../../../Code Library OOP/renderSvg.js';
 import { changeToolStyles, renInspectorContent } from './functions.js';
+import { pathTool } from './toolConfig.js';
 
 const docHTML = new HTML();
 const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas', id: 'canvas'});
 const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
 
-const tools = [{
-  toolName: 'Path',
-  toolFunc: (event, target) => {
-    changeToolStyles(event, target);
-
-    const isActive = target.node.classList.contains('active');
-
-    if (!isActive) {
-      // when buttons isn't active
-      canvas.removeListenerByEvent('mousedown')
-      return
-    }
-
-    canvas.addListener('mousedown', (event) => {
-      const curPos = getRelativePosition(event, canvas.node);
-      let pathData = `M${curPos.x} ${curPos.y}`
-      
-      const newPath = canvas.ren('path', {class: `path-el`, d: pathData});
-
-      canvas.addNodes(() => {return [newPath]});
-
-      return {curPos, pathData, newPath}
-    }).and((value) => {
-
-      const data = value.pathData;
-
-      function moveHandle(event) {
-        const newCurPos = getRelativePosition(event, canvas.node);
-        const newData = data + `L${newCurPos.x} ${newCurPos.y}`;
-
-        value.newPath.node.setAttribute('d', `${newData}`);
-      }
-
-      function upHandle() {
-
-        const length  = value.newPath.node.getTotalLength();
-
-        if (length < 5) {
-          value.newPath.node.remove()
-        } else {
-
-          value.newPath.addListener('click', () => {
-            console.log('select')
-          })
-          
-        }
-
-        canvas.listeners.forEach((data) => {
-          if (data.event === 'mousedown') return
-          canvas.removeListenerByEvent(data.event)
-        })
-        
-      }
-      
-      canvas.addListener('mousemove', moveHandle)
-      canvas.addListener('mouseup', upHandle)
-      
-    })
-    
-  }
-}]
+const tools = [ pathTool ]
 
 document.getElementById('mainSection').appendChild(display.node);
 

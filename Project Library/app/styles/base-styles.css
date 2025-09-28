@@ -95,6 +95,9 @@
 
   .path-el {
     stroke-width: 2; fill: none; stroke: white;
+    &.is-selected {
+      stroke: blue;
+    }
   }
   
 }

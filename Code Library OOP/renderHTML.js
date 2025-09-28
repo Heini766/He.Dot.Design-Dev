@@ -103,7 +103,7 @@ class HTMLElement {
     };
   }
 
-    removeListenerById(listenerId) {
+  removeListenerById(listenerId) {
     const index = this.listeners.findIndex(l => l.id === listenerId);
     if (index !== -1) {
       const listener = this.listeners[index];

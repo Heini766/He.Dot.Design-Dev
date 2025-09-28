@@ -10,11 +10,29 @@ export class SVG {
 
   addNodes(dataFunction) {
     const nodes = dataFunction();
+    const addedNodes = [];
+    
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
       if (id) this[id] = item;
+      addedNodes.push(item)
     });
+
+    return () => {
+
+      addedNodes.forEach(item => {
+        if (item.node && item.node.parentNode === this.node) {
+          this.node.removeChild(item.node)
+        }
+        const id = item.node.getAttribute('id');
+        if (id && this[id]) {
+          delete this[id]
+        }
+      })
+      
+    }
+    
   }
 
   addListener(event, func) {

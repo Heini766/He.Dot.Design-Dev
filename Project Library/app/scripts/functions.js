@@ -49,7 +49,6 @@ export function renInspectorContent(parentNode) {
 
   bodyContainer.addNodes(() => {return containerEls()});
 
-  console.log(parentNode)
-  parentNode.addNodes(() => {return [bodyContainer]})
+  return parentNode.addNodes(() => {return [bodyContainer]})
   
 }

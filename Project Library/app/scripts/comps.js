@@ -5,8 +5,8 @@ import { changeToolStyles, renInspectorContent } from './functions.js';
 import { pathTool } from './toolConfig.js';
 
 const docHTML = new HTML();
-const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas', id: 'canvas'});
-const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
+export const canvas = new SVG({viewBox: `0 0 100 100`, class: 'canvas', id: 'canvas'});
+export const display = docHTML.ren('div', {id: 'uiContainer', class: 'ui-container'});
 
 const tools = [ pathTool ]
 
@@ -41,3 +41,5 @@ display.addNodes(() => {
   return [toolBar, canvas, inspector]
   
 })
+
+display.removeNodes('canvas')

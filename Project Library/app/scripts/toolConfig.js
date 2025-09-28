@@ -1,4 +1,6 @@
-import { changeToolStyles } from "./functions.js";
+import { changeToolStyles, renInspectorContent } from "./functions.js";
+import { canvas, display } from "./comps.js";
+import { getRelativePosition } from "../../../Code Library OOP/functions.js";
 
 export const pathTool = {
   toolName: 'Path',
@@ -40,8 +42,16 @@ export const pathTool = {
           value.newPath.node.remove()
         } else {
 
+          let isSelected, cleanup;
           value.newPath.addListener('click', (event, target) => {
-            console.log(target.node)
+            if (!isSelected) {
+              isSelected = true
+              cleanup = renInspectorContent(display.inspectorBar)
+            } else {
+              cleanup()
+              isSelected = false;
+            }
+            
           })
           
         }

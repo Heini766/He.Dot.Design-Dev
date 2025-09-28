@@ -1,7 +1,7 @@
 import { HTML } from "../../../Code Library OOP/renderHTML.js";
 const docHTML = new HTML();
 
-// Tool events - functions that trigger when tool buttons are interacted with
+// Utility functions
 
 export const changeToolStyles = (event, target) => {
 
@@ -18,7 +18,7 @@ export const changeToolStyles = (event, target) => {
     targetClassList.remove('active')
   } // Changes classes for styling
 
-}
+} // updates the classes on tool buttons.
 
 // Render functipns - creates elements
 
@@ -50,18 +50,5 @@ export function renInspectorContent(parentNode) {
   bodyContainer.addNodes(() => {return containerEls()});
 
   return parentNode.addNodes(() => {return [bodyContainer]})
-  
-}
-
-// Utility functions
-
-export function getNodeByClass(className, parent) {
-
-  let el;
-  parent.childNodes.forEach(item => {
-    if (item.classList.contains(className)) el = item;
-  })
-
-  return el
   
 }

@@ -44,6 +44,10 @@ class HTMLElement {
     
   }
 
+  removeNodes(nodes) {
+    console.log()
+  }
+
   addListener(event, func) {
     if (!event || !func) {
       console.warn('Invalid listener config:', event, func);
@@ -99,12 +103,26 @@ class HTMLElement {
     };
   }
 
-  removeListener(index) {
-    const target = this.listeners[index - 1];
-    if (target) {
-      this.node.removeEventListener(target.event, target.func);
-      this.listeners.splice(index -1, 1);
+  removeListenerById(listenerId) {
+    const index = this.listeners.findIndex(l => l.id === listenerId);
+    if (index !== -1) {
+      const listener = this.listeners[index];
+      // Remove all callbacks from the chain
+      listener.callbacks.forEach(callback => {
+        this.node.removeEventListener(listener.event, callback);
+      });
+      this.listeners.splice(index, 1);
     }
+  }
+
+  removeListenerByEvent(event) {
+    const listenersToRemove = this.listeners.filter(l => l.event === event);
+    listenersToRemove.forEach(listener => {
+      listener.callbacks.forEach(callback => {
+        this.node.removeEventListener(event, callback);
+      });
+    });
+    this.listeners = this.listeners.filter(l => l.event !== event);
   }
   
 }

@@ -1,7 +1,7 @@
 import { getDistance, getRelativePosition } from '../../../Code Library OOP/functions.js';
 import { HTML } from '../../../Code Library OOP/renderHTML.js';
 import { SVG } from '../../../Code Library OOP/renderSvg.js';
-import { changeToolStyles, renInspectorContent } from './functions.js';
+import { changeToolStyles, getNodeByClass, renInspectorContent } from './functions.js';
 import { pathTool } from './toolConfig.js';
 
 const docHTML = new HTML();
@@ -41,5 +41,3 @@ display.addNodes(() => {
   return [toolBar, canvas, inspector]
   
 })
-
-display.removeNodes('canvas')

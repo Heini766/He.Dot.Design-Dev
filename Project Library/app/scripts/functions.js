@@ -52,3 +52,16 @@ export function renInspectorContent(parentNode) {
   return parentNode.addNodes(() => {return [bodyContainer]})
   
 }
+
+// Utility functions
+
+export function getNodeByClass(className, parent) {
+
+  let el;
+  parent.childNodes.forEach(item => {
+    if (item.classList.contains(className)) el = item;
+  })
+
+  return el
+  
+}

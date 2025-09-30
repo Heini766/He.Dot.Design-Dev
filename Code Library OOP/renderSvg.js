@@ -18,6 +18,8 @@ export class SVG {
       this.childNodes.set(id, item)
     });
 
+    if (!this.removeNode)  this.removeNode = removeNode
+
     return () => {
 
       this.childNodes.forEach(item => {
@@ -30,10 +32,11 @@ export class SVG {
         }
       })
       delete this.childNodes;
+      delete this.removeNode;
       
     }
     
-  }
+  } // returns a method for clearing all childNodes.
 
   addListener(event, func) {
     if (!event || !func) {
@@ -128,6 +131,22 @@ class SVGElement {
     configureElement(this.node, config);
   }
 }
+
+function removeNode(item) {
+
+  let array = Array.isArray(item) ? item : [item];
+
+  array.forEach(node => {
+    const target = this.childNodes.get(node);
+    this.childNodes.delete(node)
+    target.node.remove()
+  })
+
+  if (this.childNodes.size < 1) {
+    delete this.removeNode
+  }
+
+} // Helper used by addNodes method
 
 function configureElement(node, config) {
 

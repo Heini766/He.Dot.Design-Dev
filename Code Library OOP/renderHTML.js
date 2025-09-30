@@ -10,8 +10,6 @@ export class HTML {
 // Helper class for created elements, used by HTML and ren()
 class HTMLElement {
 
-  listeners = [];
-  
   constructor(tag, config) {
     this.node = document.createElement(tag);
     configureElement(this.node, config);
@@ -19,18 +17,21 @@ class HTMLElement {
 
   addNodes(dataFunction) {
     const nodes = dataFunction();
-    const addedNodes = [];
+
+    if (!this.childNodes) this.childNodes = new Map();
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
       if (id) this[id] = item;
-      addedNodes.push(item)
+      this.childNodes.set(id, item)
     });
+
+    if (!this.removeNode)  this.removeNode = removeNode
 
     return () => {
 
-      addedNodes.forEach(item => {
+      this.childNodes.forEach(item => {
         if (item.node && item.node.parentNode === this.node) {
           this.node.removeChild(item.node)
         }
@@ -39,14 +40,12 @@ class HTMLElement {
           delete this[id]
         }
       })
+      delete this.childNodes;
+      delete this.removeNode;
       
     }
     
-  }
-
-  removeNodes(nodes) {
-    console.log()
-  }
+  } // returns a method for clearing all childNodes.
 
   addListener(event, func) {
     if (!event || !func) {
@@ -54,7 +53,9 @@ class HTMLElement {
       return;
     }
 
-    const callbacks = []; // Store all callbacks in the chain
+    if (!this.listeners) this.listeners = new Map();
+
+    const listenerId = Symbol(); // Unique identifier for this listener chain
     let currentCallback;
 
     try {
@@ -63,9 +64,15 @@ class HTMLElement {
         return func(event, this);
       };
       
-      callbacks.push(currentCallback);
       this.node.addEventListener(event, currentCallback);
-      this.listeners.push({ event: event, func: currentCallback });
+      
+      // Store the entire listener chain info
+      this.listeners.set(listenerId, { 
+        id: listenerId,
+        event: event, 
+        func: currentCallback,
+        callbacks: [currentCallback] // Track all callbacks for cleanup
+      });
     } catch (error) {
       console.error('Failed to add event listener:', error);
       return;
@@ -75,57 +82,61 @@ class HTMLElement {
       and: (nextFunc) => {
         if (typeof nextFunc !== 'function') return this;
         
-        // Remove the previous callback
-        this.node.removeEventListener(event, currentCallback);
+        // Find the listener by ID
+        const listener = this.listeners.get(listenerId);
+        if (!listener) return this;
+        
+        // Remove the current callback
+        this.node.removeEventListener(event, listener.func);
         
         // Create a new callback that chains the functions
-        const previousCallback = currentCallback;
+        const previousCallback = listener.func;
         currentCallback = (event) => {
           const previousResult = previousCallback(event);
           return nextFunc(previousResult, event, this);
         };
         
-        callbacks.push(currentCallback);
-        
         // Update the listener
+        listener.func = currentCallback;
+        listener.callbacks.push(currentCallback);
+        
+        // Add the new callback
         this.node.addEventListener(event, currentCallback);
-        
-        // Update the listeners array
-        const listenerIndex = this.listeners.findIndex(
-          l => l.event === event && l.func === previousCallback
-        );
-        if (listenerIndex !== -1) {
-          this.listeners[listenerIndex].func = currentCallback;
-        }
-        
-        return this; // Return this for chaining
+
+        return this;
       }
     };
   }
 
-  removeListenerById(listenerId) {
-    const index = this.listeners.findIndex(l => l.id === listenerId);
-    if (index !== -1) {
-      const listener = this.listeners[index];
-      // Remove all callbacks from the chain
-      listener.callbacks.forEach(callback => {
-        this.node.removeEventListener(listener.event, callback);
-      });
-      this.listeners.splice(index, 1);
-    }
-  }
-
   removeListenerByEvent(event) {
-    const listenersToRemove = this.listeners.filter(l => l.event === event);
+    let listenersToRemove = [];
+    this.listeners.forEach((item, index) => {
+      if (item.event === event) listenersToRemove.push(item);
+      this.listeners.delete(index);
+    });
     listenersToRemove.forEach(listener => {
       listener.callbacks.forEach(callback => {
         this.node.removeEventListener(event, callback);
       });
     });
-    this.listeners = this.listeners.filter(l => l.event !== event);
+  }
+}
+
+function removeNode(item) {
+
+  let array = Array.isArray(item) ? item : [item];
+
+  array.forEach(node => {
+    const target = this.childNodes.get(node);
+    this.childNodes.delete(node)
+    target.node.remove()
+  })
+
+  if (this.childNodes.size < 1) {
+    delete this.removeNode
   }
   
-}
+} // Helper used by addNodes method in HTMLElement
 
 function configureElement(node, config) {
 

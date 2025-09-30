@@ -2,26 +2,27 @@ export class SVG {
 
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
-  listeners = [];
-
   constructor(config) {
     configureElement(this.node, config);
   }
 
   addNodes(dataFunction) {
     const nodes = dataFunction();
-    const addedNodes = [];
+
+    if (!this.childNodes) this.childNodes = new Map();
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
       if (id) this[id] = item;
-      addedNodes.push(item)
+      this.childNodes.set(id, item)
     });
+
+    if (!this.removeNode)  this.removeNode = removeNode
 
     return () => {
 
-      addedNodes.forEach(item => {
+      this.childNodes.forEach(item => {
         if (item.node && item.node.parentNode === this.node) {
           this.node.removeChild(item.node)
         }
@@ -30,16 +31,20 @@ export class SVG {
           delete this[id]
         }
       })
+      delete this.childNodes;
+      delete this.removeNode;
       
     }
     
-  }
+  } // returns a method for clearing all childNodes.
 
   addListener(event, func) {
     if (!event || !func) {
       console.warn('Invalid listener config:', event, func);
       return;
     }
+
+    if (!this.listeners) this.listeners = new Map();
 
     const listenerId = Symbol(); // Unique identifier for this listener chain
     let currentCallback;
@@ -53,7 +58,7 @@ export class SVG {
       this.node.addEventListener(event, currentCallback);
       
       // Store the entire listener chain info
-      this.listeners.push({ 
+      this.listeners.set(listenerId, { 
         id: listenerId,
         event: event, 
         func: currentCallback,
@@ -69,7 +74,7 @@ export class SVG {
         if (typeof nextFunc !== 'function') return this;
         
         // Find the listener by ID
-        const listener = this.listeners.find(l => l.id === listenerId);
+        const listener = this.listeners.get(listenerId);
         if (!listener) return this;
         
         // Remove the current callback
@@ -88,22 +93,22 @@ export class SVG {
         
         // Add the new callback
         this.node.addEventListener(event, currentCallback);
-        
         return this;
       }
     };
   }
 
-  removeListenerById(listenerId) {
-    const index = this.listeners.findIndex(l => l.id === listenerId);
-    if (index !== -1) {
-      const listener = this.listeners[index];
-      // Remove all callbacks from the chain
+  removeListenerByEvent(event) {
+    let listenersToRemove = [];
+    this.listeners.forEach((item, index) => {
+      if (item.event === event) listenersToRemove.push(item);
+      this.listeners.delete(index);
+    });
+    listenersToRemove.forEach(listener => {
       listener.callbacks.forEach(callback => {
-        this.node.removeEventListener(listener.event, callback);
+        this.node.removeEventListener(event, callback);
       });
-      this.listeners.splice(index, 1);
-    }
+    });
   }
 
   removeListenerByEvent(event) {
@@ -121,7 +126,6 @@ export class SVG {
 
     newElement.addNodes = this.addNodes.bind(newElement);
     newElement.addListener = this.addListener.bind(newElement);
-    newElement.removeListenerById = this.removeListenerById.bind(newElement);
     newElement.removeListenerByEvent = this.removeListenerByEvent.bind(newElement);
     return newElement;
   }
@@ -130,14 +134,28 @@ export class SVG {
 
 // Helper class for created elements, used by SVG and ren()
 class SVGElement {
-
-  listeners = [];
   
   constructor(tag, config) {
     this.node = document.createElementNS('http://www.w3.org/2000/svg', tag);
     configureElement(this.node, config);
   }
 }
+
+function removeNode(item) {
+
+  let array = Array.isArray(item) ? item : [item];
+
+  array.forEach(node => {
+    const target = this.childNodes.get(node);
+    this.childNodes.delete(node)
+    target.node.remove()
+  })
+
+  if (this.childNodes.size < 1) {
+    delete this.removeNode
+  }
+
+} // Helper used by addNodes method in SVG
 
 function configureElement(node, config) {
 

@@ -96,18 +96,6 @@ export class SVG {
     };
   }
 
-  removeListenerById(listenerId) {
-    const index = this.listeners.findIndex(l => l.id === listenerId);
-    if (index !== -1) {
-      const listener = this.listeners[index];
-      // Remove all callbacks from the chain
-      listener.callbacks.forEach(callback => {
-        this.node.removeEventListener(listener.event, callback);
-      });
-      this.listeners.splice(index, 1);
-    }
-  }
-
   removeListenerByEvent(event) {
     let listenersToRemove = [];
     this.listeners.forEach((item, index) => {
@@ -126,7 +114,6 @@ export class SVG {
 
     newElement.addNodes = this.addNodes.bind(newElement);
     newElement.addListener = this.addListener.bind(newElement);
-    newElement.removeListenerById = this.removeListenerById.bind(newElement);
     newElement.removeListenerByEvent = this.removeListenerByEvent.bind(newElement);
     return newElement;
   }

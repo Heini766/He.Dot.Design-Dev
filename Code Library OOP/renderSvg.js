@@ -111,16 +111,6 @@ export class SVG {
     });
   }
 
-  removeListenerByEvent(event) {
-    const listenersToRemove = this.listeners.filter(l => l.event === event);
-    listenersToRemove.forEach(listener => {
-      listener.callbacks.forEach(callback => {
-        this.node.removeEventListener(event, callback);
-      });
-    });
-    this.listeners = this.listeners.filter(l => l.event !== event);
-  }
-
   ren(tag, data) {
     const newElement = new SVGElement(tag, data);
 

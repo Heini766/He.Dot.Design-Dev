@@ -41,7 +41,7 @@ export class SVG {
   addListener(event, func) {
     if (!event || !func) {
       console.warn('Invalid listener config:', event, func);
-      return;
+      return this; // Return this for chainability
     }
 
     if (!this.listeners) this.listeners = new Map();
@@ -66,16 +66,17 @@ export class SVG {
       });
     } catch (error) {
       console.error('Failed to add event listener:', error);
-      return;
+      return this; // Return this for chainability
     }
 
-    return {
+    // Return an object with 'and' method AND also make it chainable
+    const chainableObject = {
       and: (nextFunc) => {
-        if (typeof nextFunc !== 'function') return this;
+        if (typeof nextFunc !== 'function') return chainableObject;
         
         // Find the listener by ID
         const listener = this.listeners.get(listenerId);
-        if (!listener) return this;
+        if (!listener) return chainableObject;
         
         // Remove the current callback
         this.node.removeEventListener(event, listener.func);
@@ -94,9 +95,12 @@ export class SVG {
         // Add the new callback
         this.node.addEventListener(event, currentCallback);
 
-        return this;
+        return chainableObject; // Return the chainable object
       }
     };
+
+    // Make the chainable object itself chainable by returning it
+    return chainableObject;
   }
 
   removeListenerByEvent(event) {

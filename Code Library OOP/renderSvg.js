@@ -2,26 +2,25 @@ export class SVG {
 
   node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
-  listeners = [];
-
   constructor(config) {
     configureElement(this.node, config);
   }
 
   addNodes(dataFunction) {
     const nodes = dataFunction();
-    const addedNodes = [];
+
+    if (!this.childNodes) this.childNodes = [];
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
       if (id) this[id] = item;
-      addedNodes.push(item)
+      this.childNodes.push(item)
     });
 
     return () => {
 
-      addedNodes.forEach(item => {
+      this.childNodes.forEach(item => {
         if (item.node && item.node.parentNode === this.node) {
           this.node.removeChild(item.node)
         }
@@ -30,6 +29,7 @@ export class SVG {
           delete this[id]
         }
       })
+      delete this.childNodes;
       
     }
     
@@ -40,6 +40,8 @@ export class SVG {
       console.warn('Invalid listener config:', event, func);
       return;
     }
+
+    if (!this.listeners) this.listeners = [];
 
     const listenerId = Symbol(); // Unique identifier for this listener chain
     let currentCallback;
@@ -130,8 +132,6 @@ export class SVG {
 
 // Helper class for created elements, used by SVG and ren()
 class SVGElement {
-
-  listeners = [];
   
   constructor(tag, config) {
     this.node = document.createElementNS('http://www.w3.org/2000/svg', tag);

@@ -9,13 +9,13 @@ export class SVG {
   addNodes(dataFunction) {
     const nodes = dataFunction();
 
-    if (!this.childNodes) this.childNodes = [];
+    if (!this.childNodes) this.childNodes = new Map();
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
       if (id) this[id] = item;
-      this.childNodes.push(item)
+      this.childNodes.set(id, item)
     });
 
     return () => {
@@ -41,7 +41,7 @@ export class SVG {
       return;
     }
 
-    if (!this.listeners) this.listeners = [];
+    if (!this.listeners) this.listeners = new Map();
 
     const listenerId = Symbol(); // Unique identifier for this listener chain
     let currentCallback;
@@ -55,7 +55,7 @@ export class SVG {
       this.node.addEventListener(event, currentCallback);
       
       // Store the entire listener chain info
-      this.listeners.push({ 
+      this.listeners.set(listenerId, { 
         id: listenerId,
         event: event, 
         func: currentCallback,
@@ -71,7 +71,7 @@ export class SVG {
         if (typeof nextFunc !== 'function') return this;
         
         // Find the listener by ID
-        const listener = this.listeners.find(l => l.id === listenerId);
+        const listener = this.listeners.get(listenerId);
         if (!listener) return this;
         
         // Remove the current callback
@@ -90,7 +90,7 @@ export class SVG {
         
         // Add the new callback
         this.node.addEventListener(event, currentCallback);
-        
+
         return this;
       }
     };
@@ -109,13 +109,16 @@ export class SVG {
   }
 
   removeListenerByEvent(event) {
-    const listenersToRemove = this.listeners.filter(l => l.event === event);
+    let listenersToRemove = [];
+    this.listeners.forEach((item, index) => {
+      if (item.event === event) listenersToRemove.push(item);
+      this.listeners.delete(index);
+    });
     listenersToRemove.forEach(listener => {
       listener.callbacks.forEach(callback => {
         this.node.removeEventListener(event, callback);
       });
     });
-    this.listeners = this.listeners.filter(l => l.event !== event);
   }
 
   ren(tag, data) {

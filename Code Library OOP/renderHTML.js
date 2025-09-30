@@ -10,8 +10,6 @@ export class HTML {
 // Helper class for created elements, used by HTML and ren()
 class HTMLElement {
 
-  listeners = [];
-  
   constructor(tag, config) {
     this.node = document.createElement(tag);
     configureElement(this.node, config);
@@ -19,18 +17,21 @@ class HTMLElement {
 
   addNodes(dataFunction) {
     const nodes = dataFunction();
-    const addedNodes = [];
+
+    if (!this.childNodes) this.childNodes = new Map();
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
       if (id) this[id] = item;
-      addedNodes.push(item)
+      this.childNodes.set(id, item)
     });
+
+    if (!this.removeNode)  this.removeNode = removeNode
 
     return () => {
 
-      addedNodes.forEach(item => {
+      this.childNodes.forEach(item => {
         if (item.node && item.node.parentNode === this.node) {
           this.node.removeChild(item.node)
         }
@@ -39,14 +40,12 @@ class HTMLElement {
           delete this[id]
         }
       })
+      delete this.childNodes;
+      delete this.removeNode;
       
     }
     
-  }
-
-  removeNodes(nodes) {
-    console.log()
-  }
+  } // returns a method for clearing all childNodes.
 
   addListener(event, func) {
     if (!event || !func) {
@@ -122,10 +121,25 @@ class HTMLElement {
         this.node.removeEventListener(event, callback);
       });
     });
-    this.listeners = this.listeners.filter(l => l.event !== event);
   }
   
 }
+
+function removeNode(item) {
+
+  let array = Array.isArray(item) ? item : [item];
+
+  array.forEach(node => {
+    const target = this.childNodes.get(node);
+    this.childNodes.delete(node)
+    target.node.remove()
+  })
+
+  if (this.childNodes.size < 1) {
+    delete this.removeNode
+  }
+  
+} // Helper used by addNodes method in HTMLElement
 
 function configureElement(node, config) {
 

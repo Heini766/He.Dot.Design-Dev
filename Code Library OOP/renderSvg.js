@@ -146,7 +146,7 @@ function removeNode(item) {
     delete this.removeNode
   }
 
-} // Helper used by addNodes method
+} // Helper used by addNodes method in SVG
 
 function configureElement(node, config) {
 

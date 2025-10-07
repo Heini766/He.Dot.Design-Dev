@@ -1,24 +1,67 @@
-export function createAni(duration, callBack, fillMode) {
-  let start, id;
+export class Animation {
+  constructor(duration, callBack, fillMode) {
+    this.duration = duration;
+    this.callBack = callBack;
+    this.fillMode = fillMode;
+    this.start = null;
+    this.elapsed = 0;
+    this.id = null;
+    this.paused = false;
+    this.pauseTime = null;
 
-  const animate = () => {
-
-    if (start === undefined) {
-      start = performance.now()
-    }
-    const elapsed = (performance.now() - start)/1000;
-    const t =  Math.min(elapsed/duration, 1);
-    callBack(t)
-    if (t < 1) {
-      id = requestAnimationFrame(animate)
-    } else if (fillMode === 'loop') {
-      start = performance.now();
-      id = requestAnimationFrame(animate)
-    }
-
+    // Bind the animate method to maintain 'this' context
+    this.animate = this.animate.bind(this);
+    
+    this.play();
   }
 
-  id = requestAnimationFrame(animate)
+  animate(timestamp) {
+    if (!this.start) this.start = timestamp || performance.now();
+    if (this.paused) return;
+
+    const currentTime = timestamp || performance.now();
+    this.elapsed = (currentTime - this.start) / 1000;
+    
+    const t = Math.min(this.elapsed / this.duration, 1);
+    this.callBack(t);
+    
+    if (t < 1) {
+      this.id = requestAnimationFrame(this.animate);
+    } else if (this.fillMode === 'loop') {
+      this.start = performance.now(); // Reset for loop
+      this.id = requestAnimationFrame(this.animate);
+    }
+  }
+
+  pause() {
+    if (this.id && !this.paused) {
+      this.paused = true;
+      this.pauseTime = performance.now();
+      cancelAnimationFrame(this.id);
+    }
+  }
+
+  play() {
+    if (this.paused) {
+      // Adjust start time to account for pause duration
+      const pauseDuration = performance.now() - this.pauseTime;
+      this.start += pauseDuration;
+      this.paused = false;
+      this.pauseTime = null;
+    }
+    this.id = requestAnimationFrame(this.animate);
+  }
+
+  stop() {
+    this.pause();
+    this.start = null;
+    this.elapsed = 0;
+  }
+
+  reset() {
+    this.stop();
+    this.callBack(0); // Reset to initial state
+  }
 }
 
 export function easeInQuad(t) {

@@ -6,30 +6,37 @@ export class SVG {
     configureElement(this.node, config);
   }
 
-  addNodes(dataFunction) {
-    const nodes = dataFunction();
+   addNodes(nodes) {
+
+    nodes = Array.isArray(nodes) ? nodes : [nodes]
 
     if (!this.childNodes) this.childNodes = new Map();
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
-      //if (id) this[id] = item;
       this.childNodes.set(id, item)
     });
     
-  }
+  } // Takes node objects
 
-  remove(child) {
+  remove(childID) {
 
-    if (this.childNodes && this.childNodes.get(child)) {
-      this.childNodes.get(child).node.remove()
-      this.childNodes.clear(child)
-    } else {
-      console.error(`unrecognised child node - ${child}`)
-    }
+    childID = Array.isArray(childID) ? childID : [childID];
+    const currentChildren = this.childNodes;
+
+    childID.forEach(item => {
+      if (currentChildren && currentChildren.get(item)) {
+        currentChildren.get(item).node.remove()
+        currentChildren.delete(item)
+      } else {
+        console.error(`can't remove unrecognised childID node - ${item}`)
+      }
+    })
+
     
-  }
+    
+  } // Takes the child node id
 
   ren(tag, data) {
     const newElement = new SVGElement(tag, data);
@@ -37,7 +44,7 @@ export class SVG {
     newElement.addNodes = this.addNodes.bind(newElement);
     newElement.remove = this.remove.bind(newElement);
     return newElement;
-  }
+  } 
 
 }
 

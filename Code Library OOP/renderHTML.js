@@ -15,133 +15,38 @@ class HTMLElement {
     configureElement(this.node, config);
   }
 
-  addNodes(dataFunction) {
-    const nodes = dataFunction();
+  addNodes(nodes) {
+
+    nodes = Array.isArray(nodes) ? nodes : [nodes]
 
     if (!this.childNodes) this.childNodes = new Map();
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
       const id = item.node.getAttribute('id');
-      if (id) this[id] = item;
       this.childNodes.set(id, item)
     });
-
-    if (!this.removeNode)  this.removeNode = removeNode
-
-    return () => {
-
-      this.childNodes.forEach(item => {
-        if (item.node && item.node.parentNode === this.node) {
-          this.node.removeChild(item.node)
-        }
-        const id = item.node.getAttribute('id');
-        if (id && this[id]) {
-          delete this[id]
-        }
-      })
-      delete this.childNodes;
-      delete this.removeNode;
-      
-    }
     
-  } // returns a method for clearing all childNodes.
+  } // Takes node objects
 
-  addListener(event, func) {
-    if (!event || !func) {
-      console.warn('Invalid listener config:', event, func);
-      return this; // Return this for chainability
-    }
+  remove(childID) {
 
-    if (!this.listeners) this.listeners = new Map();
+    childID = Array.isArray(childID) ? childID : [childID];
+    const currentChildren = this.childNodes;
 
-    const listenerId = Symbol(); // Unique identifier for this listener chain
-    let currentCallback;
-
-    try {
-      // Create the initial callback
-      currentCallback = (event) => {
-        return func(event, this);
-      };
-      
-      this.node.addEventListener(event, currentCallback);
-      
-      // Store the entire listener chain info
-      this.listeners.set(listenerId, { 
-        id: listenerId,
-        event: event, 
-        func: currentCallback,
-        callbacks: [currentCallback] // Track all callbacks for cleanup
-      });
-    } catch (error) {
-      console.error('Failed to add event listener:', error);
-      return this; // Return this for chainability
-    }
-
-    // Return an object with 'and' method AND also make it chainable
-    const chainableObject = {
-      and: (nextFunc) => {
-        if (typeof nextFunc !== 'function') return chainableObject;
-        
-        // Find the listener by ID
-        const listener = this.listeners.get(listenerId);
-        if (!listener) return chainableObject;
-        
-        // Remove the current callback
-        this.node.removeEventListener(event, listener.func);
-        
-        // Create a new callback that chains the functions
-        const previousCallback = listener.func;
-        currentCallback = (event) => {
-          const previousResult = previousCallback(event);
-          return nextFunc(previousResult, event, this);
-        };
-        
-        // Update the listener
-        listener.func = currentCallback;
-        listener.callbacks.push(currentCallback);
-        
-        // Add the new callback
-        this.node.addEventListener(event, currentCallback);
-
-        return chainableObject; // Return the chainable object
+    childID.forEach(item => {
+      if (currentChildren && currentChildren.get(item)) {
+        currentChildren.get(item).node.remove()
+        currentChildren.delete(item)
+      } else {
+        console.error(`can't remove unrecognised childID node - ${item}`)
       }
-    };
+    })
 
-    // Make the chainable object itself chainable by returning it
-    return chainableObject;
-  }
-
-  removeListenerByEvent(event) {
-    let listenersToRemove = [];
-    this.listeners.forEach((item, index) => {
-      if (item.event === event) listenersToRemove.push(item);
-      this.listeners.delete(index);
-    });
-    listenersToRemove.forEach(listener => {
-      listener.callbacks.forEach(callback => {
-        this.node.removeEventListener(event, callback);
-      });
-    });
-  }
-  
+    
+    
+  } // Takes the child node id
 }
-
-function removeNode(item) {
-
-  let array = Array.isArray(item) ? item : [item];
-
-  array.forEach(node => {
-    const target = this.childNodes.get(node);
-    this.childNodes.delete(node)
-    target.node.remove()
-  })
-
-  if (this.childNodes.size < 1) {
-    delete this.removeNode
-  }
-  
-} // Helper used by addNodes method in HTMLElement
 
 function configureElement(node, config) {
 

@@ -1,6 +1,7 @@
 import {canvas } from "./data/display/components.js";
+import { runBtn } from "./data/display/components.js";
 
-const elements = [canvas]
+const elements = [runBtn, canvas]
 
 elements.forEach((el) => {
 

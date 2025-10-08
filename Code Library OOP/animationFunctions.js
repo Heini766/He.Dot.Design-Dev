@@ -1,4 +1,5 @@
 export class Animation {
+  
   constructor(duration, callBack, fillMode) {
     this.duration = duration;
     this.callBack = callBack;

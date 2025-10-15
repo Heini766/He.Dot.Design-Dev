@@ -70,6 +70,8 @@ class SVGElement {
   }
 }
 
+// utility functions
+
 function configureElement(node, config) {
 
   if (!config) return;
@@ -85,3 +87,59 @@ function configureElement(node, config) {
   }
   
 }
+
+function createBezierPath(vertices, inTangents, outTangents) {
+  if (!vertices.length) return "";
+  
+  let pathData = "";
+  
+  // Start with MoveTo command for first vertex
+  pathData += `M ${vertices[0][0]},${vertices[0][1]}`;
+  
+  // Create cubic Bezier curves between vertices
+  for (let i = 1; i < vertices.length; i++) {
+    const prevVertex = vertices[i - 1];
+    const prevOutTangent = outTangents[i - 1];
+    const currentVertex = vertices[i];
+    const currentInTangent = inTangents[i];
+    
+    // Control point 1: previous vertex + its outTangent
+    const cp1x = prevVertex[0] + prevOutTangent[0];
+    const cp1y = prevVertex[1] + prevOutTangent[1];
+    
+    // Control point 2: current vertex + its inTangent  
+    const cp2x = currentVertex[0] + currentInTangent[0];
+    const cp2y = currentVertex[1] + currentInTangent[1];
+    
+    // End point: current vertex
+    const endX = currentVertex[0];
+    const endY = currentVertex[1];
+    
+    // Add cubic Bezier command
+    pathData += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${endX},${endY}`;
+  }
+    
+  return pathData;
+} // helper function used by genPathData
+
+export function genPathData(points = [], config = {}) {
+
+  const data = {};
+
+  const vertices = [[0, 0], [0, 10]];
+  const inTangents = [[0, 0], [0, 0]]; 
+  const outTangents = [[0, 0], [0, 0]];
+
+  if (!Array.isArray(points)) points = [points]
+
+  points.forEach((v, i) => {
+    vertices[i] = v.vertex ? v.vertex : [0, 0];
+    inTangents[i] = v.inTangent ? v.inTangent : [0, 0];
+    outTangents[i] = v.outTangent ? v.outTangent : [0, 0];
+  }) 
+
+  data.d = createBezierPath(vertices, inTangents, outTangents);
+
+  return data
+  
+} // used to create the bezier path data string for an svg path nodes data attribute.

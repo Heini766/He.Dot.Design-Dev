@@ -11,15 +11,21 @@ export const runBtn = html.ren('button', {id: 'runBtn', class: 'run-button', con
 
 runBtn.node.addEventListener('click', btnFunc)
 
-const myFirstPath = canvas.ren('path', {class: 'path', d: genPathData([
+const pData = genPathData([
   {
     vertex: [-10, -10],
     outTangent: [20, 0]
   }, {
     vertex: [10, 10],
     inTangent: [-30, 0]
+  }, {
+    vertex: [25, -25]
   }
-]).d})
+])
+
+pData.node1.set({vertex: [-50, -50], outTangent: [0, 0]})
+
+const myFirstPath = canvas.ren('path', {class: 'path', d: pData.d})
 
 const pos = getPointAlongPath(myFirstPath.node, .25);
 
@@ -29,8 +35,15 @@ const shape = canvas.ren('circle', {class: 'shape', id: `shape`, r: 5, transform
 canvas.addNodes( [container])
 container.addNodes([shape, myFirstPath])
 
+let toggle = false;
 function btnFunc() {
 
-  console.log('Run my script')
+  if (toggle) {
+    pData.node3.set({vertex: [50, 50]}, myFirstPath.node)
+    toggle = false
+  } else {
+    pData.node3.set({vertex: [-20, 50]}, myFirstPath.node)
+    toggle = true
+  }
   
 }

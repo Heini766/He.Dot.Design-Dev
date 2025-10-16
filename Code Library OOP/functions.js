@@ -35,10 +35,10 @@ export function getRelativePosition(event, object) {
   const { x, y, width, height } = object.getBoundingClientRect();
   const [vbX, vbY, vbWidth, vbHeight] = extNumbers(object.getAttribute('viewBox'));
   
-  return {
-    x: (event.clientX - x) / width * vbWidth + vbX,
-    y: (event.clientY - y) / height * vbHeight + vbY
-  };
+  return [
+    (event.clientX - x) / width * vbWidth + vbX,
+    (event.clientY - y) / height * vbHeight + vbY
+  ];
 
 } // Returns the relative position of the cursor to a SVG node object
 

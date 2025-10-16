@@ -122,7 +122,7 @@ function createBezierPath(vertices, inTangents, outTangents) {
   return pathData;
 } // helper function used by genPathData
 
-export function genPathData(points = []) {
+export function genPathData(points = [], node) {
 
   const data = {};
 
@@ -133,9 +133,9 @@ export function genPathData(points = []) {
   if (!Array.isArray(points)) points = [points]
 
   points.forEach((v, i) => {
-    vertices[i] = v.vertex ? v.vertex : [0, 0];
-    inTangents[i] = v.inTangent ? v.inTangent : [0, 0];
-    outTangents[i] = v.outTangent ? v.outTangent : [0, 0];
+    vertices[i] = v.vtx ? v.vtx : [0, 0];
+    inTangents[i] = v.inT ? v.inT : [0, 0];
+    outTangents[i] = v.outT ? v.outT : [0, 0];
   }) 
 
   vertices.forEach((point, i) => {
@@ -143,11 +143,11 @@ export function genPathData(points = []) {
       vtx: point,
       inT: inTangents[i],
       outT: outTangents[i],
-      set: (config, node) => {
+      set: (config) => {
         if (!config) return
-        vertices[i] = config.vertex || point
-        inTangents[i] = config.inTangent || inTangents[i]
-        outTangents[i] = config.outTangent || inTangents[i]
+        vertices[i] = config.vtx || point
+        inTangents[i] = config.inT || inTangents[i]
+        outTangents[i] = config.outT || inTangents[i]
         data.d = createBezierPath(vertices, inTangents, outTangents);
         if (node) node.setAttribute('d', data.d)
       }
@@ -155,6 +155,9 @@ export function genPathData(points = []) {
   })
 
   data.d = createBezierPath(vertices, inTangents, outTangents);
+
+  if (typeof(node) === 'string') [node] = document.querySelectorAll(node);
+  if (node.tagName === 'path') node.setAttribute('d', data.d);
 
   return data
   

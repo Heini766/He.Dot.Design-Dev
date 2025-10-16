@@ -1,6 +1,5 @@
-import { genPathData, SVG } from "../../../Code Library OOP/renderSvg.js";
-import { HTML } from "../../../Code Library OOP/renderHTML.js"
-import { getPointAlongPath } from "../../../Code Library OOP/functions.js";
+import { SVG } from "../../../Code Library OOP/renderSvg.js";
+import { HTML } from "../../../Code Library OOP/renderHTML.js";
 
 const aspect = {x: 100, y: 100}
 

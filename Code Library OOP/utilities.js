@@ -12,25 +12,25 @@ export function createDrag(node, config = {}) {
 
   if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
 
-  const  onD = (event) => {
+  const  onD = (e) => {
 
     window.addEventListener('mousemove', onM)
     window.addEventListener('mouseup', onU)
     
     if (!config.onDown || typeof(config.onDown) !== 'function' ) return
-    config.onDown(event, data)
+    config.onDown(e, data)
   }
-  const  onM =  (event) => {
+  const  onM =  (e) => {
     if (!config.onMove || typeof(config.onMove) !== 'function' ) return
-    config.onMove(event, data)
+    config.onMove(e, data)
   }
-  const  onU = (event) => {
+  const  onU = (e) => {
 
     window.removeEventListener('mousemove', onM)
     window.removeEventListener('mouseup', onU)
     
     if (!config.onUp || typeof(config.onUp) !== 'function' ) return
-    config.onUp(event, data)
+    config.onUp(e, data)
   }
 
   return data

@@ -52,10 +52,7 @@ export class UVMapper {
   #generateUVCoordinates(gridSize) {
     for (let y = 0; y <= gridSize.y; y += 1) {
       for (let x = 0; x <= gridSize.x; x += 1) {
-        this.uvCoordinates.push({
-          x: x / gridSize.x,
-          y: y / gridSize.y
-        });
+        this.uvCoordinates.push([x / gridSize.x, y / gridSize.y]);
       }
     }
   }

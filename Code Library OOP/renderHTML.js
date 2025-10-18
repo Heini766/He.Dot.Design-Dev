@@ -1,7 +1,19 @@
 export class HTML {
 
-  ren(tag, data) {
+  ren(tag, data, settings) {
+
+    let archive = true
+    if (settings) archive = settings.archive ? settings.archive : false;
+    
     const newElement = new HTMLElement(tag, data);
+
+    if (archive) {
+    if (!this.archive) this.archive = new Map();
+    const id = newElement.node.getAttribute('id')
+    if (id) this.archive.set(id, newElement)
+    else this.archive.set(`shape${this.archive.size + 1}`, newElement);
+    }
+    
     return newElement
   }
   

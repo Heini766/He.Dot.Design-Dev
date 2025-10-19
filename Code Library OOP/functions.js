@@ -10,7 +10,8 @@ export function getDistance(pos1, pos2) {
 
 export function getPointAlongPath(element, offset) {
   const pathLength = element.getTotalLength();
-  return element.getPointAtLength(offset * pathLength);
+  const pos = element.getPointAtLength(offset * pathLength)
+  return [pos.x, pos.y];
 };
 
 export function getPointAngle(element, offset) {

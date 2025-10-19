@@ -12,7 +12,8 @@
 @layer comps {
   .canvas {
     max-width: 600px;
-    background-color: rgb(128, 128, 128);
+    /* background-color: rgb(128, 128, 128); */
+    border: 1px solid gray;
   }
 
   .run-button {
@@ -26,5 +27,9 @@
       border-color: cyan;
     }
     
+  }
+
+  .path {
+    stroke: white; fill: none; stroke-width: .5;
   }
 }

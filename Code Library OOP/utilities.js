@@ -1,6 +1,9 @@
+import { getPointAlongPath } from "./functions.js";
+
 export function createDrag(node, config = {}) {
 
   node = node instanceof Node ? node : undefined;
+  if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
   
   const data = {
     active: (set) => {
@@ -9,8 +12,6 @@ export function createDrag(node, config = {}) {
       else node.removeEventListener('mousedown', onD)
      }
   }
-
-  if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
 
   const  onD = (e) => {
 
@@ -38,41 +39,86 @@ export function createDrag(node, config = {}) {
 } // adds click and drag functionality
 
 export class UVMapper {
-  uvCoordinates = [];
-  #uvNodes = [];
+  uvCords = [];
   
-  constructor(gridSize) {
-    if (!gridSize || typeof gridSize.x !== 'number' || typeof gridSize.y !== 'number') {
-      throw new Error('gridSize must be an object with x and y properties');
+  constructor(gridSize = []) {
+
+    if (gridSize.length <= 1) {
+      throw new Error('gridSize must be an array of x and y value');
     }
 
-    this.#generateUVCoordinates(gridSize);
+    this.#generateuvCords(gridSize);
   }
 
-  #generateUVCoordinates(gridSize) {
-    for (let y = 0; y <= gridSize.y; y += 1) {
-      for (let x = 0; x <= gridSize.x; x += 1) {
-        this.uvCoordinates.push([x / gridSize.x, y / gridSize.y]);
+  #generateuvCords(gridSize) {
+    for (let y = 0; y <= gridSize[1]; y += 1) {
+      for (let x = 0; x <= gridSize[0]; x += 1) {
+        this.uvCords.push([x / gridSize[0], y / gridSize[1]]);
       }
     }
   }
 
-  processCoordinates(callBack) {
-    this.uvCoordinates.forEach((coordinate, index) => {
-      const shape = callBack(coordinate, index);
-      if (shape && shape.node) {
-        this.#uvNodes.push(shape.node);
-      }
+  processCords(callBack) {
+    this.uvCords.forEach((coordinate, index) => {
+      callBack(coordinate, index);
     });
   }
-
-  forEachNode(callBack) {
-    if (typeof callBack !== 'function') {
-      throw new Error('callback must be a function');
-    }
-
-    this.#uvNodes.forEach((node, index) => {
-      callBack(node, this.uvCoordinates[index]);
-    });
-  }
+  
 } // creates a grid 
+
+export class PatternAlongPath {
+
+  #data = {
+    points: [],
+    shapes: [],
+  };
+
+  constructor(node, config) {
+
+    this.#data.count = config.count || 4;
+    this.#data.parent = config.parent || undefined;
+    this.#data.callBack = config.callBack || undefined;
+
+    if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
+    node = node instanceof Node && node.tagName === 'path' ? node : undefined;
+
+    if (!node) throw new Error('node must be a path');
+    
+    for (let i = 0; i < this.#data.count; i++) {
+
+      const offset = i/Math.abs(1 - this.#data.count);
+      this.#data.points.push(getPointAlongPath(node, offset))
+      
+    }
+    
+  }
+
+  put(node) {
+
+    node = node instanceof Node ? node : undefined;
+    if (typeof(node) === 'string') [node] = document.querySelectorAll(node);
+
+    this.#data.parent = this.#data.parent instanceof Node ? this.#data.parent : undefined;
+    if (typeof(this.#data.parent) === 'string') [this.#data.parent] = document.querySelectorAll(this.#data.parent);
+
+    this.#data.points.forEach((p, i) => {
+
+      if (!node) {
+        this.#data.callBack ? this.#data.callBack(i/Math.abs(1 - this.#data.points.length)) : null;
+      } else {
+        const newShape = node.cloneNode(true);
+        newShape.setAttribute('transform', `translate(${p[0]} ${p[1]})`);
+
+        if (this.#data.parent) this.#data.parent.appendChild(newShape)
+
+        this.#data.shapes.push(newShape);
+        this.#data.callBack ? this.#data.callBack(newShape, i/Math.abs(1 - this.#data.points.length)) : null;
+      }
+      
+    })
+
+    return this
+    
+  }
+  
+}

@@ -121,8 +121,8 @@ export function calcControlePoints(pos1, pos2, range, lengthFactor) {
 }; // Generates two controle points based of given parameters
 
 export function calcLineAngle(point1, point2) {
-  const deltaX = point2.x - point1.x;
-  const deltaY = point2.y - point1.y;
+  const deltaX = point2[0] - point1[0];
+  const deltaY = point2[1] - point1[1];
 
   const angleRadians =  Math.atan2(deltaY, deltaX);
   const angleDegrees = angleRadians * (180 / Math.PI);

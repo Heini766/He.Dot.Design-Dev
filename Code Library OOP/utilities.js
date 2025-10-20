@@ -1,4 +1,4 @@
-import { getPointAlongPath } from "./functions.js";
+import { getPointAlongPath, getPointAngle } from "./functions.js";
 
 export function createDrag(node, config = {}) {
 
@@ -77,6 +77,7 @@ export class PatternAlongPath {
 
     this.#data.count = config.count || 4;
     this.#data.parent = config.parent || undefined;
+    this.#data.tangent  = config.tangent || false;
     this.#data.callBack = config.callBack || undefined;
 
     if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
@@ -107,7 +108,16 @@ export class PatternAlongPath {
         this.#data.callBack ? this.#data.callBack(i/Math.abs(1 - this.#data.points.length)) : null;
       } else {
         const newShape = node.cloneNode(true);
-        newShape.setAttribute('transform', `translate(${p[0]} ${p[1]})`);
+        let transform = `translate(${p[0]} ${p[1]})`;
+        if (this.#data.tangent) {
+
+          const offset = i/Math.abs(1 - this.#data.points.length)
+          const angle = getPointAngle(this.#data.ref, offset).deg;
+
+          transform += `rotate(${angle})`
+        }
+
+        newShape.setAttribute('transform', transform);
 
         if (this.#data.parent) this.#data.parent.appendChild(newShape)
 
@@ -121,16 +131,29 @@ export class PatternAlongPath {
     
   }
 
-  update() {
+  update(config) {
 
     this.#data.points = [];
+
+    if (config) {
+      this.#data.tangent = config.tangent;
+    }
 
     this.#data.shapes.forEach((el, i) => {
       const offset = i/Math.abs(1 - this.#data.count);
       const p = getPointAlongPath(this.#data.ref, offset)
       this.#data.points.push(p);
 
-      el.setAttribute('transform', `translate(${p[0]} ${p[1]})`);
+      let transform = `translate(${p[0]} ${p[1]})`;
+      if (this.#data.tangent) {
+
+        const offset = i/Math.abs(1 - this.#data.count)
+        const angle = getPointAngle(this.#data.ref, offset).deg;
+
+        transform += `rotate(${angle})`
+      }
+
+      el.setAttribute('transform', transform);
     })
     
   }

@@ -27,4 +27,12 @@
     }
     
   }
+
+  .path {
+    stroke-width: 3; stroke: white; fill: none; opacity: .2;
+  }
+
+  .block {
+    fill: white;
+  }
 }

@@ -69,92 +69,9 @@ export class UVMapper {
 export class PatternAlongPath {
 
   #data = {
-    points: [],
-    shapes: [],
   };
 
   constructor(node, config) {
-
-    this.#data.count = config.count || 4;
-    this.#data.parent = config.parent || undefined;
-    this.#data.tangent  = config.tangent || false;
-    this.#data.callBack = config.callBack || undefined;
-
-    if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
-    this.#data.ref = node instanceof Node && node.tagName === 'path' ? node : undefined;
-
-    if (!node) throw new Error('node must be a path');
-
-    for (let i = 0; i < this.#data.count; i++) {
-
-      const offset = i/Math.abs(1 - this.#data.count);
-      this.#data.points.push(getPointAlongPath(this.#data.ref, offset))
-      
-    }
-    
-  }
-
-  put(node) {
-
-    node = node instanceof Node ? node : undefined;
-    if (typeof(node) === 'string') [node] = document.querySelectorAll(node);
-
-    this.#data.parent = this.#data.parent instanceof Node ? this.#data.parent : undefined;
-    if (typeof(this.#data.parent) === 'string') [this.#data.parent] = document.querySelectorAll(this.#data.parent);
-
-    this.#data.points.forEach((p, i) => {
-
-      if (!node) {
-        this.#data.callBack ? this.#data.callBack(i/Math.abs(1 - this.#data.points.length)) : null;
-      } else {
-        const newShape = node.cloneNode(true);
-        let transform = `translate(${p[0]} ${p[1]})`;
-        if (this.#data.tangent) {
-
-          const offset = i/Math.abs(1 - this.#data.points.length)
-          const angle = getPointAngle(this.#data.ref, offset).deg;
-
-          transform += `rotate(${angle})`
-        }
-
-        newShape.setAttribute('transform', transform);
-
-        if (this.#data.parent) this.#data.parent.appendChild(newShape)
-
-        this.#data.shapes.push(newShape);
-        this.#data.callBack ? this.#data.callBack(newShape, i/Math.abs(1 - this.#data.points.length)) : null;
-      }
-      
-    })
-
-    return this
-    
-  }
-
-  update(config) {
-
-    this.#data.points = [];
-
-    if (config) {
-      this.#data.tangent = config.tangent;
-    }
-
-    this.#data.shapes.forEach((el, i) => {
-      const offset = i/Math.abs(1 - this.#data.count);
-      const p = getPointAlongPath(this.#data.ref, offset)
-      this.#data.points.push(p);
-
-      let transform = `translate(${p[0]} ${p[1]})`;
-      if (this.#data.tangent) {
-
-        const offset = i/Math.abs(1 - this.#data.count)
-        const angle = getPointAngle(this.#data.ref, offset).deg;
-
-        transform += `rotate(${angle})`
-      }
-
-      el.setAttribute('transform', transform);
-    })
     
   }
   

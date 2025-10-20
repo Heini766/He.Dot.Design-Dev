@@ -10,6 +10,8 @@ const myPData = genPathData(myPath.node, [
   {vtx: [80, 75]}
 ])
 
-const pattern = new PatternAlongPath();
+const pattern = new PatternAlongPath(myPath.node, {container: canvas.node});
+
+console.log(pattern)
 
 canvas.addNodes(myPath)

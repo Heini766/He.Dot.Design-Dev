@@ -1,3 +1,4 @@
+import { fast } from "@cloudinary/url-gen/qualifiers/FontAntialias";
 import { getPointAlongPath, getPointAngle } from "./functions.js";
 
 export function createDrag(node, config = {}) {
@@ -71,8 +72,14 @@ export class PatternAlongPath {
   #data = {
   };
 
-  constructor(node, config) {
+  constructor(path, config) {
     
+    this.#data.refPath = path instanceof Node ? path : undefined;
+    if (typeof(path) === 'string') [path] = document.querySelectorAll(path); // Finds reference path
+
+    this.#data.container = config ? config.container : console.error('container node is invalid', this.#data.container)
+    this.#data.count = config ? config.count : 3
+        
   }
   
 }

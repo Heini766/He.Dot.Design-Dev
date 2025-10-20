@@ -1,4 +1,3 @@
-import { fast } from "@cloudinary/url-gen/qualifiers/FontAntialias";
 import { getPointAlongPath, getPointAngle } from "./functions.js";
 
 export function createDrag(node, config = {}) {

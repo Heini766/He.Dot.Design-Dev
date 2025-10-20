@@ -80,14 +80,14 @@ export class PatternAlongPath {
     this.#data.callBack = config.callBack || undefined;
 
     if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
-    node = node instanceof Node && node.tagName === 'path' ? node : undefined;
+    this.#data.ref = node instanceof Node && node.tagName === 'path' ? node : undefined;
 
     if (!node) throw new Error('node must be a path');
-    
+
     for (let i = 0; i < this.#data.count; i++) {
 
       const offset = i/Math.abs(1 - this.#data.count);
-      this.#data.points.push(getPointAlongPath(node, offset))
+      this.#data.points.push(getPointAlongPath(this.#data.ref, offset))
       
     }
     
@@ -118,6 +118,20 @@ export class PatternAlongPath {
     })
 
     return this
+    
+  }
+
+  update() {
+
+    this.#data.points = [];
+
+    this.#data.shapes.forEach((el, i) => {
+      const offset = i/Math.abs(1 - this.#data.count);
+      const p = getPointAlongPath(this.#data.ref, offset)
+      this.#data.points.push(p);
+
+      el.setAttribute('transform', `translate(${p[0]} ${p[1]})`);
+    })
     
   }
   

@@ -35,4 +35,20 @@
   .block {
     fill: white;
   }
+
+  .control-point {
+    stroke: white; fill: none; stroke-width: .5;
+    cursor: pointer;
+
+    &.in {
+      fill: burlywood;
+    }
+    &.out {
+      fill: rgb(177, 222, 135);
+    }
+
+     &:hover {
+        fill: white;
+      }
+  }
 }

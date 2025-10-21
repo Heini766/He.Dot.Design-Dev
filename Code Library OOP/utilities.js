@@ -68,8 +68,7 @@ export class UVMapper {
 
 export class PatternAlongPath {
 
-  #data = {
-  };
+  #data = {}; // Stores all pattern related data.
 
   constructor(path, config = {}) {
     
@@ -129,9 +128,7 @@ export class PatternAlongPath {
 
     if (!this.#data.pat || typeof(callBack) !== 'function') return
 
-    this.#data.pat.forEach((v, key, map) => {
-      callBack(v, key, map)
-    })
+    callBack(this.#data.pat)
 
     this.update()
   }

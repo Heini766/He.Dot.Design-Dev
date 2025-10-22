@@ -1,5 +1,6 @@
 import { SVG } from "../../../Code Library OOP/renderSvg.js";
 import { HTML } from "../../../Code Library OOP/renderHTML.js";
+import { pacMan } from "../../script.js";
 
 const aspect = {x: 100, y: 100}
 
@@ -12,5 +13,7 @@ runBtn.node.addEventListener('click', btnFunc)
 
 
 function btnFunc() {
+
+  pacMan.setState({position: [75, 90]})
   
 }

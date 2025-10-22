@@ -12,7 +12,5 @@ runBtn.node.addEventListener('click', btnFunc)
 
 
 function btnFunc() {
-
-  console.log(canvas.archive)
   
 }

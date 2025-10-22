@@ -1,8 +1,8 @@
 export class SVG {
 
-  node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-
-  constructor(config) {
+  constructor(tag, config) {
+    if (typeof(tag) !== 'string') console.error('invalid tag', tag)
+    this.node = document.createElementNS('http://www.w3.org/2000/svg', tag)
     configureElement(this.node, config);
   }
 

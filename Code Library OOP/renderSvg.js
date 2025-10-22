@@ -11,51 +11,42 @@ export class SVG {
     if (typeof(nodes) === 'function') nodes = nodes();
     nodes = Array.isArray(nodes) ? nodes : [nodes];
 
-    if (!this.childNodes) this.childNodes = new Map();
+    if (!this.archive) this.archive = new Map();
+
+    nodes.forEach(item => {
+      if (this.archive.get(item.key) !== item) this.archive.set(item.key, item)
+    }) // adds node to archive if it hasn't already
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
-      const id = item.node.getAttribute('id');
-      this.childNodes.set(id, item)
     });
     
   } // Takes node objects
 
-  remove(childID) {
-
-    childID = Array.isArray(childID) ? childID : [childID];
-    const currentChildren = this.childNodes;
-
-    childID.forEach(item => {
-      if (currentChildren && currentChildren.get(item)) {
-        currentChildren.get(item).node.remove()
-        currentChildren.delete(item)
-      } else {
-        console.error(`can't remove unrecognised childID node - ${item}`)
-      }
-    })
-
-    
-    
-  } // Takes the child node id
-
-  ren(tag, data, settings) {
-
-    let archive = true
-    if (settings) archive = settings.archive ? settings.archive : false;
+  ren(tag, data = {}) {
     
     const newElement = new SVGElement(tag, data);
+    newElement.id = data ? data.id : undefined;
 
-    newElement.addNodes = this.addNodes.bind(newElement);
-    newElement.remove = this.remove.bind(newElement);
-
-    if (archive) {
     if (!this.archive) this.archive = new Map();
-    const id = newElement.node.getAttribute('id')
-    if (id) this.archive.set(id, newElement)
-    else this.archive.set(`shape${this.archive.size + 1}`, newElement);
+
+    let undefIds = 0;
+    if (!data.id) {
+      this.archive.forEach((item, key) => {
+        if (!item.id) undefIds += 1;
+      })
     }
 
+    if (newElement.id) {
+      newElement.key = newElement.id
+      this.archive.set(newElement.id, newElement)
+    }
+    else {
+      newElement.key = `shape${undefIds + 1}`
+      this.archive.set(newElement.key, newElement)
+    }
+
+    newElement.addNodes = this.addNodes.bind(newElement);
     return newElement
   } 
 
@@ -68,6 +59,16 @@ class SVGElement {
     this.node = document.createElementNS('http://www.w3.org/2000/svg', tag);
     configureElement(this.node, config);
   }
+
+  add(container) {
+    if (!container || !container.node) { console.error('Not a valid container', container);  return }
+    container.addNodes(this)
+  }
+
+  remove() {
+    this.node.remove()
+  }
+  
 }
 
 // utility functions

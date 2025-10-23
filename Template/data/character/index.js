@@ -27,38 +27,54 @@ export class Element {
     this.node.node.remove()
   }
 
-  setState(node, config) {
-
-    const isNode = node.node instanceof Node;
-
-    if (typeof(node) === 'string') [node] = document.querySelectorAll(node)
-    else if (!node && !isNode) return
-    if (!config || typeof(config) !== 'object') return
-
-    const curData = this.#d.get(node.key) ? this.#d.get(node.key) : {}
-    if (curData) config = {...curData, ...config}
-
-    this.#d.set(node.key, config)
-
-    const changedProps = new Set();
-
-    for (const key in config) {
-      if (curData[key] !== config[key]) {
-        curData[key] = config[key];
-        changedProps.add(key)
-      }
-    }
-
-    changedProps.forEach(attr => {
-      
-      if (Array.isArray(curData[attr])) curData[attr] = `${curData[attr][0]}px ${curData[attr][1]}px`;
-      if (attr === 'rotate') curData[attr] = `${curData[attr]}deg`;
-
-      node.node.style[attr] = curData[attr]
-      
-    })
-
-    
+  setState(nodeWrapper, config) {
+  // Input validation
+  if (!nodeWrapper || !nodeWrapper.node || !(nodeWrapper.node instanceof Node)) {
+    console.warn('Invalid node provided');
+    return;
   }
+  
+  if (!config || typeof config !== 'object') {
+    console.warn('Invalid config provided');
+    return;
+  }
+
+  const node = nodeWrapper.node;
+  const currentData = this.#d.get(nodeWrapper.key) || {};
+  
+  // Merge config with existing data (config takes precedence)
+  const mergedData = { ...currentData, ...config };
+  this.#d.set(nodeWrapper.key, mergedData);
+
+  const changedProps = new Set();
+
+  // Find what actually changed
+  for (const key in mergedData) {
+    if (currentData[key] !== mergedData[key]) {
+      changedProps.add(key);
+    }
+  }
+
+  // Apply changes to DOM
+  changedProps.forEach(attr => {
+    let value = mergedData[attr];
+    
+    // Transform values for CSS
+    if (Array.isArray(value) && value.length === 2 && attr === 'translate') {
+      value = `${value[0]}px ${value[1]}px`;
+    } else if (Array.isArray(value) && value.length === 2 && attr === 'scale') {
+      value = `${value[0]} ${value[1]}`;
+    } else if (attr === 'rotate') {
+      value = `${value}deg`;
+    }
+    
+    // Apply to style (with validation)
+    if (attr in node.style) {
+      node.style[attr] = value;
+    } else {
+      console.warn(`Invalid style property: ${attr}`);
+    }
+  });
+}
   
 }

@@ -11,7 +11,7 @@ export class PacMan {
 
   constructor() {
 
-    const svg = new SVG('g', {id: 'pacMan',transform: `translate(${this.#data.position[0]} ${this.#data.position[1]})`});
+    const svg = new SVG('g', {id: 'pacMan'});
     this.node = svg;
 
     svg.addNodes([
@@ -38,14 +38,23 @@ export class PacMan {
 
   setState(config) {
 
+    const node = this.node.node;
+
+    let newData = this.#data;
+
     if (config && typeof(config) === 'object') {
       for (let key in this.#data) {
         if (config[key]) this.#data[key] = config[key]
+        else newData[key] = undefined;
       }
+    } else {
+      newData = {}
     }
     
-    const [scale, rotate, translate] = [`scale(${this.#data.scale})`, `rotate(${this.#data.rotate})` ,`translate(${this.#data.position[0]} ${this.#data.position[1]})`]
-    this.node.node.setAttribute(`transform`, translate + scale + rotate);
+    if (newData.position) node.style.translate = `${newData.position[0]}px ${newData.position[1]}px`;
+    if (newData.scale) node.style.scale = newData.scale;
+    if (newData.rotate) node.style.rotate = `${newData.rotate}deg`;
+    
   }
   
 }

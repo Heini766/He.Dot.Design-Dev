@@ -14,6 +14,5 @@ runBtn.node.addEventListener('click', btnFunc)
 
 function btnFunc() {
 
-  pacMan.setState({position: [50, 50], scale: 2})
   
 }

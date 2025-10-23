@@ -7,7 +7,7 @@ const elements = [runBtn, canvas]
 
 export const pacMan = new PacMan();
 
-pacMan.spawn(canvas)
+pacMan.spawn(canvas, {position: [50, 50]})
 
 elements.forEach((el) => {
 

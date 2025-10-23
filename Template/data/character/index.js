@@ -39,22 +39,27 @@ export class PacMan {
   setState(config) {
 
     const node = this.node.node;
+    const changedProps = new Set();
 
-    let newData = this.#data;
-
-    if (config && typeof(config) === 'object') {
-      for (let key in this.#data) {
-        if (config[key]) this.#data[key] = config[key]
-        else newData[key] = undefined;
+    if (config && typeof config === 'object') {
+      for (const key in config) {
+        if (this.#data[key] !== config[key]) {
+          this.#data[key] = config[key];
+          changedProps.add(key);
+        }
       }
-    } else {
-      newData = {}
     }
-    
-    if (newData.position) node.style.translate = `${newData.position[0]}px ${newData.position[1]}px`;
-    if (newData.scale) node.style.scale = newData.scale;
-    if (newData.rotate) node.style.rotate = `${newData.rotate}deg`;
-    
+
+    // Only update the transforms that actually changed
+    if (changedProps.has('position')) {
+      node.style.translate = `${this.#data.position[0]}px ${this.#data.position[1]}px`;
+    }
+    if (changedProps.has('scale')) {
+      node.style.scale = this.#data.scale;
+    }
+    if (changedProps.has('rotate')) {
+      node.style.rotate = `${this.#data.rotate}deg`;
+    }
   }
   
 }

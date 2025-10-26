@@ -15,7 +15,7 @@ export class Element {
     const svg = new SVG('g');
     this.root = svg;
 
-    if (call && typeof call === 'function') svg.addNodes(call(this.root))
+    if (call && typeof call === 'function') svg.addNodes(call(svg))
   }
 
   spawn(container, config) {

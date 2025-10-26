@@ -123,12 +123,6 @@ export class PatternAlongPath {
 export class Element {
 
   #d = new Map();
-  
-  #data = {
-    position: [0, 0],
-    scale: 1,
-    rotate: 0,
-  }
 
   constructor(call) {
 
@@ -195,6 +189,10 @@ export class Element {
         console.warn(`Invalid style property: ${attr}`);
       }
     });
+  }
+
+  getData() {
+    return this.#d
   }
   
 }

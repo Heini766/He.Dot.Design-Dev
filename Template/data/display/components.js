@@ -1,5 +1,6 @@
 import { SVG } from "../../../Code Library OOP/renderSvg.js";
 import { HTML } from "../../../Code Library OOP/renderHTML.js";
+import { PointGame } from "../components/index.js";
 
 const aspect = {x: 100, y: 100}
 
@@ -11,6 +12,10 @@ export const runBtn = html.ren('button', {id: 'runBtn', class: 'run-button', con
 runBtn.node.addEventListener('click', btnFunc)
 
 
+const game = new PointGame()
+
 function btnFunc() {
+
+  game.renderPoint(canvas)
   
 }

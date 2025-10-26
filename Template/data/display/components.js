@@ -1,7 +1,5 @@
 import { SVG } from "../../../Code Library OOP/renderSvg.js";
 import { HTML } from "../../../Code Library OOP/renderHTML.js";
-import { createDrag } from "../../../Code Library OOP/utilities.js";
-import { getRelativePosition } from "../../../Code Library OOP/functions.js";
 
 const aspect = {x: 100, y: 100}
 

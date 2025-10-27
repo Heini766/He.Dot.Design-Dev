@@ -208,7 +208,7 @@ export function createDrag(node, config = {}) {
   
 } // adds click and drag functionality
 
-export function events(array = []) {
+export function createListeners(array = []) {
 
   const listners = new Set();
 

@@ -208,6 +208,48 @@ export function createDrag(node, config = {}) {
   
 } // adds click and drag functionality
 
+export function events(array = []) {
+
+  const listners = new Set();
+
+  array.forEach(el => {
+
+    if (typeof(el) !== 'object' || Array.isArray(el)) return;
+    const callBack = e => {
+
+      if (e.repeat && !el.repeat) return
+
+      if (Array.isArray(el.call)) {
+        el.call.forEach(it => {
+          if (it.key === e.key) it.call(e)
+          if (Array.isArray(it.key) && it.key.includes(e.key)) it.call(e)
+        })
+        return
+      }
+
+      el.call(e)
+    }
+    const newListener = el.node.addEventListener(el.event, callBack);
+    el.callBack = callBack
+    listners.add(el)
+
+  })
+
+  return {
+    remove: () => {
+      listners.forEach(el => {
+        el.node.removeEventListener(el.event, el.callBack)
+      })
+    },
+    add: () => {
+      listners.forEach(el => {
+        el.node.addEventListener(el.event, el.callBack)
+      })
+    }
+  }
+  
+}
+
 export function isMobileDevice() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }

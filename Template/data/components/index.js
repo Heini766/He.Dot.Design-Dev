@@ -1,5 +1,3 @@
-
-
 import {Element} from "../../../Code Library OOP/utilsClasses.js"
 import { createDrag, getRelativePosition } from "../../../Code Library OOP/utilsFunctions.js"
 import { canvas } from "../display/components.js"
@@ -32,7 +30,6 @@ export class PointGame {
         if (this.points.size >= 3) {
           this.deletePoint(newPoint)
         }
-        console.log(this.points.size)
       }
     }).active(true)
 

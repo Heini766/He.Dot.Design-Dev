@@ -10,23 +10,6 @@ export class SVG {
     
   }
 
-   addNodes(nodes) {
-
-    if (typeof(nodes) === 'function') nodes = nodes();
-    nodes = Array.isArray(nodes) ? nodes : [nodes];
-
-    if (!this.archive) this.archive = new Map();
-
-    nodes.forEach(item => {
-      if (this.archive.get(item.key) !== item) this.archive.set(item.key, item)
-    }) // adds node to archive if it hasn't already
-    
-    nodes.forEach(item => {
-      this.node.appendChild(item.node);
-    });
-    
-  } // Takes node objects
-
   ren(tag, data = {}) {
     
     const newElement = new SVGElement(tag, data);
@@ -52,25 +35,83 @@ export class SVG {
 
     newElement.addNodes = this.addNodes.bind(newElement);
     return newElement
-  } 
+  }
+
+  addNodes(nodes) {
+
+    if (typeof(nodes) === 'function') nodes = nodes();
+    nodes = Array.isArray(nodes) ? nodes : [nodes];
+
+    // if (!this.archive) this.archive = new Map();
+
+    // nodes.forEach(item => {
+    //   if (this.archive.get(item.key) !== item) this.archive.set(item.key, item)
+    // }) // adds node to archive if it hasn't already
+    
+    nodes.forEach(item => {
+      this.node.appendChild(item.node);
+    });
+    
+  } // Takes node objects
 
 }
 
 // Helper class for created elements, used by SVG and ren()
 class SVGElement {
+
+  _d = {};
   
   constructor(tag, config) {
     this.node = document.createElementNS('http://www.w3.org/2000/svg', tag);
     configureElement(this.node, config);
   }
 
-  add(container) {
-    if (!container || !container.node) { console.error('Not a valid container', container);  return }
-    container.addNodes(this)
-  }
+  setState(config = {}) {
+    // Input validation
+    
+    if (!config || typeof config !== 'object') {
+      console.warn('Invalid config provided');
+      return;
+    }
 
-  remove() {
-    this.node.remove()
+    const currentData = this._d;
+    
+    // Merge config with existing data (config takes precedence)
+    const mergedData = { ...currentData, ...config };
+    this._d = mergedData;
+
+    const changedProps = new Set();
+
+    // Find what actually changed
+    for (const key in mergedData) {
+      if (currentData[key] !== mergedData[key]) {
+        changedProps.add(key);
+      }
+    }
+
+    // Apply changes to DOM
+    changedProps.forEach(attr => {
+      let value = mergedData[attr];
+      
+      // Transform values for CSS
+      if (Array.isArray(value) && value.length === 2 && attr === 'translate') {
+        value = `${value[0]}px ${value[1]}px`;
+      } else if (Array.isArray(value) && value.length === 2 && attr === 'scale') {
+        value = `${value[0]} ${value[1]}`;
+      } else if (attr === 'rotate') {
+        value = `${value}deg`;
+      }
+      
+      // Apply to style (with validation)
+      if (attr in this.node.style) {
+        this.node.style[attr] = value;
+      } else {
+        console.warn(`Invalid style property: ${attr}`);
+      }
+    });
+
+    return this
+    
   }
   
 }
@@ -154,7 +195,7 @@ function createBezierPath(vertices, inTangents, outTangents, closePath = false) 
 } // helper function used by genPathData
 
 export function genPathData(node, points = [], closePath = false) {
-  // Better default handling
+  // Default handling
   const defaultPoints = [
     { vtx: [0, 0], inT: [0, 0], outT: [0, 0] },
     { vtx: [0, 50], inT: [0, 0], outT: [0, 0] }

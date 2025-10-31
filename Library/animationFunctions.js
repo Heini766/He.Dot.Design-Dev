@@ -13,7 +13,7 @@ export class Animation {
     // Bind the animate method to maintain 'this' context
     this.animate = this.animate.bind(this);
     
-    this.play();
+    //this.play();
   }
 
   animate(timestamp) {

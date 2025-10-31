@@ -1,7 +1,6 @@
-import { SVG } from "../../../Code Library OOP/renderSvg.js";
-import { HTML } from "../../../Code Library OOP/renderHTML.js";
-import { PointGame } from "../components/index.js";
-import { createListeners } from "../../../Code Library OOP/utilsFunctions.js";
+import { SVG } from "../../../Library/renderSvg.js";
+import { HTML } from "../../../Library/renderHTML.js";
+import { createListeners } from "../../../Library/utilsFunctions.js";
 
 const aspect = {x: 100, y: 100}
 
@@ -18,10 +17,8 @@ createListeners([
   }
 ])
 
-const game = new PointGame()
-
 function btnFunc() {
 
-  game.renderPoint(canvas)
+  
   
 }

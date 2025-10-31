@@ -1,6 +1,7 @@
 import { SVG } from "../../../Library/renderSvg.js";
 import { HTML } from "../../../Library/renderHTML.js";
 import { createListeners } from "../../../Library/utilsFunctions.js";
+import { stGame } from "../components/index.js";
 
 const aspect = {x: 100, y: 100}
 
@@ -17,7 +18,14 @@ createListeners([
   }
 ])
 
+let game
 function btnFunc() {
+
+  const [btn] = document.querySelectorAll('#runBtn');
+  if (!game) game = new stGame();
+  if (game.levels && game.levels.size !== 0) return
+
+  game.newLevel()
 
   
   

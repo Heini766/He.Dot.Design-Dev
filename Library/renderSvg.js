@@ -12,26 +12,9 @@ export class SVG {
 
   ren(tag, data = {}) {
     
-    const newElement = new SVGElement(tag, data);
-    newElement.id = data ? data.id : undefined;
-
     if (!this.archive) this.archive = new Map();
-
-    let undefIds = 0;
-    if (!data.id) {
-      this.archive.forEach((item, key) => {
-        if (!item.id) undefIds += 1;
-      })
-    }
-
-    if (newElement.id) {
-      newElement.key = newElement.id
-      this.archive.set(newElement.id, newElement)
-    }
-    else {
-      newElement.key = `shape${undefIds + 1}`
-      this.archive.set(newElement.key, newElement)
-    }
+    
+    const newElement = new SVGElement(tag, data, this);
 
     newElement.addNodes = this.addNodes.bind(newElement);
     return newElement
@@ -41,12 +24,6 @@ export class SVG {
 
     if (typeof(nodes) === 'function') nodes = nodes();
     nodes = Array.isArray(nodes) ? nodes : [nodes];
-
-    // if (!this.archive) this.archive = new Map();
-
-    // nodes.forEach(item => {
-    //   if (this.archive.get(item.key) !== item) this.archive.set(item.key, item)
-    // }) // adds node to archive if it hasn't already
     
     nodes.forEach(item => {
       this.node.appendChild(item.node);
@@ -61,9 +38,29 @@ class SVGElement {
 
   _d = {};
   
-  constructor(tag, config) {
+  constructor(tag, config, meta) {
     this.node = document.createElementNS('http://www.w3.org/2000/svg', tag);
     configureElement(this.node, config);
+
+    this.id = config ? config.id : undefined;
+
+    let undefIds = 0;
+    if (!config.id) {
+      meta.archive.forEach((item, key) => {
+        if (!item.id) undefIds += 1;
+      })
+    }
+
+     if (this.id) {
+      this.key = this.id
+      meta.archive.set(this.id, this)
+    }
+    else {
+      this.key = `shape${undefIds + 1}`
+      meta.archive.set(this.key, this)
+    }
+
+    this.containerClass = meta
   }
 
   setState(config = {}) {
@@ -112,6 +109,11 @@ class SVGElement {
 
     return this
     
+  }
+
+  purge() {
+    this.containerClass.archive.get(this.key).node.remove()
+    this.containerClass.archive.delete(this.key)
   }
   
 }

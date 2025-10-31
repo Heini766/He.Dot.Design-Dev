@@ -10,7 +10,7 @@
 }
 
 @layer comps {
-  .canvas {
+  .game-display {
     max-width: 600px;
     border: 1px solid gray;
   }
@@ -26,5 +26,9 @@
       border-color: cyan;
     }
     
+  }
+
+  .draw-path {
+    stroke: white; stroke-width: 2;
   }
 }
